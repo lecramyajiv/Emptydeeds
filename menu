@@ -1,0 +1,44 @@
+[begin] (fluxbox)
+ [submenu] (Internet)</usr/share/icons/Adwaita/48x48/categories/applications-internet.png>
+	[exec](Firefox){/usr/bin/firefox-esr}</usr/share/icons/hicolor/128x128/apps/firefox-esr.png>
+ [end]
+
+ [submenu] (Office)</usr/share/icons/Adwaita/48x48/categories/applications-office.png>
+	[exec](Dictionary){/usr/share/wordnet/bin/wnb}</usr/share/wordnet/pixmaps/micro-wn.xpm>
+	[exec](Editor){/usr/bin/medit}</usr/share/icons/hicolor/48x48/apps/medit.png>
+ [end]
+
+ [submenu] (Utilities)</usr/share/icons/Adwaita/48x48/categories/applications-utilities.png>
+	[exec](GtkHash){/usr/bin/gtkhash}</usr/share/icons/hicolor/32x32/apps/gtkhash.png>
+	[exec](Synaptic){/usr/bin/synaptic-pkexec}</usr/share/icons/gnome-colors-common/32x32/apps/synaptic.png>
+	[exec](Home){/usr/bin/thunar}</usr/share/icons/hicolor/128x128/apps/Thunar.png>
+	[exec](Terminal){/usr/bin/xfce4-terminal}</usr/share/icons/gnome/32x32/apps/xfce-terminal.png>
+ 	[exec](Settings Manager){/usr/bin/xfce4-settings-manager}</usr/share/icons/Adwaita/32x32/devices/computer.png>
+	[exec](Theme Manager){/usr/bin/gtk-theme-switch2}</usr/share/icons/Adwaita/32x32/devices/media-flash.png>
+ [end]
+
+ [submenu] (Multimedia)</usr/share/icons/Adwaita/48x48/categories/applications-multimedia.png>
+	[exec](Vlc){/usr/bin/vlc}</usr/share/icons/hicolor/128x128/apps/vlc.png>
+ [end]	
+
+[separator]
+
+ [submenu](Fluxbox)
+	[workspaces](workspaces)
+	[subnmenu](styles)
+		[stylesdir](/usr/share/fluxbox/styles)
+		[stylesdir](~/.fluxbox/styles)
+ [end]
+
+[separator]
+
+[config] (configure)
+[reconfig] (reconfig)
+[restart] (restart)
+ 
+[separator]
+
+[exec] (Quit){sh ~/.fluxbox/system/logout.sh}
+[exec] (Reboot){sh ~/.fluxbox/system/reboot.sh}
+[exec] (poweroff){sh ~/.fluxbox/system/poweroff.sh}
+[end]
