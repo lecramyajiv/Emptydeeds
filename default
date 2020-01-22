@@ -1,0 +1,132 @@
+Global {
+    edge = bottom
+    allign = center
+    margin = 0
+    widthtype = percent
+    width = 100
+    height = 30
+    transparent = false
+    setDockType = true
+    tintcolor = #100806
+    alpha = 255
+    setdocktype = true
+    setpartialstrut = true
+    autohide = false
+    heightWhenHidden = 2
+    roundcorners = false
+    roundcornersradius = 7
+    layer = below
+    MaxElemHeight = 35
+    xmargin = 0
+    ymargin = 0
+    setlayer = true
+}
+Plugin {
+    type = menu
+    config {
+        image = /usr/share/jwm/jwm-red.svg
+        height = 30
+        systemmenu {
+        }
+        separator {
+        }
+        menu {
+            name = Computer
+            icon = /usr/share/icons/gnome/32x32/devices/computer.png
+            item {
+                name = Terminal
+                icon = /usr/share/icons/gnome/32x32/apps/terminal.png
+                action = x-terminal
+            }
+            item {
+                name = Lock Display
+                icon = /usr/share/icons/gnome/32x32/actions/lock.png
+                action = xlock -mode blank
+            }
+            separator {
+            }
+            item {
+                name = Reboot
+                icon = /usr/share/icons/gnome-colors-common/32x32/apps/system-restart.png
+                action = ~/.fluxbox/system/reboot.sh
+            }
+            item {
+                name = Shutdown
+                icon = /usr/share/icons/Adwaita/32x32/actions/system-shutdown.png
+                action = ~/.fluxbox/system/poweroff.sh
+            }
+            item {
+                name = logout
+                icon = /usr/share/icons/gnome/32x32/actions/gnome-logout.png
+                action = /usr/lib/fbpanel/fbpanel/xlogout
+            }
+        }
+    }
+}
+Plugin {
+    type = space
+    config {
+        size = 5
+    }
+}
+Plugin {
+    type = space
+    config {
+        size = 5
+    }
+}
+Plugin {
+    type = taskbar
+    expand = true
+    config {
+        ShowIconified = true
+        ShowMapped = true
+        ShowAllDesks = false
+        tooltips = true
+        IconsOnly = false
+        MaxTaskWidth = 200
+    }
+}
+Plugin {
+    type = space
+    config {
+        size = 15
+    }
+}
+Plugin {
+    type = pager
+    config {
+        showwallpaper = false
+    }
+}
+Plugin {
+    type = space
+    config {
+        size = 10
+    }
+}
+Plugin {
+    type = space
+    config {
+        size = 3
+    }
+}
+Plugin {
+    type = tray
+}
+Plugin {
+    type = space
+    config {
+        size = 5
+    }
+}
+Plugin {
+    type = tclock
+    config {
+        ClockFmt = <span font="Sans 12">%I:%M</span>
+        TooltipFmt = %A %x
+        ShowCalendar = false
+        action = x11calendar
+        ShowTooltip = true
+    }
+}
