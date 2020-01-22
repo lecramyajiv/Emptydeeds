@@ -1,0 +1,16 @@
+#!/bin/sh
+#
+# fluxbox startup-script:
+#
+# Lines starting with a '#' are ignored.
+
+# Change your keymap:
+xmodmap "/home/ben/.Xmodmap"
+systemctl --user start xfce4-notifyd 
+/usr/bin/dropbox start
+/usr/bin/pasystray &
+/usr/bin/flameshot &
+idesk &
+"/opt/xdman/jre/bin/java" -Xmx1024m -jar "/opt/xdman/xdman.jar" -m &
+/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 &
+exec fluxbox -log "/home/ben/.fluxbox/log"
