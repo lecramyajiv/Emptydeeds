@@ -1,0 +1,8 @@
+table Icon
+  Caption: Nomacs
+  Command: /usr/bin/nomacs
+  Icon: /usr/share/icons/Adwaita/48x48/categories/applications-graphics.png
+  X: 37
+  Y: 439
+end
+
