@@ -3,39 +3,72 @@
     <!-- The root menu. -->
     <RootMenu height="15" onroot="12">
 	<!--#DEBIAN -->
+	<Menu icon="/usr/share/icons/Adwaita/48x48/categories/applications-utilities.png" label="Accessories">
+		<Program icon="terminal.png" label="Console">/usr/bin/qterminal</Program>
+		<Program icon="/usr/share/icons/hicolor/128x128/apps/gtkhash.png" label="GtkHash">/usr/bin/gtkhash</Program>
+		<Program icon="/usr/share/icons/hicolor/48x48/apps/xarchiver.png" label="Xarchiver">/usr/bin/xarchiver</Program>
+	</Menu>
+	<Menu icon="/usr/share/icons/gnome/48x48/apps/redhat-filemanager.png" label="File Manager">
+		<Program icon="/usr/share/icons/hicolor/128x128/apps/Thunar.png" label="Home" >/usr/bin/thunar</Program>
+		<Program icon="/usr/share/pixmaps/xfe.xpm" label="Xplorer">/usr/bin/xfe</Program>
+	</Menu>
+	<Menu icon="/usr/share/icons/Adwaita/48x48/categories/applications-graphics.png" label="Graphics">
+		<Program icon="/usr/share/pixmaps/xfi.xpm" label="Xfview">/usr/bin/xfimage</Program>
+		<Program icon="/home/ben/.local/share/nomacs/nomacs.png" label="nomacs">/usr/bin/nomacs</Program>
+		<Program icon="/usr/share/icons/hicolor/32x32/apps/mcomix.png" label="MComix">/usr/bin/mcomix</Program>
+	</Menu>
 	<Menu icon="/usr/share/icons/Adwaita/48x48/categories/applications-internet.png" label="Internet">
-		<Program icon="/usr/share/icons/hicolor/128x128/apps/firefox-esr.png" label="Firefox" >/usr/bin/firefox-esr </Program>
+		<Program icon="/usr/share/icons/hicolor/128x128/apps/firefox-esr.png" label="Firefox" >/usr/bin/firefox-esr</Program>
+		<Program icon="/usr/share/icons/hicolor/48x48/apps/dropbox.png" label="Dropbox">/usr/bin/dropbox start</Program>
+		<Program icon="/usr/share/icons/gnome-colors-common/32x32/apps/deluge-torrent.png" label="Transmission">/usr/bin/transmission-gtk</Program>
+		<Program icon="/opt/xdman/icon.png" label="Download Manager">/opt/xdman/xdman</Program>
 	</Menu>
 	<Menu icon="/usr/share/icons/Adwaita/48x48/categories/applications-office.png" label="Office">
 		<Program icon="/usr/share/wordnet/pixmaps/micro-wn.xpm" label="Wordnet">/usr/share/wordnet/bin/wnb </Program>
 		<Program icon="/usr/share/icons/hicolor/48x48/apps/medit.png" label="Editor">/usr/bin/medit</Program>
+		<Program icon="/usr/share/pixmaps/xfw.xpm" label="Notepad">/usr/bin/xfwrite</Program>
+		<Program icon="/usr/share/icons/gnome-colors-common/32x32/apps/gnome-pdf.png" label="Pdf Viewer">/usr/bin/atril</Program>
+		<Program icon="/usr/share/pixmaps/FBReader.png" label="Ebook Reader">/usr/bin/FBReader</Program>
+		<Program icon="/usr/share/pixmaps/xchm-48.png" label="xCHM">/usr/bin/xchm</Program>
 	</Menu>
 	<Menu icon="/usr/share/icons/Adwaita/48x48/categories/applications-multimedia.png" label="Multimedia">
-	<Program icon="/usr/share/icons/hicolor/128x128/apps/vlc.png" label="Vlc"> /usr/bin/vlc</Program>
+		<Program icon="/usr/share/icons/hicolor/128x128/apps/vlc.png" label="Vlc"> /usr/bin/vlc</Program>	
+		<Program icon="/usr/share/icons/hicolor/32x32/apps/qmmp.png" label="Audio Player">/usr/bin/qmmp</Program>
+		<Program icon="/usr/share/icons/gnome/48x48/categories/redhat-sound_video.png" label="Winff">/usr/bin/winff-gtk2</Program>
+		<Program icon="/usr/share/pixmaps/Acetino2.png" label="Acetone Iso">/usr/bin/acetoneiso</Program>
+    	</Menu>
+	<Menu icon="/usr/share/icons/gnome/48x48/categories/preferences-system.png" label="System">
+		<Program icon="/usr/share/icons/Adwaita/32x32/devices/computer.png" label="Settings Manager">/usr/bin/xfce4-settings-manager</Program>
+		<Program icon="/usr/share/icons/Adwaita/32x32/devices/media-flash.png" label="Theme Manager">/usr/bin/gtk-theme-switch2</Program>
+		<Program icon="/usr/share/icons/gnome-colors-common/32x32/apps/gnome-settings-background.png" label="Background Settings">/usr/bin/anypaper</Program>
+		<Program icon="/usr/share/icons/gnome-colors-common/32x32/apps/synaptic.png" label="Software Manager">/usr/bin/synaptic-pkexec</Program>
+		<Program icon="/usr/share/pixmaps/xfp.xpm" label="Package Viewer">/usr/bin/xfpack</Program>
 	</Menu>
-	<Menu icon="/usr/share/icons/Adwaita/48x48/categories/applications-utilities.png" label="Utilities">
-	<Program icon="terminal.png" label="Console">/usr/bin/xfce4-terminal</Program>
-	<Program icon="/usr/share/icons/hicolor/128x128/apps/gtkhash.png" label="GtkHash">/usr/bin/gtkhash</Program>
-	<Program icon="/usr/share/icons/hicolor/128x128/apps/Thunar.png" label="Home" >/usr/bin/thunar</Program>
-	<Program icon="/usr/share/icons/Adwaita/32x32/devices/computer.png" label="Settings Manager">/usr/bin/xfce4-settings-manager</Program>
-	<Program icon="/usr/share/icons/Adwaita/32x32/devices/media-flash.png" label="Theme Manager">/usr/bin/gtk-theme-switch2</Program>
-	<Program icon="/usr/share/icons/gnome-colors-common/32x32/apps/synaptic.png" label="Software Manager" >/usr/bin/synaptic-pkexec</Program>
-	<Program icon="/usr/share/icons/gnome-colors-common/32x32/apps/gnome-settings-background.png" label="Backgrounds">/usr/bin/anypaper</Program>
-	</Menu>
-        <Separator/>
-        <Program icon="lock.png" label="Lock"> xlock -mode blank
-        </Program>
-        <Separator/>
+	<Menu icon="/usr/share/icons/Adwaita/32x32/apps/utilities-system-monitor.png" label="Administration">
+		<Program icon="media-flash.png" label="Xvidtune">xvidtune</Program>
+		<Program icon="preferences-desktop-font.png"label="Xfontsel">xfontsel</Program>
+	        <Program icon="application-exit.png" label="Xkill">xkill</Program>
+		<Program icon="process-stop.png" label="Process Tree">/usr/bin/qterminal -e /usr/bin/pstree.x11</Program>
+		<Program icon="top.png" label="Top">/usr/bin/qterminal -e /usr/bin/top</Program>
+		<Program icon="emblem-synchronizing.png" label="Xev">/usr/bin/qterminal -e xev</Program>
+	</Menu>		
+	<Separator/>
 	<Restart label="Refresh" icon="/usr/share/icons/gnome/48x48/actions/view-refresh.png"/>
         <Exit label="Logout" confirm="true" icon="/usr/share/icons/gnome/48x48/actions/gnome-session-logout.png"/>
-	<Separator/>
 	<Program icon="/usr/share/icons/Adwaita/32x32/actions/system-shutdown.png" label="Shutdown">~/.fluxbox/system/poweroff.sh</Program>
 	<Program icon="/usr/share/icons/gnome-colors-common/32x32/apps/system-restart.png" label="Reboot">~/.fluxbox/system/reboot.sh</Program>
     </RootMenu>
 <!-- Options for program groups. -->
     <Group>
+    <Option>noturgent</Option>
+    </Group>
+    <Group>
         <Option>tiled</Option>
         <Option>aerosnap</Option>
+    </Group>
+    <Group>
+	<Name>xterm</Name>
+	<Option>vmax</Option>
     </Group>
     <Group>
         <Name>firefox-esr</Name>
@@ -45,16 +78,16 @@
     </Group>
 
     <!-- Tray at the bottom. -->
-    <!--Tray x="0" y="1" height="25" decorations="motif" group="true" list="all" autohide="off">
-		<TrayButton icon="/usr/share/jwm/jwm-red.svg">root:1</TrayButton>
+    <Tray autohide="off" insert="right" x="0" y="-1" width="0" height="30" layer="above" layout="horizontal" halign="left" valign="bottom">
+		<TrayButton icon="/usr/share/jwm/jwm-red.svg" label="START"  border="true">root:1</TrayButton>
                 <TrayButton icon="/usr/share/icons/gnome/32x32/places/desktop.png">showdesktop</TrayButton>
-                <TaskList maxwidth="200"/>
-    
-
+                <TaskList maxwidth="256"/>
+		<Pager/>
+<Swallow name="xdman" width="25">"/opt/xdman/jre/bin/java" -jar "/opt/xdman/xdman.jar" -m </Swallow>
         <Dock/>
-        <Clock format="%H:%M"><Button mask="123">exec:xclock</Button></Clock>
-	<Pager/>
-    </Tray-->
+	<Spacer width="4"/>
+	        <Clock format="%H:%M"><Button mask="123">exec:xclock</Button></Clock>
+    </Tray>
 
     <!-- Visual Styles -->
     <WindowStyle>
@@ -73,13 +106,13 @@
             <Opacity>1.0</Opacity>
         </Active>
     </WindowStyle>
-    <TrayStyle group="true" list="all">
+    <!-- TrayStyle group="true" list="all">
         <Font>Sans-9</Font>
         <Background>#333333</Background>
         <Foreground>#FFFFFF</Foreground>
         <Outline>#000000</Outline>
         <Opacity>0.75</Opacity>
-    </TrayStyle>
+    </TrayStyle -->
     <TaskListStyle>
       <Font>Sans-9</Font>
       <Active>
@@ -166,14 +199,12 @@
     <IconPath>/usr/share/icons/hicolor/scalable/status</IconPath>
     <IconPath>/usr/share/icons</IconPath>
     <IconPath>/usr/share/pixmaps</IconPath>
-    <IconPath>
-        /usr/local/share/jwm
-    </IconPath>
+    <IconPath>/usr/local/share/jwm</IconPath>
 
     <!-- Virtual Desktops -->
     <!-- Desktop tags can be contained within Desktops for desktop names. -->
     
-    <Desktops width="4" height="1">
+    <Desktops width="3" height="1">
         <!-- Default background. Note that a Background tag can be
               contained within a Desktop tag to give a specific background
               for that desktop.
@@ -187,13 +218,13 @@
     <DoubleClickDelta>2</DoubleClickDelta>
 
     <!-- The focus model (sloppy or click) -->
-    <FocusModel>sloppy</FocusModel>
+    <FocusModel>click</FocusModel>
 
     <!-- The snap mode (none, screen, or border) -->
     <SnapMode distance="10">border</SnapMode>
 
     <!-- The move mode (outline or opaque) -->
-    <MoveMode>outline</MoveMode>
+    <MoveMode>opaque</MoveMode>
 
     <!-- The resize mode (outline or opaque) -->
     <ResizeMode>opaque</ResizeMode>
@@ -220,14 +251,20 @@
     <Key mask="A" key="Left">ldesktop</Key>
     <Key mask="A" key="Up">udesktop</Key>
     <Key mask="A" key="Down">ddesktop</Key>
+ 
 
 <StartupCommand>/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1</StartupCommand>
 <StartupCommand>feh --randomize --bg-fill ~/.fluxbox/backgrounds/*</StartupCommand>
 <StartupCommand>/usr/bin/xfce4-notifyd</StartupCommand>
-<StartupCommand>/usr/bin/fbpanel </StartupCommand>
 <StartupCommand>/usr/bin/flameshot</StartupCommand>
 <StartupCommand>/usr/bin/pasystray</StartupCommand>
 <StartupCommand>/usr/bin/dropbox start</StartupCommand>
 <StartupCommand>/usr/bin/idesk</StartupCommand>
-<StartupCommand>"/opt/xdman/jre/bin/java" -Xmx1024m -jar "/opt/xdman/xdman.jar" -m </StartupCommand>
+<StartupCommand>"/opt/xdman/jre/bin/java" -jar "/opt/xdman/xdman.jar" -m </StartupCommand>
 </JWM>
+
+ <!-- extra comments 
+ if you want to use fbpanel disable tray in jwmrc as it clashes with fbpanel. There is no taskbar in jwm so make it a single 
+ workspace it will giove you a peace of mind
+ 
+  -->
