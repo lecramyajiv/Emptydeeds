@@ -86,7 +86,7 @@
 <Swallow name="xdman" width="25">"/opt/xdman/jre/bin/java" -jar "/opt/xdman/xdman.jar" -m </Swallow>
         <Dock/>
 	<Spacer width="4"/>
-	        <Clock format="%H:%M"><Button mask="123">exec:xclock</Button></Clock>
+	        <Clock format="%H:%M">exec:xclock<Button mask="123">exec:gsimplecal</Button></Clock>
     </Tray>
 
     <!-- Visual Styles -->
