@@ -298,7 +298,7 @@
 </JWM>
 
  <!-- extra comments 
- if you want to use fbpanel disable tray in jwmrc as it clashes with fbpanel. There is no taskbar in jwm so make it a single 
- workspace it will giove you a peace of mind
+ if you want to use fbpanel disable tray in jwmrc as it clashes with fbpanel. Make sure you have installed the gtk themes and libraries otherwise it might look
+ugly
  
   -->
