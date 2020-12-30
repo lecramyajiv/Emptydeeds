@@ -83,7 +83,7 @@
                 <TrayButton icon="/usr/share/icons/gnome/32x32/places/desktop.png">showdesktop</TrayButton>
                 <TaskList maxwidth="256"/>
 		<Pager/>
-<Swallow name="xdman" width="25">"/opt/xdman/jre/bin/java" -jar "/opt/xdman/xdman.jar" -m </Swallow>
+
         <Dock/>
 	<Spacer width="4"/>
 	        <Clock format="%H:%M">exec:xclock<Button mask="123">exec:gsimplecal</Button></Clock>
@@ -106,7 +106,7 @@
             <Opacity>1.0</Opacity>
         </Active>
     </WindowStyle>
-    <!-- TrayStyle group="true" list="all">
+    <TrayStyle group="true" list="desktop">
         <Font>Sans-9</Font>
         <Background>#333333</Background>
         <Foreground>#FFFFFF</Foreground>
