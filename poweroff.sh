@@ -1,9 +1,14 @@
 #!/bin/sh
 
-xmessage 'Do you want to shutdown?' \
-	-buttons 'Cancel:1,Shut Down:2'
+xmessage -center 'Do you want to shutdown your Computer?' \
+	 -buttons 'Cancel:1,Shut Down:2'
 
-case $? in
-    2) systemctl poweroff
+answer=$?
+
+case $answer in
+1) xmessage -center "Aborted" 
+	;;
+2) systemctl poweroff 
 	;;
 esac
+
