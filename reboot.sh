@@ -1,10 +1,15 @@
 #!/bin/sh
 
-xmessage 'Do you want to reboot?' \
-	-buttons 'Cancel:1,Reboot:2'
+xmessage -center 'Do you want to Restart your Computer?' \
+	 -buttons 'Cancel:1,Shut Down:2'
 
-case $? in
-    2)
-	systemctl reboot
+answer=$?
+
+case $answer in
+1) xmessage -center "Aborted" 
+	;;
+2) systemctl reboot 
 	;;
 esac
+
+
