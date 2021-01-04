@@ -1,0 +1,21 @@
+# Edit this file.
+
+[Unit]
+Description=Darkstat
+Documentation=man:darkstat(8) https://unix4lyfe.org/darkstat/
+After=graphical.target
+Conflicts=shutdown.target
+DefaultDependencies=no
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+StandardInput=null
+ProtectSystem=full
+ProtectHome=true
+ExecStart=darkstat -i enpxsy
+ExecReload=darkstat -i enpxsy
+
+[Install]
+WantedBy=multi-user.target
+
