@@ -1,0 +1,334 @@
+<?xml version="1.0"?>
+<JWM>
+
+    <!-- The root menu. -->
+    <RootMenu onroot="12">    	      
+        <Menu icon="/usr/share/icons/Faenza/categories/scalable/applications-utilities.svg" label="Accessories">
+       	<Program icon="/usr/share/icons/oxygen/base/32x32/apps/utilities-terminal.png" label="Terminal">/usr/bin/qterminal</Program>
+       	<Program icon="/usr/share/icons/Faenza/apps/48/xarchiver.png" label="Archiver">/usr/bin/xarchiver</Program>
+       	<Program icon="/usr/share/icons/Faenza/apps/48/spacefm.png" label="SpaceFM">/usr/bin/spacefm</Program>
+       	<Program icon="/usr/share/icons/Papirus/32x32/apps/pcbcalculator.svg" label="Calculator">xcalc</Program>
+       	<Program icon="/usr/share/icons/Papirus/32x32/apps/acetoneiso.svg" label="Acetoneiso">/usr/bin/acetoneiso</Program>
+       	<Program icon="/usr/share/icons/Papirus/32x32/apps/featherpad.svg" label="Featherpad">/usr/bin/featherpad</Program>
+       	<Program icon="/usr/share/icons/Papirus/16x16/apps/xournal.svg" label="Journal">/usr/bin/xournal</Program>
+       	<Program icon="/usr/share/icons/Papirus/32x32/apps/xclipboard.svg" label="Clipboard">xclipboard</Program>
+       	<Program icon="/usr/share/icons/oxygen/base/32x32/apps/kmag.png"  label="Magnifier">xmag</Program>
+        </Menu>
+        <Separator/>
+        <Menu icon="/usr/share/icons/Faenza/categories/64/applications-graphics.png" label="Graphics">
+        <Program icon="/usr/share/icons/Papirus/32x32/apps/nomacs.svg" label=Nomacs">/usr/bin/nomacs</Program>
+        <Program icon="/usr/share/icons/Faenza/apps/scalable/imagemagick.svg" label="Imagemagick">/usr/bin/display-im6.q16</Program>
+        <Program icon="/usr/share/icons/Papirus/32x32/apps/xsane.svg" label="Xsane">/usr/bin/xsane</Program>
+        <Program icon="/usr/share/icons/Papirus/32x32/apps/tuxpaint.svg" label="Xpaint">/usr/bin/xpaint</Program>
+        <Program icon="/usr/share/icons/hicolor/32x32/apps/libreoffice-draw.svg" label="Libreoffice-Draw">/usr/bin/lodraw</Program>
+        <Program icon="/usr/share/icons/hicolor/48x48/apps/flameshot.png" label="Flameshot">/usr/bin/flameshot</Program>
+        </Menu>
+        <Separator/>
+        <Menu icon="/usr/share/icons/Faenza/categories/32/redhat-office.png" label=Office">
+        <Program icon="/usr/share/icons/Papirus/32x32/apps/qpdfview.svg" label="QpdfView">/usr/bin/qpdfview</Program>
+        <Program icon="/usr/share/icons/Papirus/32x32/apps/bookworm.svg" label="BookWorm">com.github.babluboy.bookworm</Program>
+        <Program icon="/usr/share/icons/Papirus/32x32/apps/xchm-48.svg" label="Xchm">/usr/bin/xchm</Program>
+        <Program icon="/usr/share/icons/Papirus/32x32/apps/pdfarranger.svg" label="PdfArranger">/usr/bin/pdfarranger</Program>
+        <Program icon="/usr/share/icons/Faenza/apps/32/libreoffice-writer.png" label="Writer">/usr/bin/lowriter</Program>
+        <Program icon="/usr/share/icons/Papirus/32x32/apps/libreoffice-calc.svg" label="Calc">/usr/bin/localc</Program>
+        <Program icon="/usr/share/icons/Papirus/32x32/apps/libreoffice-impress.svg" label="Presentation">/usr/bin/loimpress</Program>
+        <Program icon="/usr/share/icons/Papirus/32x32/apps/vym.svg" label="Mindmap">/usr/bin/vym</Program>
+        <Program icon="/usr/share/icons/hicolor/32x32/apps/treesheets.png" label="Organizer">treesheets</Program>
+        </Menu>
+        <Separator/>
+        <Menu icon="/usr/share/icons/Papirus/32x32/apps/applications-internet.svg" label="Internet">
+        <Program icon="/usr/share/icons/Papirus/32x32/apps/mozilla-firefox.svg" label="Mozilla Firefox">/usr/bin/firefox</Program>
+        <Program icon="/usr/share/icons/Papirus/32x32/apps/chromium.svg" label="Chromium">/usr/bin/chromium</Program>
+        <Program icon="/usr/share/icons/Papirus/32x32/apps/xdman.svg"  label="Download Manager">/opt/xdman/xdman</Program>
+        </Menu>
+        <Separator/>
+        <Menu icon="/usr/share/icons/Papirus/48x48/apps/multimedia.svg" label="Multimedia">
+        <Program icon="/usr/share/icons/Faenza/apps/32/audacious.png" label="Audacious">audacious</Program>
+        <Program icon="/usr/share/icons/Faenza/apps/32/smplayer.png" label="Smplayer">/usr/bin/smplayer</Program>
+        <Program icon="/usr/share/icons/Papirus/32x32/apps/vlc.svg" label="VLC Media player">/usr/bin/vlc</Program>
+        <Program icon="/usr/share/icons/Papirus/32x32/apps/streamtuner2.svg" label="StreamTuner">/usr/bin/streamtuner2</Program>
+        <Program icon="/usr/share/icons/Papirus/32x32/apps/audacity.svg" label="Audacity">/usr/bin/audacity</Program>
+        <Program icon="/usr/share/icons/Papirus/32x32/apps/winff.svg" label="Winff">/usr/bin/winff</Program>
+        </Menu>
+        <Separator/>
+      	<Menu icon="/usr/share/icons/Faenza/categories/scalable/applications-system.svg" label="System">
+      	<Program icon="/usr/share/icons/Papirus/32x32/apps/gtkhash.svg" label="Gtkhash">/usr/bin/gtkhash</Program>
+        <Program icon="/usr/share/icons/Faenza/apps/scalable/synaptic.svg" label="Software Manager">/usr/bin/synaptic-pkexec</Program>
+        <Program icon="/usr/share/icons/hicolor/32x32/apps/gparted.png" label="Gparted">/usr/sbin/gparted</Program>
+        <Program icon="/usr/share/icons/hicolor/48x48/apps/qps.png" label="Qps">/usr/bin/qps</Program>
+        <Program icon="/usr/share/icons/Faenza/actions/32/system-search.png" label="GTK2 Themer">/usr/bin/gtk-chtheme</Program>
+        <Program icon="/usr/share/icons/Faenza/actions/32/system-run.png" label="GTK3 Themer">/usr/bin/gtk-theme-switch2 </Program>
+        <Program icon="/usr/share/icons/Papirus/32x32/apps/qt5ct.svg"  label="QT5ct">/usr/bin/qt5ct</Program>
+        <Program icon="/usr/share/icons/hicolor/48x48/apps/compton.png" label="Compton">/usr/bin/compton-conf</Program>
+	   <Program icon="/usr/share/icons/gnome-human/scalable/actions/top.svg" label="Tasks Viewer">/usr/bin/qterminal -e /usr/bin/top</Program>
+	   <Program icon="/usr/share/icons/Faenza/categories/scalable/package_network.svg" label="Network Monitor">firefox --new-window  localhost:667</Program>
+		<Program icon="/usr/share/icons/oxygen/base/16x16/actions/view-process-tree.png" label="Process Tree">/usr/bin/qterminal -e /usr/bin/pstree.x11</Program>
+		<Program icon="/usr/share/icons/Faenza-Darker/actions/scalable/stop.svg" label=" Process Terminator">xkill</Program>
+        <Program icon="/usr/share/icons/gnome/48x48/mimetypes/font.png" label="XFonts">xfontsel</Program>
+        <Program icon="/usr/share/icons/gnome/48x48/status/info.png" label="Window Properties">xprop | xmessage -file -</Program>
+        <Program icon="/usr/share/icons/gnome/24x24/status/gtk-dialog-info.png" label="Window Information">xwininfo | xmessage -file -</Program>
+        <Program icon="/usr/share/icons/Papirus/32x32/apps/fman.svg" label="Manual">xman</Program>
+        </Menu>
+        <Separator/>
+        <Program icon="lock" label="Lock">xscreensaver-command -lock</Program>
+        <Separator/>
+        <Restart label="Restart" icon="/usr/share/icons/Faenza/apps/scalable/system-restart.svg"/>
+        <Exit label="Logout" confirm="true" icon="/usr/share/icons/Papirus/32x32/apps/xfsm-logout.svg"/>
+        <Separator/>
+        <Program icon="/usr/share/icons/Faenza/apps/scalable/xfsm-shutdown.svg" label="Shutdown">/home/ben/.config/Shutdown</Program>
+        <Program icon="/usr/share/icons/Papirus/32x32/apps/xfsm-reboot.svg" label="Reboot">/home/ben/.config/Reboot</Program>
+        <Separator/>
+    </RootMenu>
+
+    <!-- Options for program groups. -->
+    <Group>
+        <Option>tiled</Option>
+    	<Option>aerosnap</Option>
+    </Group>
+    <Group>
+        <Name>xterm</Name>
+        <Option>aerosnap</Option>
+        <Option>border</Option>
+    </Group>
+    <Group>
+        <Name>xclock</Name>
+        <Option>drag</Option>
+        <Option>notitle</Option>
+    </Group>
+
+    <!-- Tray at the bottom. -->
+    <Tray x="0" y="0" autohide="off" width="0" height="30" delay="1000">
+
+        <TrayButton icon="/usr/local/share/jwm/jwm-red.svg" label="JWM">root:1</TrayButton>
+        <Spacer width="2"/>
+        <TrayButton icon="/usr/share/icons/Faenza/places/32/desktop.png">showdesktop</TrayButton>
+        <Spacer width="2"/>
+
+        <Pager labeled="true"/>
+
+        <TaskList maxwidth="256"/>
+
+       
+         <Spacer width="2"/>
+		<Swallow width="32" height="32" name="pasystray">pasystray</Swallow>    
+		<Swallow name="xdman">"/opt/xdman/jre/bin/java" -Xmx1024m -jar "/opt/xdman/xdman.jar" -m</Swallow>    
+		 <Swallow width="32" height="32" name="xclock">xclock</Swallow>
+
+       
+
+        <Dock/>
+        <Spacer width="4"/>
+        <Clock format="%l:%M %p">exec:xclock<Button mask="123">exec:gsimplecal</Button></Clock>
+
+    </Tray>
+
+    <!-- Visual Styles -->
+    <WindowStyle decorations="motif">
+        <Font>Gentium Plus-12:bold</Font>
+        <Width>4</Width>
+        <Corner>0</Corner>
+        <Foreground>#FFFFFF</Foreground>
+        <Background>#555555</Background>
+        <Opacity>0.5</Opacity>
+        <Active>
+            <Foreground>#FFFFFF</Foreground>
+            <Background>#0077CC</Background>
+            <Opacity>1.0</Opacity>
+        </Active>
+    </WindowStyle>
+    <TrayStyle decorations="motif">
+        <Font>Gentium Plus-12:bold-12</Font>
+        <Background>#333333</Background>
+        <Foreground>#FFFFFF</Foreground>
+        <Opacity>0.75</Opacity>
+    </TrayStyle>
+    <TaskListStyle list="desktop" group="false">
+      <Font>Georgia-12</Font>
+      <Active>
+        <Foreground>#FFFFFF</Foreground>
+        <Background>#555555</Background>
+      </Active>
+      <Foreground>#FFFFFF</Foreground>
+      <Background>#333333</Background>
+    </TaskListStyle>
+    <PagerStyle>
+        <Foreground>#555555</Foreground>
+        <Background>#333333</Background>
+        <Text>#FFFFFF</Text>
+        <Active>
+            <Foreground>#0077CC</Foreground>
+            <Background>#004488</Background>
+        </Active>
+    </PagerStyle>
+    <MenuStyle decorations="motif">
+        <Font>Doulos SIL-12</Font>
+        <Foreground>#FFFFFF</Foreground>
+        <Background>#333333</Background>
+        <Active>
+            <Foreground>#FFFFFF</Foreground>
+            <Background>#0077CC</Background>
+        </Active>
+        <Opacity>0.85</Opacity>
+    </MenuStyle>
+    <PopupStyle>
+        <Font>Caladea-12</Font>
+        <Foreground>#000000</Foreground>
+        <Background>#999999</Background>
+    </PopupStyle>
+
+    <!-- Path where icons can be found.
+         IconPath can be listed multiple times to allow searching
+         for icons in multiple paths.
+      -->
+    <IconPath>
+      /usr/share/icons/Faenza/actions/scalable
+      /usr/share/icons/Adwaita/scalable/actions
+      /usr/share/icons/gnome-colors-common/scalable/actions
+      /usr/share/icons/hicolor/scalable/actions
+      /usr/share/icons/Faenza/Tangerine/scalable/actions
+      /usr/share/icons/gnome-dust/scalable/actions
+      /usr/share/icons/gnome-human/scalable/actions
+      /usr/share/icons/Papirus/symbolic/actions
+    </IconPath>
+    <IconPath>
+      /usr/share/icons/Faenza/apps/scalable
+      /usr/share/icons/Adwaita/scalable/apps
+      /usr/share/icons/gnome-colors-common/scalable/apps
+      /usr/share/icons/hicolor/scalable/apps
+      /usr/share/icons/Faenza/Tangerine/scalable/apps
+      /usr/share/icons/gnome/scalable/apps
+      /usr/share/icons/gnome-dust/scalable/apps
+      /usr/share/icons/gnome-human/scalable/apps
+      /usr/share/icons/Papirus/symbolic/apps
+    </IconPath>
+    <IconPath>
+      /usr/share/icons/Faenza/places/scalable
+      /usr/share/icons/Adwaita/scalable/places
+      /usr/share/icons/gnome-colors-common/scalable/places
+      /usr/share/icons/hicolor/scalable/places
+      /usr/share/icons/Faenza/Tangerine/scalable/places
+      /usr/share/icons/gnome/scalable/places
+      /usr/share/icons/gnome-dust/scalable/places
+      /usr/share/icons/gnome-human/scalable/places
+      /usr/share/icons/Papirus/symbolic/places
+    </IconPath>
+    <IconPath>
+      /usr/share/icons/Faenza/status/scalable
+      /usr/share/icons/Adwaita/scalable/status
+      /usr/share/icons/gnome-colors-common/scalable/status
+      /usr/share/icons/hicolor/scalable/status
+      /usr/share/icons/Faenza/Tangerine/scalable/status
+      /usr/share/icons/gnome-dust/scalable/status
+      /usr/share/icons/gnome-human/scalable/status
+      /usr/share/icons/Papirus/symbolic/status
+    </IconPath>
+    <IconPath>
+      /usr/share/icons/Faenza//mimetypes/scalable
+      /usr/share/icons/Adwaita/scalable/mimetypes
+      /usr/share/icons/gnome-colors-common/scalable/mimetypes
+      /usr/share/icons/hicolor/scalable/mimetypes
+      /usr/share/icons/Faenza/Tangerine/scalable/mimetypes
+      /usr/share/icons/gnome/scalable/mimetypes
+      /usr/share/icons/gnome-dust/scalable/mimetypes
+      /usr/share/icons/gnome-human/scalable/mimetypes
+      /usr/share/icons/Papirus/symbolic/mimetypes
+    </IconPath>
+    <IconPath>
+      /usr/share/icons
+      /usr/share/icons/Faenza/categories/scalable
+      /usr/share/icons/gnome-dust/scalable/categories
+      /usr/share/icons/gnome-human/scalable/categories
+      /usr/share/icons/Papirus/symbolic/categories
+    </IconPath>
+
+    <!-- Virtual Desktops -->
+    <!-- Desktop tags can be contained within Desktops for desktop names. -->
+    <Desktops width="4" height="1">
+        <!-- Default background. Note that a Background tag can be
+              contained within a Desktop tag to give a specific background
+              for that desktop.
+         -->
+        <!--Background type="command">xwallpaper --daemon --stretch  /home/ben/Background/0ptBIJQ.jpg</Background-->
+        <Background type="command">feh --randomize --bg-fill  /home/ben/Background/*</Background>
+    </Desktops>
+
+    <!-- Double click speed (in milliseconds) -->
+    <DoubleClickSpeed>400</DoubleClickSpeed>
+
+    <!-- Double click delta (in pixels) -->
+    <DoubleClickDelta>2</DoubleClickDelta>
+
+    <!-- The focus model (sloppy or click) -->
+    <FocusModel>sloppy</FocusModel>
+
+    <!-- The snap mode (none, screen, or border) -->
+    <SnapMode distance="10">border</SnapMode>
+
+    <!-- The move mode (outline or opaque) -->
+    <MoveMode>opaque</MoveMode>
+
+    <!-- The resize mode (outline or opaque) -->
+    <ResizeMode>opaque</ResizeMode>
+
+    <!-- Key bindings -->
+    <Key key="Up">up</Key>
+    <Key key="Down">down</Key>
+    <Key key="Right">right</Key>
+    <Key key="Left">left</Key>
+    <Key key="h">left</Key>
+    <Key key="j">down</Key>
+    <Key key="k">up</Key>
+    <Key key="l">right</Key>
+    <Key key="Return">select</Key>
+    <Key key="Escape">escape</Key>
+
+    <Key mask="A" key="Tab">nextstacked</Key>
+    <Key mask="A" key="F4">close</Key>
+    <Key mask="A" key="#">desktop#</Key>
+    <Key mask="A" key="F1">root:1</Key>
+    <Key mask="A" key="F2">window</Key>
+    <Key mask="A" key="F10">maximize</Key>
+    <Key mask="A" key="Right">rdesktop</Key>
+    <Key mask="A" key="Left">ldesktop</Key>
+    <Key mask="A" key="Up">udesktop</Key>
+    <Key mask="A" key="Down">ddesktop</Key>
+
+    <!-- Mouse bindings -->
+    <Mouse context="root" button="4">ldesktop</Mouse>
+    <Mouse context="root" button="5">rdesktop</Mouse>
+
+    <Mouse context="title" button="1">move</Mouse>
+    <Mouse context="title" button="2">move</Mouse>
+    <Mouse context="title" button="3">window</Mouse>
+    <Mouse context="title" button="4">shade</Mouse>
+    <Mouse context="title" button="5">shade</Mouse>
+    <Mouse context="title" button="11">maximize</Mouse>
+
+    <Mouse context="icon" button="1">window</Mouse>
+    <Mouse context="icon" button="2">move</Mouse>
+    <Mouse context="icon" button="3">window</Mouse>
+    <Mouse context="icon" button="4">shade</Mouse>
+    <Mouse context="icon" button="5">shade</Mouse>
+
+    <Mouse context="border" button="1">resize</Mouse>
+    <Mouse context="border" button="2">move</Mouse>
+    <Mouse context="border" button="3">window</Mouse>
+
+    <Mouse context="close" button="-1">close</Mouse>
+    <Mouse context="close" button="2">move</Mouse>
+    <Mouse context="close" button="-3">close</Mouse>
+
+    <Mouse context="maximize" button="-1">maximize</Mouse>
+    <Mouse context="maximize" button="-2">maxv</Mouse>
+    <Mouse context="maximize" button="-3">maxh</Mouse>
+
+    <Mouse context="minimize" button="-1">minimize</Mouse>
+    <Mouse context="minimize" button="2">move</Mouse>
+    <Mouse context="minimize" button="-3">shade</Mouse>
+    
+	<StartupCommand>/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1</StartupCommand>
+
+</JWM>
+
+
+<!-- if running chromium as default run chromium http://localhost:667 -->
