@@ -1,7 +1,7 @@
 #!/bin/sh
 
 xmessage -center 'Do you want to Restart your Computer?' \
-	 -buttons 'Cancel:1,Shut Down:2'
+	 -buttons 'Cancel:1, Reboot:2'
 
 answer=$?
 
