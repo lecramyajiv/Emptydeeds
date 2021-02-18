@@ -1,0 +1,84 @@
+Global {
+    edge = top
+    allign = right
+    margin = 0
+    widthtype = percent
+    width = 85
+    height = 24
+    transparent = true
+    setDockType = true
+    tintcolor = #fbfcfe
+    alpha = 255
+    setdocktype = true
+    setpartialstrut = true
+    autohide = false
+    heightWhenHidden = 2
+    roundcorners = false
+    roundcornersradius = 2
+    layer = below
+    MaxElemHeight = 35
+    xmargin = 0
+    ymargin = 0
+    setlayer = true
+}
+Plugin {
+    type = space
+    config {
+        size = 5
+    }
+}
+Plugin {
+    type = space
+    config {
+        size = 5
+    }
+}
+Plugin {
+    type = taskbar
+    expand = true
+    config {
+        ShowIconified = true
+        ShowMapped = true
+        ShowAllDesks = false
+        tooltips = true
+        IconsOnly = false
+        MaxTaskWidth = 200
+    }
+}
+Plugin {
+    type = space
+    config {
+        size = 15
+    }
+}
+Plugin {
+    type = pager
+    config {
+        showwallpaper = false
+    }
+}
+Plugin {
+    type = space
+    config {
+        size = 10
+    }
+}
+Plugin {
+    type = space
+    config {
+        size = 3
+    }
+}
+Plugin {
+    type = tray
+}
+Plugin {
+    type = tclock
+    config {
+        ClockFmt = <span font="Sans 12">%I:%M</span>
+        TooltipFmt = %A %x
+        ShowCalendar = false
+        action = x11calendar
+        ShowTooltip = true
+    }
+}
