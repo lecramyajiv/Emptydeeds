@@ -1,0 +1,73 @@
+[begin] (fluxbox)
+ 
+ [submenu](File Manager)</usr/share/icons/gnome/48x48/apps/redhat-filemanager.png>
+	[exec](Home){/usr/bin/thunar}</usr/share/icons/hicolor/128x128/apps/Thunar.png>
+	[exec](Explorer){/usr/bin/xfe}</usr/share/pixmaps/xfe.xpm>
+ [end]
+ 
+ [submenu](Graphics)</usr/share/icons/Adwaita/48x48/categories/applications-graphics.png>
+	[exec](xfview){/usr/bin/xfimage}</usr/share/pixmaps/xfi.xpm>
+	[exec](nomacs){/usr/bin/nomacs}</home/ben/.local/share/nomacs/nomacs.png>
+	[exec](MComix){/usr/bin/mcomix}</usr/share/icons/hicolor/32x32/apps/mcomix.png>
+	[exec](Screenshooter){/usr/bin/scrot '%d-%m-%Y-%M-%S_$s.png' -e 'mv $f ~/pictures/shots/'}</usr/share/icons/gnome-colors-common/32x32/devices/gnome-screenshot.png>
+ [end]
+ 
+ [submenu] (Internet)</usr/share/icons/Adwaita/48x48/categories/applications-internet.png>
+	[exec](Firefox){/usr/bin/firefox-esr}</usr/share/icons/hicolor/128x128/apps/firefox-esr.png>
+	[exec](Dropbox){/usr/bin/dropbox start}</usr/share/icons/hicolor/48x48/apps/dropbox.png>
+	[exec](Transmission){/usr/bin/transmission-gtk}</usr/share/icons/gnome-colors-common/32x32/apps/deluge-torrent.png>
+	[exec](Download Manager){/opt/xdman/xdman}</opt/xdman/icon.png>
+ [end]
+
+ [submenu] (Office)</usr/share/icons/Adwaita/48x48/categories/applications-office.png>
+	[exec](Dictionary){/usr/share/wordnet/bin/wnb}</usr/share/wordnet/pixmaps/micro-wn.xpm>
+	[exec](Editor){/usr/bin/medit}</usr/share/icons/hicolor/48x48/apps/medit.png>
+	[exec](Writer){/usr/bin/xfwrite}</usr/share/pixmaps/xfw.xpm>
+	[exec](Pdf Viewer){/usr/bin/atril}</usr/share/icons/gnome-colors-common/32x32/apps/gnome-pdf.png>
+	[exec](Ebook reader){/usr/bin/FBReader}</usr/share/pixmaps/FBReader.png>
+	[exec](xCHM){/usr/bin/xchm}</usr/share/pixmaps/xchm-48.png>
+ [end]
+
+ [submenu] (Multimedia)</usr/share/icons/Adwaita/48x48/categories/applications-multimedia.png>
+	[exec](Vlc){/usr/bin/vlc}</usr/share/icons/hicolor/128x128/apps/vlc.png>
+	[exec](Audio Player){/usr/bin/qmmp}</usr/share/icons/hicolor/32x32/apps/qmmp.png>
+	[exec](Winff){/usr/bin/winff-gtk2}</usr/share/icons/gnome/48x48/categories/redhat-sound_video.png>
+	[exec](AcetoneISO){/usr/bin/acetoneiso}</usr/share/pixmaps/Acetino2.png>
+ [end]	
+ 
+ [submenu] (Utilities)</usr/share/icons/Adwaita/48x48/categories/applications-utilities.png>
+	[exec](Xarchiver){/usr/bin/xarchiver}</usr/share/icons/hicolor/48x48/apps/xarchiver.png>
+	[exec](GtkHash){/usr/bin/gtkhash}</usr/share/icons/hicolor/32x32/apps/gtkhash.png>
+	[exec](Software Manager){/usr/bin/synaptic-pkexec}</usr/share/icons/gnome-colors-common/32x32/apps/synaptic.png>
+	[exec](Package Viewer){/usr/bin/xfpack}</usr/share/pixmaps/xfp.xpm>
+	[exec](Terminal){/usr/bin/xfce4-terminal}</usr/share/icons/gnome/32x32/apps/xfce-terminal.png>
+ 	[exec](Settings Manager){/usr/bin/xfce4-settings-manager}</usr/share/icons/Adwaita/32x32/devices/computer.png>
+	[exec](Theme Manager){/usr/bin/gtk-theme-switch2}</usr/share/icons/Adwaita/32x32/devices/media-flash.png>
+ [end]
+
+[separator]
+ [submenu] (Backgrounds)
+	[wallpapers] (~/.fluxbox/backgrounds){feh --bg-fill }
+ [end]
+ 
+ [separator]
+ 
+ [submenu](Fluxbox)
+	[workspaces](workspaces)
+	[subnmenu](styles)
+		[stylesdir](/usr/share/fluxbox/styles)
+		[stylesdir](~/.fluxbox/styles)
+ [end]
+
+[separator]
+
+[config] (configure)
+[reconfig] (reconfig)
+[restart] (restart)
+ 
+[separator]
+
+[exec] (Quit){sh ~/.fluxbox/system/logout.sh}
+[exec] (Reboot){sh ~/.fluxbox/system/reboot.sh}
+[exec] (poweroff){sh ~/.fluxbox/system/poweroff.sh}
+[end]
