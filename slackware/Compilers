@@ -1,0 +1,301 @@
+---------------------------------------------------------------------------
+CMAKE
+---------------------------------------------------------------------------
+
+CFLAGS="$SLKCFLAGS" \
+CXXFLAGS="$SLKCFLAGS" \
+cmake -B build -S $TMP/$PRGNAM-$VERSION   \
+    -DCMAKE_C_FLAGS=$SLKCFLAGS \
+    -DCMAKE_CXX_FLAGS=$SLKCFLAGS \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_INSTALL_BINDIR=/usr/bin \
+    -DCMAKE_INSTALL_DOCDIR=/usr/doc \
+    -DCMAKE_INSTALL_INCLUDEDIR=/usr/include \
+    -DCMAKE_INSTALL_LIBDIR=/usr/lib64 \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DBUILD_SHARED_LIBS:BOOL=ON \
+
+make
+make install DESTDIR=$PKG
+
+
+export LDFLAGS+=' -Wl,-z,noexecstack'   # Copied from the arch svt-av1 pkgbuild
+    cmake -B build -S SVT-AV1 \
+        -DCMAKE_BUILD_TYPE:STRING=None \
+        -DCMAKE_INSTALL_PREFIX:PATH=/usr \
+        -DCMAKE_INSTALL_LIBDIR:PATH=lib \
+        -Wno-dev
+
+make -C build
+make -C build install DESTDIR=$PKG  [OR]  make -C build DESTDIR=$PKG install
+
+
+----------------------
+CMAKE WITH NINJA
+----------------------
+
+cmake -B build -S $TMP/$PRGNAM-$VERSION  -G Ninja \
+    -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
+    -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo
+
+cmake --build build
+
+DESTDIR=$PKG cmake --install build
+
+
+------------------------
+CMAKE WITH GO
+------------------------
+
+./go
+
+cmake \
+    -DCMAKE_C_FLAGS=$SLKCFLAGS \
+    -DCMAKE_CXX_FLAGS=$SLKCFLAGS \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_INSTALL_BINDIR=/usr/bin \
+    -DCMAKE_INSTALL_DOCDIR=/usr/doc \
+    -DCMAKE_INSTALL_INCLUDEDIR=/usr/include \
+    -DCMAKE_INSTALL_LIBDIR=/usr/lib64 \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DBUILD_SHARED_LIBS:BOOL=ON \
+
+# Compile the application and install it into the $PKG directory
+make
+make install DESTDIR=$PKG
+
+------------------------------------------------------------------------------
+CONFIGURE WITH AUTORECONF
+------------------------------------------------------------------------------
+
+autoreconf -fiv  [OR]  autoreconf -i -s  [OR]   [ ! -x configure ] && autoreconf -vif       # Depending upon the project
+
+./configure \
+  --prefix=/usr \
+  --libdir=/usr/lib${LIBDIRSUFFIX} \
+  --sysconfdir=/etc \
+  --localstatedir=/var \
+  --mandir=/usr/man \
+  --docdir=/usr/doc/$PRGNAM-$VERSION
+
+make
+make install DESTDIR=$PKG
+
+------------------------------------------
+CONFIGURE
+------------------------------------------
+
+./configure \
+  --prefix=/usr \
+  --libdir=/usr/lib${LIBDIRSUFFIX} \
+  --enable-shared \
+  --disable-static \
+  --disable-gpl \
+  --enable-lto \
+  --system-libdavs2 \
+  --enable-strip
+
+# Compile the application and install it into the $PKG directory
+make
+make install DESTDIR=$PKG
+
+
+-------------------------------------
+CONFIGURE WITH AUTOGEN
+-------------------------------------
+
+./autogen.sh \
+./configure --prefix=/usr \
+            --libdir=/usr/lib${LIBDIRSUFFIX} \
+            --docdir=/usr/doc/${PRGNAM}-${VERSION} \
+            --mandir=/usr/man \
+            --enable-shared=yes \
+            --enable-static=no
+
+make V=1 -j
+make DESTDIR=$PKG install
+
+[OR]
+
+make install DESTDIR=$PKG
+
+--------------------------------------
+CONFIGURE WITH BOOTSTRAP
+--------------------------------------
+
+
+cd build/generic
+./bootstrap.sh
+CFLAGS="$SLKCFLAGS" \
+./configure \
+  --prefix=/usr \
+  --libdir=/usr/lib${LIBDIRSUFFIX} \
+  --sysconfdir=/etc \
+  --localstatedir=/var \
+  --build=$ARCH-slackware-linux
+
+make
+make install DESTDIR=$PKG
+
+-------------------------------
+CONFIGURE WITH ACLOCAL
+-------------------------------
+
+
+libtoolize --force --copy
+aclocal
+autoheader
+automake --add-missing --include-deps --copy
+autoconf
+CFLAGS="$SLKCFLAGS" \
+CXXFLAGS="$SLKCFLAGS" \
+./configure \
+  --build=$ARCH \
+  --prefix=/usr \
+  --libdir=/usr/lib${LIBDIRSUFFIX} \
+  --enable-static=no \
+  --build=$ARCH-slackware-linux
+
+make
+make install DESTDIR=$PKG
+
+
+-----------------------------------------------------------------
+MESON WITH NINJA
+-----------------------------------------------------------------
+
+
+mkdir build
+cd build
+  CFLAGS="$SLKCFLAGS" \
+  CXXFLAGS="$SLKCFLAGS" \
+  meson .. \
+    --buildtype=release \
+    --libdir=/usr/lib${LIBDIRSUFFIX} \
+    --prefix=/usr
+  ninja
+  DESTDIR=$PKG ninja install
+cd ..
+
+
+
+mkdir -pv build && cd build
+meson --prefix=/usr
+ninja -v
+DESTDIR=$PKG ninja  install
+
+
+meson build -Dprefix=/usr
+ninja -C build
+DESTDIR=$PKG ninja -C build install
+
+meson configure
+meson build -Dprefix=/usr
+export OSINFO_DB_TOOLS_NETWORK_TESTS=1
+ninja -C build
+DESTDIR=$PKG ninja -C build install
+
+
+
+------------------------
+from arch pkgbuild
+------------------------
+
+ arch-meson DirectX-Headers-$pkgver build \
+    -Dbuild-test=false
+ninja -C build
+DESTDIR="$pkgdir" meson install -C build
+
+
+
+meson build
+cd build
+meson configure -Dprefix=/usr -Dminigbm_allocation=true  -Dvenus-experimental=true -Dvenus-validate=true -Dtests=true
+DESTDIR=$PKG ninja  install
+
+------------------------------------------------------------------
+MAKE
+------------------------------------------------------------------
+
+make CCINC="$SLKCFLAGS" -j1
+make install \
+  INSTALL_ROOT=$PKG/usr \
+  GSM_INSTALL_LIB=$PKG/usr/lib$LIBDIRSUFFIX \
+  GSM_INSTALL_INC=$PKG/usr/include/gsm \
+  GSM_INSTALL_MAN=$PKG/usr/man/man3 \
+  TOAST_INSTALL_MAN=$PKG/usr/man/man1
+
+
+cd src                  # Ladspa slackbuild
+  make \
+    CFLAGS="$SLKCFLAGS -I. -Wall -Werror -fPIC" \
+    INSTALL_PLUGINS_DIR="/usr/lib${LIBDIRSUFFIX}/ladspa" \
+    INSTALL_BINARY_DIR="/usr/bin"
+
+  make install \
+    INSTALL_PLUGINS_DIR="$PKG/usr/lib${LIBDIRSUFFIX}/ladspa" \
+    INSTALL_BINARY_DIR="$PKG/usr/bin" \
+    INSTALL_INCLUDE_DIR="$PKG/usr/include"
+cd -
+
+
+CFLAGS="$SLKCFLAGS" \
+CXXFLAGS="$SLKCFLAGS" \
+make
+make install DESTDIR=$PKG PREFIX="/usr"
+
+
+
+make LIB_PREFIX=lib prefix=/usr PREFIX=/usr install DESTDIR=$PKG
+
+
+------------------------------------------------------------------
+PYTHON PACKAGES
+------------------------------------------------------------------
+
+
+export PYTHON=python3
+./waf configure \
+  --prefix=/usr \
+  --libdir=/usr/lib${LIBDIRSUFFIX} \
+  --configdir=/etc \
+  --mandir=/usr/man \
+  --docdir=/usr/doc/$PRGNAM-$VERSION \
+  --dyn-manifest
+
+./waf
+
+./waf install --destdir=$PKG
+
+
+
+./setup.py install  --prefix=/usr --root=$PKG
+
+-----------------------------------------------------------------
+NUMJOBS
+-----------------------------------------------------------------
+
+
+NUMJOBS=${NUMJOBS:-" -j$(expr $(nproc) + 1) "}
+
+
+------------------------------------------------------------------
+LOGGING THE COMPILATION
+------------------------------------------------------------------
+
+2>&1 | tee $OUTPUT/configure-${PRGNAM}_mfx.log
+  make ${NUMJOBS} 2>&1 | tee $OUTPUT/make-${PRGNAM}_mfx.log
+
+
+--------------------------------------------------------------------
+DEBUG INFO
+--------------------------------------------------------------------
+
+trap 'echo "$0 FAILED at line $LINENO!" | tee $OUTPUT/error-${PKGNAM}.log' ERR
+set -u
+P1=${1:-1}
+
+
+

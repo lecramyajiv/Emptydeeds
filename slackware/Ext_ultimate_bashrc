@@ -1,0 +1,2555 @@
+#!/usr/bin/env bash
+#######################################################
+# ┏━╸╻ ╻╺┳╸┏━┓┏━╸┏┳┓┏━╸   ╻ ╻╻  ╺┳╸╻┏┳┓┏━┓╺┳╸┏━╸    ┏┓ ┏━┓┏━┓╻ ╻┏━┓┏━╸
+# ┣╸ ┏╋┛ ┃ ┣┳┛┣╸ ┃┃┃┣╸    ┃ ┃┃   ┃ ┃┃┃┃┣━┫ ┃ ┣╸     ┣┻┓┣━┫┗━┓┣━┫┣┳┛┃
+# ┗━╸╹ ╹ ╹ ╹┗╸┗━╸╹ ╹┗━╸   ┗━┛┗━╸ ╹ ╹╹ ╹╹ ╹ ╹ ┗━╸   ╹┗━┛╹ ╹┗━┛╹ ╹╹┗╸┗━╸
+# Extreme Ultimate .bashrc File sources are free and
+# open software released under the MIT License (MIT)
+# https://sourceforge.net/projects/ultimate-bashrc/files/
+#
+# The MIT License (MIT)
+# Copyright © 2022
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the “Software”), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
+#######################################################
+# To Install or Update:
+# wget -O ~/.bashrc https://sourceforge.net/projects/ultimate-bashrc/files/_bashrc/download
+# wget -O ~/.bashrc_help https://sourceforge.net/projects/ultimate-bashrc/files/_bashrc_help/download
+# -or-
+# curl https://sourceforge.net/projects/ultimate-bashrc/files/_bashrc/download --output ~/.bashrc
+# curl https://sourceforge.net/projects/ultimate-bashrc/files/_bashrc_help/download --output ~/.bashrc_help
+#######################################################
+# Supported Optional Applications:
+# 7z bash-completion bashmarks bashtop bat bc blesh bottom bpytop btrfs bzip2
+# cmatrix cod colordiff commacd curl delta doas dua fd ffmpeg fzf gawk git
+# gitalias git-commander git-completion git-delta glow gzip hstr htop icdiff
+# ifconfig jp2a lolcat lscolors lsd lsx lsof mcfly micro mlocate multitail
+# mysql-colorize nano ncdu neovim nnn pakku paru qfc rar resh ripgrep rsync
+# shellcheck shred source-highlight tar thefuck the_silver_searcher tig tmux
+# toilet tree vivid vlock wget yay zip zoxide
+#
+# Supported Optional Huds:
+# neofetch, fastfetch, screenFetch, linux_logo, archey, pfetch
+#
+# Supported Optional Prompts:
+# Trueline, Powerline, Powerline-Go, Powerline-Shell,
+# Pureline, Starship, Bash Git Prompt, Liquid Prompt
+#
+# To Install Packages:
+# pkginstall [package names separated by spaces]
+#######################################################
+# set -o errexit  # Exit when a command fails
+# set -o pipefail # Catch mysqldump fails
+# set -o nounset  # Exit when using undeclared variables
+# set -o xtrace   # Trace what gets executed (useful for debugging)
+
+### ERROR TRAPPING
+# alias debug="set -o nounset; set -o xtrace"
+# error() { echo 'Error in ${1} on line ${2}: ${3}' }
+# trap 'error "${BASH_SOURCE}" "${LINENO}"' ERR
+
+### TEST FOR AN INTERACTIVE SHELL
+# This file is sourced by all "interactive" bash shells on startup
+# including shells such as scp and rcp that can't tolerate any output.
+# There is no need to set anything past this point for scp and rcp,
+# and it's important to refrain from outputting anything in those cases.
+[[ $- != *i* ]] && return
+[[ -z "$PS1" ]] && return
+
+# Security for X apps
+if [[ -x "$(command -v xhost)" ]]; then
+	xhost +local:root > /dev/null 2>&1
+fi
+
+# Bash version check
+if ((BASH_VERSINFO[0] < 4)); then
+	echo "This .bashrc file requires at least Bash 4.0"
+	exit 1
+fi
+
+# Make sure if the history file is deleted...
+if [[ ! -f "$HOME/.bash_history" ]]; then
+	# Recreate an empty copy so history apps don't show errors
+	touch "$HOME/.bash_history"
+fi
+
+# Source global definitions
+if [[ -f /etc/bashrc ]]; then
+	 source /etc/bashrc
+elif [[ -f /etc/bash.bashrc ]]; then
+	 source /etc/bash.bashrc
+fi
+
+#######################################################
+# Set the default editor
+# Examples: vim, nvim, emacs, nano, micro, pico, etc
+# NOTE: In Git Bash, you can use something like "/c/Program\ Files/Notepad++/notepad++.exe"
+#######################################################
+
+export VISUAL=nano
+export EDITOR=nano
+export SUDO_EDITOR=nano
+export FCEDIT=nano
+
+# We will default to use either Neovim https://neovim.io or vim instead of vi
+# NOTE: vi is POSIX compliant but vim has more features and Neovim is more extensible
+# http://www.viemu.com/a-why-vi-vim.html
+# https://www.linuxfordevices.com/tutorials/linux/vim-vs-neovim
+if [[ -x "$(command -v nvim)" ]]; then
+	alias vi='nvim'
+	alias vim='nvim'
+	alias svi='sudo nvim'
+	alias vis='nvim "+set si"'
+elif [[ -x "$(command -v vim)" ]]; then
+	alias vi='vim'
+	alias svi='sudo vim'
+	alias vis='vim "+set si"'
+fi
+
+# Set some defaults for nano
+# NOTE: Depending on the version of nano you have, --linenumbers is helpful
+alias nano='nano --smarthome --multibuffer --const --autoindent --suspend'
+
+# Set Micro true color support
+# Link: https://micro-editor.github.io/
+# Install: curl https://getmic.ro | bash
+export MICRO_TRUECOLOR=1
+
+#######################################################
+# Set some variable values
+#######################################################
+
+# Set any of these to true if you wish not to load and bypass an installed prompt or application
+_SKIP_PROMPT_ORIGINAL=false
+_SKIP_PROMPT_TRUELINE=false
+_SKIP_PROMPT_POWERLINE_GO=false
+_SKIP_PROMPT_POWERLINE_SHELL=false
+_SKIP_PROMPT_PURELINE=false
+_SKIP_PROMPT_STARSHIP=false
+_SKIP_PROMPT_OH_MY_GIT=false
+_SKIP_PROMPT_BASH_GIT_PROMPT=false
+_SKIP_PROMPT_BASH_POWERLINE=false
+_SKIP_PROMPT_SEXY_BASH_PROMPT=false
+_SKIP_PROMPT_LIQUIDPROMPT=false
+_SKIP_PROMPT_POWERLINE=false
+_SKIP_SYSTEM_INFO=false
+_SKIP_TMUX=false
+_SKIP_BLESH=false
+_SKIP_SUDO_ALTERNATIVE=true
+
+# Choose the built-in prompt time format (pick only one)
+#_TIME_FORMAT="\D{%-l:%M}" # 12 hour
+#_TIME_FORMAT="\@" # 12 hour with AM/PM
+#_TIME_FORMAT="\T" # 12 hour with seconds
+#_TIME_FORMAT="\D{%r}" # 12 hour with seconds and AM/PM
+_TIME_FORMAT="\A" # 24 hour
+#_TIME_FORMAT="\t" # 24 hour with seconds
+
+# Colors used in prompt
+LIGHTGRAY="\033[0;37m"
+WHITE="\033[1;37m"
+BLACK="\033[0;30m"
+DARKGRAY="\033[1;30m"
+RED="\033[0;31m"
+LIGHTRED="\033[1;31m"
+GREEN="\033[0;32m"
+LIGHTGREEN="\033[1;32m"
+BROWN="\033[0;33m"
+YELLOW="\033[1;33m"
+BLUE="\033[0;34m"
+LIGHTBLUE="\033[1;34m"
+PURPLE="\033[0;35m"
+MAGENTA="\033[1;35m"
+CYAN="\033[0;36m"
+LIGHTCYAN="\033[1;36m"
+NOCOLOR="\033[0m"
+
+# Determine our kernel name
+_KERNEL_NAME="$(expr substr $(uname -s) 1 5)"
+
+#######################################################
+# Add Common Binary Directories to Path
+#######################################################
+
+# Add a directory to the end of the path if it exists and is not already in the path
+# Link: https://superuser.com/questions/39751/add-directory-to-path-if-its-not-already-there
+function pathappend() {
+	for ARG in "$@"
+	do
+		if [ -d "$ARG" ] && [[ ":$PATH:" != *":$ARG:"* ]]; then
+			PATH="${PATH:+"$PATH:"}$ARG"
+		fi
+	done
+}
+
+# Add a directory to the beginning of the path if it exists and is not already in the path
+function pathprepend() {
+	for ((i=$#; i>0; i--));
+	do
+		ARG=${!i}
+		if [ -d "$ARG" ] && [[ ":$PATH:" != *":$ARG:"* ]]; then
+			PATH="$ARG${PATH:+":$PATH"}"
+		fi
+	done
+}
+
+# Add the most common personal binary paths located inside the home folder
+pathprepend "$HOME/bin" "$HOME/sbin" "$HOME/.local/bin" "$HOME/local/bin"
+
+# Check for the Rust package manager binary install location
+# Link: https://doc.rust-lang.org/cargo/index.html
+pathappend "$HOME/.cargo/bin"
+
+#######################################################
+# User Specific Aliases
+#######################################################
+
+if [[ -f "$HOME/.bash_aliases" ]]; then
+	source "$HOME/.bash_aliases"
+fi
+
+#######################################################
+# Git Aliases
+#######################################################
+
+if [[ -x "$(command -v git)" ]]; then
+
+	# Set the editor for Git
+	git config --global core.editor "${EDITOR}"
+
+	# Git Alias: Provides many useful Git alias commands
+	# This alias will install/update the Git alias commands file
+	# Link: https://github.com/GitAlias/gitalias
+	# Edit ~/.gitconfig and then include the path to this file like this:
+	# [include]
+	# path = gitalias.txt
+	alias gitalias='curl -O https://raw.githubusercontent.com/GitAlias/gitalias/master/gitalias.txt --output "~/gitalias.txt"'
+
+	# When invoked without arguments gg will do a short Git status,
+	# otherwise it will just pass on the given arguments to the Git command.
+	# Status is likely to be the Git command one will execute the most,
+	# hence this simple enhancement does prove very useful in practice.
+	alias gg='_f() { if [[ $# == 0 ]]; then git status --short --branch; else git "$@"; fi }; _f'
+
+	# All Git aliases start with gg for speed
+	alias ggg='git status'
+	alias ggp='git pull' # Fetch and merge
+	alias ggf='git fetch'
+	alias ggm='git merge'
+	alias ggpu='git push'
+	alias ggr='git reset' # Specify a file to un-add or no file to unstage all
+	alias gga='git add'
+	alias ggap='git add -p' # Interactively choose hunks
+	alias ggac='git add --all && git commit --verbose -m' # Add "commit message"
+	alias ggc='git commit --verbose -m' # Add "commit message"
+	alias ggm='git commit --amend --verbose'
+	alias ggl='git log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short'
+	alias ggd='git diff'
+	alias ggds='git diff --stat'
+	alias ggdc='git diff --cached'
+	alias ggb='git checkout' # Checkout a branch
+	alias ggcb='git checkout -b' # Create new branch
+
+	# Git Auto-Completion
+	# Link: https://github.com/git/git/tree/master/contrib/completion
+	# Install: wget -O ~/git-completion.bash https://github.com/git/git/raw/master/contrib/completion/git-completion.bash
+	if [[ -f "$HOME/git-completion.bash" ]]; then
+		source "$HOME/git-completion.bash"
+	fi
+
+	# Tig ncurses-based text-mode interface for git
+	# Link: https://jonas.github.io/tig/
+	if [[ -x "$(command -v tig)" ]]; then
+		alias gitt='tig'
+	fi
+
+	# Git Commander
+	# Link: https://github.com/golbin/git-commander
+	# Install: npm install -g git-commander
+	if [[ -x "$(command -v git-commander)" ]]; then
+		alias gitc='git-commander'
+	fi
+
+	# Using the Git status short format information, here's a function that
+	# uses Awk and the column command to give you customized status output
+	# Link: https://stackoverflow.com/questions/8727003/enhanced-ls-with-git-status-information
+	function gitls {
+		git status --porcelain | \
+			awk 'BEGIN {FS=" "}
+		{
+			xstat = substr($0, 1, 1);
+			ystat = substr($0, 2, 1);
+			f = substr($0, 4);
+			ri = index(f, " -> ");
+			if (ri > 0) f = substr(f, 1, ri);
+			if (xstat == " " && ystat ~ "M|D") stat = "not_updated";
+			else if (xstat == "M" && ystat ~ " |M|D") stat = "updated_in_index";
+			else if (xstat == "A" && ystat ~ " |M|D") stat = "added_to_index";
+			else if (xstat == "D" && ystat ~ " |M") stat = "deleted_from_index";
+			else if (xstat == "R" && ystat ~ " |M|D") stat = "renamed_in_index";
+			else if (xstat == "C" && ystat ~ " |M|D") stat = "copied_in_index";
+			else if (xstat ~ "M|A|R|C" && ystat == " ") stat = "index_and_work_tree_matches";
+			else if (xstat ~ " |M|A|R|C" && ystat == "M") stat = "work_tree_changed_since_index";
+			else if (xstat ~ " |M|A|R|C" && ystat == "D") stat = "deleted_in_work_tree";
+			else if (xstat == "D" && ystat == "D") stat = "unmerged,both_deleted";
+			else if (xstat == "A" && ystat == "U") stat = "unmerged,added_by_us";
+			else if (xstat == "U" && ystat == "D") stat = "unmerged,deleted_by_them";
+			else if (xstat == "U" && ystat == "A") stat = "unmerged,added_by_them";
+			else if (xstat == "D" && ystat == "U") stat = "unmerged,deleted_by_us";
+			else if (xstat == "A" && ystat == "A") stat = "unmerged,both_added";
+			else if (xstat == "U" && ystat == "U") stat = "unmerged,both_modified";
+			else if (xstat == "?" && ystat == "?") stat = "untracked";
+			else if (xstat == "!" && ystat == "!") stat = "ignored";
+			else stat = "unknown_status";
+			print f "   " stat;
+		}' | \
+			column -t -s "  " | "$PAGER"
+	}
+fi
+
+#######################################################
+# General Aliases
+# NOTE: To temporarily bypass an alias, we proceed the command with a \
+# EG: if the ls command is aliased, to use the normal command you would type \ls
+#######################################################
+
+# Update this .bashrc and .bashrc_help files
+if [[ -x "$(command -v wget)" ]]; then
+	alias bashrcupdate='wget -O ~/.bashrc https://sourceforge.net/projects/ultimate-bashrc/files/_bashrc/download && wget -O ~/.bashrc_help https://sourceforge.net/projects/ultimate-bashrc/files/_bashrc_help/download && echo "Restart your terminal to see the changes."'
+elif [[ -x "$(command -v curl)" ]]; then
+	alias bashrcupdate='curl https://sourceforge.net/projects/ultimate-bashrc/files/_bashrc/download --output ~/.bashrc && curl https://sourceforge.net/projects/ultimate-bashrc/files/_bashrc_help/download --output ~/.bashrc_help && echo "Restart your terminal to see the changes."'
+else
+	alias bashrcupdate='echo "Please install wget or curl, or visit https://sourceforge.net/projects/ultimate-bashrc/ to update.'
+fi
+
+# Show help for this .bashrc file (type hlp or press CONTROL-H)
+if [[ -f "$HOME/.bashrc_help" ]]; then
+	alias hlp='\less -f -r -n -S "$HOME/.bashrc_help"'
+	bind -x '"\C-h":"less -f -r -n -S ~/.bashrc_help"'
+fi
+
+# Create an alias to run the default editor (like sudoedit without the sudo)
+alias edit="$EDITOR"
+
+# Edit this .bashrc file
+alias ebrc='edit ~/.bashrc'
+
+# Show a list of available aliases and functions
+alias a='_listcommands | \less -n -S'
+function _listcommands() {
+	local COLOR="\033[1;31m" # Light Red
+	local NOCOLOR="\033[0m"
+	echo -e "${COLOR}Aliases:${NOCOLOR}"
+	# compgen -A alias
+	alias | awk -F'[ =]' '{print "\033[33m"$2"\033[0m\t\033[34m"$0"\033[0m";}'
+	echo
+	echo -e "${COLOR}Functions:${NOCOLOR}"
+	compgen -A function | grep -v '^_.*'
+}
+
+# Vlock - lock all terminals
+# Install: sudo apt install vlock
+# Install: sudo pacman -S kbd
+# https://odysee.com/@DistroTube:2/lock-your-terminal-sessions-with-vlock:0
+if [[ -x "$(command -v vlock)" ]]; then
+	# Alias Vlock to lock all terminals and can be typed with one hand
+	alias lok='vlock --all'
+fi
+
+# Search command line history
+alias h='history | grep'
+
+# Alias to launch a document, file, or URL in it's default X application
+if [[ -x "$(command -v xdg-open)" ]]; then
+	alias open='xdg-open'
+fi
+
+### CHANGING AND LISTING DIRECTORIES
+
+# Alias and bookmark the web folder (try to guess it's location)
+# This will NOT overwrite a "web" alias previously definded in .bash_aliases
+if [[ "$(type -t web)" != 'alias' ]]; then
+	if [[ -d /var/www/html ]]; then
+		alias web='cd /var/www/html'
+		export web="/var/www/html"
+	elif [[ -d /srv/http ]]; then
+		alias web='cd /srv/http'
+		export web="/srv/http"
+	fi
+fi
+
+# If lsx script is found, source it
+# Link: https://github.com/souvikinator/lsx
+if [[ -f "$HOME/.config/lsx/lsx.sh" ]]; then
+	source ~/.config/lsx/lsx.sh
+fi
+# If lsx is installed, alias it to see hidden directories
+if [[ -x "$(command -v lsx)" ]]; then
+	alias lsx='lsx -a'
+fi
+
+# Change to the home directory
+alias home='cd ~'
+
+# Allow changing directory when missing a space
+alias cd..='cd ..'
+
+# Go back directories dot style
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+
+# Go back directories dot dot number style
+alias ..2='..; ..'
+alias ..3='..2; ..'
+alias ..4='..3; ..'
+alias ..5='..4; ..'
+
+# If nnn is installed, add an alias for a directory listing
+# Link: https://github.com/jarun/nnn/
+# The following command installs or updates all plugins:
+# Install: curl -Ls https://raw.githubusercontent.com/jarun/nnn/master/plugins/getplugs | sh
+# Plugins are installed to ${XDG_CONFIG_HOME:-$HOME/.config}/nnn/plugins
+if [[ -x "$(command -v nnn)" ]]; then
+	if [[ -f "$HOME/.config/nnn/plugins/finder" ]]; then
+		export NNN_PLUG='f:finder;o:fzopen;p:mocplay;d:diffs;t:nmount;v:imgview'
+		alias nnnplugins='curl -Ls https://raw.githubusercontent.com/jarun/nnn/master/plugins/getplugs | sh'
+	fi
+	alias nnn='nnn -e'
+	alias lll='nnn -Headr'
+fi
+
+# Aliases for multiple directory listing commands
+# If lsd is installed, use it instead
+# Link: https://github.com/Peltoche/lsd
+if [[ -x "$(command -v lsd)" ]]; then
+	alias ls='lsd -aF --group-dirs first'
+	alias la='lsd -la'
+	alias labc='lsd -lav'                 # sort alphabetically
+	alias lx='lsd -laXh'                  # sort by extension
+	alias lk='lsd -laSrh'                 # sort by size
+	alias lt='lsd -latrh'                 # sort by date
+	alias lc='\ls -lacrh --color=always'  # sort by change time
+	alias lu='\ls -laurh --color=always'  # sort by access time
+	alias new='lsd -latr --almost-all | tail -10 | tac' # list recently created/updated files
+	alias lw='\ls -xAh --color=always'    # wide listing format
+	alias lm='\ls -alh --color=always | \less -S' # pipe through less
+	alias lr='lsd -lRh'                   # recursive ls
+	alias lf="lsd -la | egrep -v '^d'"    # files only
+	alias ldir="\ls -la --color=always | egrep '^d'" # directories only
+	alias l.='lsd -d .*'                  # show hidden files
+else
+	#alias ls='ls -aFh --color=always'  # add colors and file type extensions
+	alias ls='ls -aFh --color=always --group-directories-first'
+	alias la='ls -la | grep "^d" && ls -la | grep "^-" && ls -la | grep -E "^d|^-" -v | grep -v "^total"'
+	alias labc='ls -lap'                  # sort alphabetically
+	alias lx='ll -laXBh'                  # sort by extension
+	alias lk='ll -laSrh'                  # sort by size
+	alias lt='ll -latrh'                  # sort by date
+	alias lc='ll -lacrh'                  # sort by change time
+	alias lu='ll -laurh'                  # sort by access time
+	alias new='ls -latr | tail -10 | tac' # list recently created/updated files
+	alias lw='ls -xAh'                    # wide listing format
+	alias lm='ll -alh | \less -S'         # pipe through less
+	alias lr='ls -lRh'                    # recursive ls
+	alias lf="ls -l | egrep -v '^d'"      # files only
+	alias ldir="ls -la | egrep '^d'"      # directories only
+	alias l.='ll -d .* --color=auto'      # show hidden files
+fi
+
+# List all files larger than a given size
+# llfs +10k will find and display all files larger than 10 kilobytes in the currect directory
+alias llfs='_f(){ find . -type f -size "$1" -exec ls --color --classify --human-readable -l {} \; ; }; _f'
+
+# Show colors with the dir command
+if [[ -x "$(command -v dir)" ]]; then
+	alias dir='dir --color=auto'
+	alias vdir='vdir --color=auto'
+fi
+
+# Show the previous path
+alias pwd-='echo ${OLDPWD}'
+
+# Show full path of file or wildcard
+alias fullpath='find "`pwd`" -name'
+
+# List the PATH environment variable directories
+alias path='echo -e ${PATH//:/\\n}'
+
+### FIND FILES OR FILE INFORMATION
+
+# Searches for filenames (can use wildcards)
+if [[ -x "$(command -v fdfind)" ]]; then
+	# Use fdfind if installed
+	# Link: https://github.com/sharkdp/fd
+	alias f='fdfind'
+elif [[ -x "$(command -v fd)" ]]; then
+	# Use the shorter fd command
+	alias f='fd'
+else
+	alias f='find . -type f -iname'
+fi
+
+# Searches for directories (can use wildcards)
+# Example: finddir config
+# Example: finddir "This has spaces"
+alias finddir='find . -type d -iname'
+
+# To count how many files are in your current file system location:
+alias countfiles='find . -type f | wc -l'
+
+# Show logs in color
+if [[ -x "$(command -v multitail)" ]]; then
+	alias multitail='multitail -c'
+fi
+
+# Show all logs in /var/log
+alias logs="find /var/log -type f -exec file {} \; | grep 'text' | cut -d' ' -f1 | sed -e's/:$//g' | grep -v '[0-9]$' | xargs tail -f"
+
+# To see if a command is aliased, a file, or a built-in command
+alias check="type -t"
+
+# If the mlocate package is installed
+if [[ -x "$(command -v locate)" ]]; then
+	# Case insensitive search and display only files present in your system
+	alias locate='locate -i -e'
+
+	# Update the locate database before locating a file
+	alias ulocate='sudo updatedb && locate'
+
+	# Always update the locate (mlocate) database as root
+	alias updatedb='sudo updatedb'
+
+	# Display the number of matching entries
+	alias locount='locate -c'
+fi
+
+### FILE AND DIRECTORY MANAGEMENT
+
+# When changing a directory, don't show an extra line with the directory
+alias cd='cd >/dev/null'
+
+# When copying files, prompt before overwriting a file
+alias cp='cp -i'
+
+# When moving files, prompt for confirmation if the destination path exists
+# Use -f if you want to skip all prompts (-i option is ignored)
+alias mv='mv -i'
+
+# Prompt before every removal
+alias rm='rm -i'
+
+# Remove a directory and all files
+alias rmd='\rm --recursive --force --verbose'
+
+# When shredding files, shred no matter permissions and remove the file(s)
+alias shred='shred --force --remove --verbose'
+
+# Make parent directories as needed
+alias mkdir='mkdir -pv'
+
+# Alias to make a file executable
+# A combination of the letters ugoa controls which users' access to the
+# file will be changed: the user who owns it (u), other users in the
+# file's group (g), other users not in the file's group (o), or all users
+# (a). If none of these are given, the effect is as if (a) were given,
+# but bits that are set in the umask are not affected.
+alias mx='chmod a+x'
+
+# Make mount command output pretty and human readable format
+alias mount='mount | column -t'
+alias m='mount'
+alias um='umount'
+
+# Display disk space available and show file system type (human-readable)
+alias df='df -khT'
+
+# dua Disk Space Analyzer in interactive mode (in color)
+# Link: https://github.com/Byron/dua-cli
+# Install: curl -LSfs https://raw.githubusercontent.com/byron/dua-cli/master/ci/install.sh | \sh -s -- --git byron/dua-cli --target x86_64-unknown-linux-musl --crate dua
+if [[ -f "$HOME/.cargo/bin/dua" ]]; then
+	alias diskspace="$HOME/.cargo/bin/dua i"
+elif [[ -x "$(command -v dua)" ]]; then
+	alias diskspace='dua i'
+# Ncdu is a disk usage analyzer with an ncurses interface
+# Link: https://dev.yorhel.nl/ncdu
+elif [[ -x "$(command -v ncdu)" ]]; then
+	alias diskspace='ncdu'
+# List all folders disk space sorted by largest space
+else
+	alias diskspace='du -S | sort -n -r | more'
+fi
+
+# List disk space of immediate folders one level deep
+alias folders='du -kh --max-depth=1'
+
+# If tree is installed, make it more readable
+if [[ -x "$(command -v tree)" ]]; then
+	alias tree='tree -CAhF --dirsfirst'
+	alias treed='tree -CAFd'
+fi
+
+# Aliases for archives
+alias mkbz2='tar -cvjf'
+alias unbz2='tar -xvjf'
+alias mkgz='tar -cvzf'
+alias ungz='tar -xvzf'
+alias mktar='tar -cvf'
+alias untar='tar -xvf'
+
+# SHA1
+alias sha1='openssl sha1'
+
+# Alias to fuzzy find files, preview them, and launch in an editor
+if [[ -x "$(command -v fzf)" ]]; then
+	if [[ -x "$(command -v xdg-open)" ]]; then
+		alias fzfpreview='xdg-open $(fzf --info=inline --preview="$PAGER {}")'
+	else
+		alias fzfpreview='edit $(fzf --info=inline --preview="$PAGER {}")'
+	fi
+fi
+
+# Check shell script syntax
+if [[ -x "$(command -v shellcheck)" ]]; then
+	alias schk='shellcheck'
+fi
+
+### DATE AND TIME
+
+# Show the time
+alias now='date +"%T"'
+
+# Show the short date
+alias today='date +"%Y-%m-%d"'
+
+# Stop watch
+alias stopwatch='date && echo "Press CTRL-D to stop" && time read'
+
+### CPU, MEMORY, AND PROCESSES
+
+# Display amount of free and used memory in MB
+alias free='free -m'
+
+# When reporting a snapshot of the current processes:
+# a = all users
+# u = user-oriented format providing detailed information
+# x = list the processes without a controlling terminal
+# f = display a tree view of parent to child processes
+alias ps='ps auxf'
+
+# Show top ten processes
+alias cpu='ps aux | sort -r -nk +4 | head | $PAGER'
+
+# Alias top
+# https://ostechnix.com/some-alternatives-to-top-command-line-utility-you-might-want-to-know/
+if [[ -x "$(command -v bpytop)" ]]; then
+	alias top='bpytop'
+elif [[ -x "$(command -v bashtop)" ]]; then
+	alias top='bashtop'
+elif [[ -x "$(command -v htop)" ]]; then
+	alias top='htop'
+fi
+
+# Alias bottom
+# Link: https://github.com/ClementTsang/bottom
+if [[ -x "$(command -v btm)" ]]; then
+	alias bottom='btm'
+fi
+
+# Show jobs
+alias j='jobs -l'
+
+# Get active X-window process ID (3 second delay)
+alias activewinpid='sleep 3 && xdotool getactivewindow getwindowpid'
+
+### NETWORKING
+
+# Stop pinging after sending 5 ECHO_REQUEST packets
+alias ping='ping -c 5'
+
+# Do not wait for ping interval 1 second, go fast
+alias fastping='ping -c 100 -s.2'
+
+# Watch real time network activity
+if [[ -x "$(command -v lsof)" ]]; then
+	alias netwatch='lsof -i'
+fi
+
+# Show open ports
+alias ports='netstat -tulanp'
+
+# Get local IP addresses
+alias iplocal="ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'"
+
+# Get public IP address (several options)
+alias ipexternal='wget -O - -q icanhazip.com && echo'
+# alias ipexternal='wget -qO- ifconfig.me/ip && echo'
+# alias ipexternal='curl ipinfo.io/ip && echo'
+
+# Add an "alert" alias for long running commands
+# Example: sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+### VISUAL
+
+# Colorize the grep command output for ease of use (good for log files)
+alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+
+# Colorize messages for the kernel ring buffer
+alias dmesg='dmesg --color'
+
+# Clear the screen with both clear and cls shorthand
+alias cls='clear'
+
+# If lolcat is installed, show rainbow bars when the screen is cleared
+if [[ -x "$(command -v lolcat)" ]]; then
+	# random_bars | lolcat --animate --seed=1 --freq=0.12
+	alias clear='clear && echo && random_bars | lolcat && echo'
+fi
+
+if [[ -x "$(command -v delta)" ]]; then
+	# delta - Beautiful side by side colored diff with Git support and syntax highlighting
+	# Link: https://github.com/dandavison/delta
+	# Info: Add listed settings to your ~/.gitconfig
+	alias diff='delta --side-by-side --line-numbers'
+elif [[ -x "$(command -v icdiff)" ]]; then
+	# Icdiff - Improved (side by side) colored diff
+	# Link: https://github.com/jeffkaufman/icdiff
+	alias diff='icdiff --line-numbers --strip-trailing-cr'
+elif [[ -x "$(command -v colordiff)" ]]; then
+	# Colorize diff output if colordiff is installed
+	alias diff='colordiff'
+fi
+
+# Convert images to ASCII in color
+if [[ -x "$(command -v jp2a)" ]]; then
+	alias jp2a='jp2a --color'
+fi
+
+# List fonts for toilet
+if [[ -x "$(command -v toilet)" ]]; then
+	alias toiletfont='ls /usr/share/figlet'
+	alias toiletfontlist='for file in /usr/share/figlet/*.?lf; do toilet -f $(basename "$file") $(basename "$file"); done'
+fi
+
+# Video capture the Linux destop
+if [[ -x "$(command -v ffmpeg)" ]]; then
+	alias grabvideo='ffmpeg -f x11grab -s wxga -r 25 -i :0.0 -qscale 0 ~/video_out.mpg'
+fi
+
+# Launch the cmatrix screen saver
+if [[ -x "$(command -v cmatrix)" ]]; then
+	alias matrix='cmatrix -b'
+fi
+
+### MISCELLANEOUS
+
+# Alias's for safe and forced reboots
+alias rebootsafe='sudo shutdown -r now'
+alias rebootforce='sudo shutdown -r -n now'
+
+# Start calculator with math support
+# Link: https://www.gnu.org/software/bc/manual/html_mono/bc.html
+if [[ -x "$(command -v bc)" ]]; then
+	alias bc='bc --mathlib'
+fi
+
+# Glow is one of the best CLI markdown viewers with pager support
+# Link: https://github.com/charmbracelet/glow
+if [[ -x "$(command -v glow)" ]]; then
+	alias glow='glow --all --pager'
+
+	# Use --local if you want to load markdown without internet files or images
+	alias glowsafe='glow --all --pager --local'
+fi
+
+# When updating virus definitions, do it as root
+if [[ -x "$(command -v freshclam)" ]]; then
+	alias freshclam='sudo freshclam'
+fi
+
+# Aliases to modify GRUB
+# https://www.howtogeek.com/196655/how-to-configure-the-grub2-boot-loaders-settings/
+alias grubedit='sudoedit /etc/default/grub'
+alias grubsave='sudo update-grub'
+
+# Aliases for BtrFS file systems
+if [[ -x "$(command -v btrfs)" ]]; then
+	alias btrcheck='sudo btrfs fi show'                        # Check status of raid drives
+	alias btrstats='sudo btrfs device stats'                   # Show device statistics
+	alias btrscrub='sudo btrfs scrub start'                    # Start a scrub
+	alias btrpause='sudo btrfs scrub cancel'                   # Cancel or pause a scrub
+	alias btrresume='sudo btrfs scrub resume'                  # Resume a paused scrub
+	alias btrstatus='sudo btrfs scrub status'                  # Show status of a scrub
+	alias btrdefragfile='sudo btrfs filesystem defragment -vf' # Defrag a file
+	alias btrdefragdir='sudo btrfs filesystem defragment -rvf' # Defrag a directory
+fi
+
+# Aliases for tmux terminal multiplexer if installed
+# alias tm='tmux a -t main || tmux new -s main'
+if [[ -x "$(command -v tmux)" ]]; then
+	alias tm='tmux new-session -A -s main'
+	alias tmlist='tmux ls'
+	alias tmclients='tmux lsc'
+	alias tmnew='tmux new -s'
+	alias tmattach='tmux a -t'
+	alias tmrename='tmux rename -t'
+	alias tmkill='tmux kill-session -t'
+	alias tmreset='tmux kill-server'
+fi
+
+# Alias thefuck that corrects errors in previous console commands
+# Link: https://github.com/nvbn/thefuck
+if [[ -x "$(command -v thefuck)" ]]; then
+	eval $(thefuck --alias fix)
+fi
+
+#######################################################
+# Easy Package Management Aliases
+#######################################################
+
+# Depending on the installed package managers, set up some package aliases
+if [[ -x "$(command -v pakku)" ]]; then     # Arch
+	# Link: https://github.com/kitsunyan/pakku
+	alias has='pakku -Si'
+	alias pkgupgradeall='pakku -Syyu && if type flatpak >/dev/null 2>&1; then sudo flatpak update; fi && if type snap >/dev/null 2>&1; then sudo snap refresh; fi'
+	alias pkgupgrade='pakku -S'
+	alias pkginstall='pakku -S'
+	alias pkgremove='pakku -Rsc'
+	alias pkgsearch='pakku -Ss'
+	alias pkglist='pakku -Qe'
+elif [[ -x "$(command -v paru)" ]]; then    # Arch
+	# Link: https://github.com/morganamilo/paru
+	# Link: https://itsfoss.com/paru-aur-helper/
+	alias has='paru -Si'
+	alias pkgupgradeall='paru -Syyu && if type flatpak >/dev/null 2>&1; then sudo flatpak update; fi && if type snap >/dev/null 2>&1; then sudo snap refresh; fi'
+	alias pkgupgrade='paru -S'
+	alias pkginstall='paru -S'
+	alias pkgremove='sudo pacman -Rsc'
+	alias pkgsearch='paru'
+	alias pkglist='paru -Qe'
+elif [[ -x "$(command -v yay)" ]]; then     # Arch
+	# Link: https://github.com/Jguer/yay
+	alias has='yay -Si'
+	alias pkgupgradeall='yay -Syyu && if type flatpak >/dev/null 2>&1; then sudo flatpak update; fi && if type snap >/dev/null 2>&1; then sudo snap refresh; fi'
+	alias pkgupgrade='yay -S'
+	alias pkginstall='yay -S'
+	alias pkgremove='sudo pacman -Rsc'
+	alias pkgsearch='yay'
+	alias pkglist='yay -Qe'
+elif [[ -x "$(command -v pamac)" ]]; then   # Manjaro
+	# Link: https://wiki.manjaro.org/index.php/Pamac
+	alias has='sudo pamac info'
+	alias pkgupgradeall='sudo pamac upgrade -a'
+	alias pkgupgrade='sudo pamac update'
+	alias pkginstall='sudo pamac install'
+	alias pkgremove='sudo pamac remove'
+	alias pkgsearch='sudo pamac search -a'
+	alias pkglist='pacman -Qe'
+elif [[ -x "$(command -v pacman)" ]]; then  # Arch (No AUR)
+	# Link: https://archlinux.org/pacman/
+	alias has='pacman -Q --info'
+	alias pkgupgradeall='sudo pacman -Syyu && if type flatpak >/dev/null 2>&1; then sudo flatpak update; fi && if type snap >/dev/null 2>&1; then sudo snap refresh; fi'
+	alias pkgupgrade='sudo pacman -S'
+	alias pkginstall='sudo pacman -S'
+	alias pkgremove='sudo pacman -Rsc'
+	alias pkgsearch='pacman -Ss'
+	alias pkglist='pacman -Qe'
+elif [[ -x "$(command -v dnf)" ]]; then     # RedHat/Fedora
+	# Link: https://fedoraproject.org/wiki/DNF
+	alias has='dnf info'
+	alias pkgupgradeall='sudo dnf upgrade --refresh'
+	alias pkgupgrade='sudo dnf upgrade'
+	alias pkginstall='sudo dnf install'
+	alias pkgremove='sudo dnf remove'
+	alias pkgsearch='sudo dnf search'
+	alias pkglist='dnf list installed'
+elif [[ -x "$(command -v yum)" ]]; then     # RedHat/Fedora
+	# Link: https://access.redhat.com/articles/yum-cheat-sheet
+	alias has='yum info'
+	alias pkgupgradeall='sudo yum clean all && yum -y update'
+	alias pkgupgrade='sudo yum update'
+	alias pkginstall='sudo yum install'
+	alias pkgremove='sudo yum remove'
+	alias pkgsearch='sudo yum search'
+	alias pkglist='yum list installed'
+elif [[ -x "$(command -v apt)" ]]; then     # Debian/Ubuntu/Raspbian
+	# Link: https://itsfoss.com/apt-command-guide/
+	alias has='apt show'
+	alias pkgupgradeall='sudo apt update -y && sudo apt upgrade -y'
+	alias pkgupgrade='sudo apt-get install --only-upgrade'
+	alias pkginstall='sudo apt install'
+	alias pkgremove='sudo apt remove'
+	alias pkgsearch='sudo apt search'
+	alias pkglist='sudo apt list --installed'
+elif [[ -x "$(command -v apt-get)" ]]; then # Debian/Ubuntu
+	# Link: https://help.ubuntu.com/community/AptGet/Howto
+	alias has='apt-cache show'
+	alias pkgupgradeall='sudo apt-get update && sudo apt-get upgrade'
+	alias pkgupgrade='sudo apt-get install --only-upgrade'
+	alias pkginstall='sudo apt-get install'
+	alias pkgremove='sudo apt-get remove'
+	alias pkgsearch='sudo apt-cache search'
+	alias pkglist='sudo dpkg -l'
+elif [[ -x "$(command -v zypper)" ]]; then  # SUSE
+	# Link: https://en.opensuse.org/SDB:Zypper_usage
+	alias has='zypper info'
+	alias pkgupgradeall='sudo zypper patch'
+	alias pkgupgrade='sudo zypper up'
+	alias pkginstall='sudo zypper in'
+	alias pkgremove='sudo zypper rm'
+	alias pkgsearch='sudo zypper se'
+	alias pkglist='zypper se --installed-only'
+elif [[ -x "$(command -v eopkg)" ]]; then   # Solus
+	# Link: https://getsol.us/articles/package-management/basics/en/
+	alias has='sudo eopkg info'
+	alias pkgupgradeall='sudo eopkg upgrade'
+	alias pkgupgrade='sudo eopkg upgrade'
+	alias pkginstall='sudo eopkg install'
+	alias pkgremove='sudo eopkg remove'
+	alias pkgsearch='sudo eopkg search'
+	alias pkglist='eopkg li -l'
+elif [[ -x "$(command -v emerge)" ]]; then  # Gentoo (Portage)
+	# Link: https://www.linode.com/docs/guides/portage-package-manager/
+	alias has='equery files'
+	alias pkgupgradeall='sudo emerge --sync && sudo emerge --update --deep --with-bdeps=y --newuse @world && sudo emerge --depclean && sudo revdep-rebuild'
+	alias pkgupgrade='sudo emerge -u'
+	alias pkginstall='sudo emerge'
+	alias pkgremove='sudo emerge --depclean'
+	alias pkgsearch='sudo emerge --search'
+	alias pkglist='equery list "*"'
+elif [[ -x "$(command -v slackpkg)" ]]; then # Slackware
+	# Link: https://www.linux.com/training-tutorials/intro-slackware-package-management/
+	alias has='slackpkg info'
+	alias pkgupgradeall='slackpkg update && slackpkg install-new && slackpkg upgrade-all'
+	alias pkgupgrade='upgradepkg'
+	alias pkginstall='installpkg'
+	alias pkgremove='removepkg'
+	alias pkglist='pkgtool'
+elif [[ -x "$(command -v urpmi)" ]]; then # Mandrake
+	# Link: https://wiki.mageia.org/en/URPMI
+	alias has='urpmq --summary -Y'
+	alias pkgupgradeall='urpmi --auto-update'
+	alias pkgupgrade='urpmi'
+	alias pkginstall='urpmi'
+	alias pkgremove='urpme'
+	alias pkgsearch='urpmq --summary -Y'
+	alias pkglist='rpm -qa'
+elif [[ -x "$(command -v apt-cyg)" ]]; then # Cygwin
+	# Link: http://stephenjungels.com/jungels.net/projects/apt-cyg/
+	alias has='apt-cyg show'
+	alias pkgupgradeall='apt-cyg update'
+	alias pkgupgrade='apt-cyg update'
+	alias pkginstall='apt-cyg install'
+	alias pkgremove='apt-cyg remove'
+	alias pkgsearch='apt-cyg find'
+	alias pkglist='cygcheck --check-setup'
+fi
+
+#######################################################
+# Alias for sudo replacement on machines with one user
+#######################################################
+
+if [[ "$_SKIP_SUDO_ALTERNATIVE" = false ]]; then
+
+	# A very slim alternative to both sudo and doas
+	# Link: https://codeberg.org/sw1tchbl4d3/rdo
+	# Config: sudoedit /etc/rdo.conf
+	# username=yourusername
+	# wrong_pw_sleep=1000
+	# session_ttl=5
+	if [[ -x "$(command -v rdo)" ]]; then
+		alias sudo='rdo'
+
+	# A port of OpenBSD's doas offers two benefits over sudo:
+	# 1) Its configuration file has a simple syntax and
+	# 2) It is smaller, requiring less effort to audit the code
+	# This makes it harder for both admins and coders to make mistakes that potentially open security holes in the system
+	# Link: https://github.com/Duncaen/OpenDoas or https://github.com/slicer69/doas
+	# Link: https://youtu.be/eamEZCj-CuQ
+	# Config: Add "permit <user> as root" in /etc/doas.conf or /usr/local/etc/doas.conf
+	elif [[ -x "$(command -v doas)" ]]; then
+		alias sudo='doas'
+
+		# Replace sudoedit only if doasedit exists
+		# Link: https://github.com/AN3223/scripts/blob/master/doasedit
+		if [[ -x "$(command -v doasedit)" ]]; then
+			alias sudoedit='doasedit'
+		fi
+	fi
+fi
+
+#######################################################
+# General Function Aliases
+#######################################################
+
+# Long format directory listing with color columns (requires gawk)
+# If there is an alias for ll, it will cause issues with our function
+if [[ "$(type -t ll)" = 'alias' ]]; then
+	# Remove the alias
+	unalias ll
+fi
+function ll() {
+	# If lsd is installed...
+	# Link: https://github.com/Peltoche/lsd
+	if [[ -x "$(command -v lsd)" ]]; then
+		lsd --all --long --group-dirs first "$@"
+
+	# If gawk is installed...
+	elif [[ -x "$(command -v gawk)" ]]; then
+		# Show long directory listings with color columns
+		\ls -l --all --classify --group-directories-first --human-readable --color=always "$@" | awk '
+			BEGIN {
+				FPAT = "([[:space:]]*[^[:space:]]+)";
+				OFS = "";
+			}
+			{
+				$1 = "\033[0;37m" $1 "\033[0m";
+				$2 = "\033[0;34m" $2 "\033[0m";
+				$3 = "\033[0;35m" $3 "\033[0m";
+				$4 = "\033[0;31m" $4 "\033[0m";
+				$5 = "\033[0;33m" $5 "\033[0m";
+				$6 = "\033[0;32m" $6 "\033[0m";
+				$7 = "\033[0;32m" $7 "\033[0m";
+				$8 = "\033[0;36m" $8 "\033[0m";
+				print
+			}
+		'
+	else # Gawk not installed...
+		# Show long directory listings with highest compatibility
+		ls -Fls "$@"
+	fi
+}
+### Uncomment out the alias line below to bypass this function if
+### the color file listing format has problems on your platform
+#alias ll='ls -Fls' # long listing format
+
+# Function to run upon exit of shell
+function _exit() {
+	# Show who logged out
+	local COLOR="\033[1;31m"     # Light Red
+	local HIGHLIGHT="\033[1;34m" # Light Blue
+	local NOCOLOR="\033[0m"
+	echo -e "${COLOR}User ${HIGHLIGHT}$(echo $USER)${COLOR} has logged out of ${HIGHLIGHT}$(echo $HOSTNAME)${COLOR}.${NOCOLOR}"
+}
+trap _exit EXIT
+
+# Calculator that uses Bash's built-in arithmetic
+# Example: = 5 x 5 + 2
+function =() {
+	local IFS=' '
+	local calc="${*//p/+}"
+	calc="${calc//x/*}"
+	echo "$(($calc))"
+}
+
+# Give alias information
+# Example: aliasinfo ls
+function aliasinfo() {
+	echo -e "${CYAN}${1}${WHITE} = ${YELLOW}${BASH_ALIASES[${1}]}${NOCOLOR}"
+}
+
+# Extracts any archive(s)
+function extract() {
+	for archive; do
+		if [ -f "$archive" ] ; then
+			case "$archive" in
+				*.tar.bz2)   tar xvjf "$archive"   ;;
+				*.tar.gz)    tar xvzf "$archive"   ;;
+				*.bz2)       bunzip2 "$archive"    ;;
+				*.rar)       rar x "$archive"      ;;
+				*.gz)        gunzip "$archive"     ;;
+				*.tar)       tar xvf "$archive"    ;;
+				*.tbz2)      tar xvjf "$archive"   ;;
+				*.tgz)       tar xvzf "$archive"   ;;
+				*.zip)       unzip "$archive"      ;;
+				*.Z)         uncompress "$archive" ;;
+				*.7z)        7z x "$archive"       ;;
+				*)           echo "don't know how to extract '$archive'..." ;;
+			esac
+		else
+			echo "'$archive' is not a valid file!"
+		fi
+	done
+}
+
+# Searches for text in all files in the current folder
+function findtext() {
+	# If ripgrep is installed, use that
+	# Link: https://github.com/BurntSushi/ripgrep
+	if [[ -x "$(command -v rg)" ]]; then
+		rg --pretty "${@}" | more
+
+	# If The Silver Searcher is installed, use that
+	# Link: https://github.com/ggreer/the_silver_searcher
+	elif [[ -x "$(command -v ag)" ]]; then
+		ag --color --ignore-case --hidden --literal
+
+	else # Use grep
+		# -i case-insensitive
+		# -I ignore binary files
+		# -H causes filename to be printed
+		# -r recursive search
+		# -n causes line number to be printed
+		# optional: -F treat search term as a literal, not a regular expression
+		# optional: -l only print filenames and not the matching lines ex. grep -irl "$@" *
+		grep -iIHrn --color=always "${@}" . | $PAGER -r
+	fi
+}
+
+# Searches for text in source code files located in the current path
+function findcode() {
+	# If ripgrep is installed, use that
+	# Link: https://github.com/BurntSushi/ripgrep
+	if [[ -x "$(command -v rg)" ]]; then
+		rg --pretty "${@}" -g '*.{ada,asm,c,cbl,conf,cpp,cpy,cs,css,f,f90,for,go,groovy,h,hpp,htm,html,inc,ini,java,js,json,lib,lua,m,mat,mk,php,pl,py,r,rb,rlib,rs,sc,scala,scss,sh,sql,swift,tcl,template,tpl,ts,vb,vba,vbs,xml,yaml,yml}' | more
+
+	# If The Silver Searcher is installed, use that
+	# Link: https://github.com/ggreer/the_silver_searcher
+	elif [[ -x "$(command -v ag)" ]]; then
+		ag --color --ignore-case --hidden --literal --file-search-regex ".*\.(ada|asm|c|cbl|conf|cpp|cpy|cs|css|f|f90|for|go|groovy|h|hpp|htm|html|inc|ini|java|js|json|lib|lua|m|mat|mk|php|pl|py|r|rb|rlib|rs|sc|scala|scss|sh|sql|swift|tcl|template|tpl|ts|vb|vba|vbs|xml|yaml|yml)"
+
+	else
+		grep -iIHrnF --color=always \
+			--include=*.ada \
+			--include=*.asm \
+			--include=*.c \
+			--include=*.cbl \
+			--include=*.conf \
+			--include=*.cpp \
+			--include=*.cpy \
+			--include=*.cs \
+			--include=*.css \
+			--include=*.f \
+			--include=*.f90 \
+			--include=*.for \
+			--include=*.go \
+			--include=*.groovy \
+			--include=*.h \
+			--include=*.hpp \
+			--include=*.htm \
+			--include=*.html \
+			--include=*.inc \
+			--include=*.ini \
+			--include=*.java \
+			--include=*.js \
+			--include=*.json \
+			--include=*.lib \
+			--include=*.lua \
+			--include=*.m \
+			--include=*.mat \
+			--include=*.mk \
+			--include=*.php \
+			--include=*.pl \
+			--include=*.py \
+			--include=*.r \
+			--include=*.rb \
+			--include=*.rlib \
+			--include=*.rs \
+			--include=*.sc \
+			--include=*.scala \
+			--include=*.scss \
+			--include=*.sh \
+			--include=*.sql \
+			--include=*.swift \
+			--include=*.tcl \
+			--include=*.template \
+			--include=*.tpl \
+			--include=*.ts \
+			--include=*.vb \
+			--include=*.vba \
+			--include=*.vbs \
+			--include=*.xml \
+			--include=*.yaml \
+			--include=*.yml \
+			"${@}" . | $PAGER -r
+	fi
+}
+
+# Copy file with a progress bar
+function cpp() {
+	if [[ -x "$(command -v rsync)" ]]; then
+		rsync -ap "${1}" "${2}"
+	else
+		set -e
+		strace -q -ewrite cp -- "${1}" "${2}" 2>&1 \
+		| awk '{
+		count += $NF
+		if (count % 10 == 0) {
+			percent = count / total_size * 100
+			printf "%3d%% [", percent
+			for (i=0;i<=percent;i++)
+				printf "="
+				printf ">"
+				for (i=percent;i<100;i++)
+					printf " "
+					printf "]\r"
+				}
+			}
+		END { print "" }' total_size=$(stat -c '%s' "${1}") count=0
+	fi
+}
+
+# Copy and go to the directory
+function cpg() {
+	if [[ -d "$2" ]];then
+		cp "$1" "$2" && cd "$2"
+	else
+		cp "$1" "$2"
+	fi
+}
+
+# Move and go to the directory
+function mvg() {
+	if [[ -d "$2" ]];then
+		mv "$1" "$2" && cd "$2"
+	else
+		mv "$1" "$2"
+	fi
+}
+
+# Create and go to the directory
+function mkdirg() {
+	mkdir -p "$@"
+	cd "$@"
+}
+
+# Repeat a command n times
+function repeat() {
+	local i max
+	max=$1; shift;
+	for ((i=1; i <= max ; i++)); do  # --> C-like syntax
+		eval "$@";
+	done
+}
+
+# Goes up a specified number of directories  (i.e. up 4)
+function up() {
+	local d=""
+	limit=$1
+	for ((i=1 ; i <= limit ; i++))
+		do
+			d="$d"/..
+		done
+	d=$(echo $d | sed 's/^\///')
+	if [[ -z "$d" ]]; then
+		d=..
+	fi
+	cd "$d"
+}
+
+# Returns the last 2 fields of the working directory
+function pwdtail () {
+	pwd|awk -F/ '{nlast = NF -1;print $nlast"/"$NF}'
+}
+
+# Print a list of colors
+function colors() {
+	local fgc bgc vals seq0
+
+	printf "Color escapes are %s\n" '\e[${value};...;${value}m'
+	printf "Values 30..37 are \e[33mforeground colors\e[m\n"
+	printf "Values 40..47 are \e[43mbackground colors\e[m\n"
+	printf "Value  1 gives a  \e[1mbold-faced look\e[m\n\n"
+
+	# foreground colors
+	for fgc in {30..37}; do
+		# background colors
+		for bgc in {40..47}; do
+			fgc=${fgc#37} # white
+			bgc=${bgc#40} # black
+
+			vals="${fgc:+$fgc;}${bgc}"
+			vals=${vals%%;}
+
+			seq0="${vals:+\e[${vals}m}"
+			printf "  %-9s" "${seq0:-(default)}"
+			printf " ${seq0}TEXT\e[m"
+			printf " \e[${vals:+${vals+$vals;}}1mBOLD\e[m"
+		done
+		echo; echo
+	done
+}
+
+# Print a list of 256 colors
+function colors256() {
+	for i in {0..255} ; do
+		printf "\x1b[38;5;${i}mcolour${i}\n"
+	done
+}
+
+# Prints random height bars across the width of the screen
+# (great with lolcat application on new terminal windows)
+function random_bars() {
+	columns=$(tput cols)
+	chars=▁▂▃▄▅▆▇█
+	for ((i = 1; i <= $columns; i++))
+	do
+		echo -n "${chars:RANDOM%${#chars}:1}"
+	done
+	echo
+}
+
+# View Apache logs (requires multitail)
+function apachelog () {
+	if [ -d /var/log/httpd ]; then
+		cd /var/log/httpd && ls -Ah && multitail --no-repeat -c -s 2 /var/log/httpd/*_log
+	else
+		cd /var/log/apache2 && ls -Ah && multitail --no-repeat -c -s 2 /var/log/apache2/*.log
+	fi
+}
+
+# Auto-find and edit the Apache configuration
+function apacheconfig() {
+	if [[ -x "$(command -v httpd)" ]]; then
+		if [[ -f /etc/httpd/conf/httpd.conf ]]; then
+			sudoedit /etc/httpd/conf/httpd.conf
+		elif [[ -f /etc/httpd/httpd.conf ]]; then
+			sudoedit /etc/httpd/httpd.conf
+		elif [[ -f /etc/apache2/apache2.conf ]]; then
+			sudoedit /etc/apache2/apache2.conf
+		elif [[ -f /usr/local/apache2/apache2.conf ]]; then
+			sudoedit /usr/local/apache2/apache2.conf
+		elif [[ -f /usr/local/etc/httpd/httpd.conf ]]; then
+			sudoedit /usr/local/etc/httpd/httpd.conf
+		else
+			echo "Error: Apache config file could not be found."
+			echo "Searching for possible locations:"
+			# sudo updatedb && locate httpd.conf && locate apache2.conf
+			# apachectl -V
+			httpd -V
+		fi
+	else
+		echo "Apache is not installed."
+	fi
+}
+
+# Auto-find and edit the PHP configuration file
+function phpconfig() {
+	if [[ -x "$(command -v php)" ]]; then
+		local _php_ini_file=$(php -r 'echo php_ini_loaded_file();')
+		if [[ -f "${_php_ini_file}" ]]; then
+			sudoedit "${_php_ini_file}"
+		elif [[ -f /etc/php.ini ]]; then
+			sudoedit /etc/php.ini
+		elif [[ -f /etc/php/php.ini ]]; then
+			sudoedit /etc/php/php.ini
+		else
+			echo "Error: php.ini file could not be found automatically."
+			echo "Searching for possible locations:"
+			# sudo updatedb && locate php.ini
+			php --ini
+		fi
+	else
+		echo "PHP is not installed."
+	fi
+}
+
+# Auto-find and edit the MySQL configuration file
+function mysqlconfig() {
+	if [[ -x "$(command -v mysqld)" ]]; then
+		if [[ -f /etc/my.cnf ]]; then
+			sudoedit /etc/my.cnf
+		elif [[ -f /etc/mysql/my.cnf ]]; then
+			sudoedit /etc/mysql/my.cnf
+		elif [[ -f /usr/local/etc/my.cnf ]]; then
+			sudoedit /usr/local/etc/my.cnf
+		elif [[ -f /usr/bin/mysql/my.cnf ]]; then
+			sudoedit /usr/bin/mysql/my.cnf
+		elif [[ -f "$HOME/my.cnf" ]]; then
+			sudoedit "$HOME/my.cnf"
+		else
+			echo "Error: my.cnf file could not be found automatically."
+			echo "Searching for possible locations:"
+			# sudo updatedb && locate my.cnf
+			mysqld --verbose --help | grep -A 1 "Default options"
+		fi
+	else
+		echo "MySQL is not installed."
+	fi
+}
+
+# Confirm/Ask a question - See 'killps' for example of use
+# General-purpose function to ask Yes/No questions in Bash,
+# either with or without a default answer.
+# It keeps repeating the question until it gets a valid answer.
+# Link: https://gist.github.com/davejamesmiller/1965569
+# Example Usage:
+#   if ask "Do you want to do such-and-such?"; then
+# Default to Yes if the user presses enter without giving an answer:
+#   if ask "Do you want to do such-and-such?" Y; then
+# Default to No if the user presses enter without giving an answer:
+#   if ask "Do you want to do such-and-such?" N; then
+# Or if you prefer the shorter version:
+#   ask "Do you want to do such-and-such?" && said_yes
+#   ask "Do you want to do such-and-such?" || said_no
+function ask() {
+	local prompt default reply
+
+	if [[ ${2:-} = 'Y' ]]; then
+		prompt='Y/n'
+		default='Y'
+	elif [[ ${2:-} = 'N' ]]; then
+		prompt='y/N'
+		default='N'
+	else
+		prompt='y/n'
+		default=''
+	fi
+
+	while true; do
+
+		# Ask the question (not using "read -p" as it uses stderr not stdout)
+		echo -n "$1 [$prompt] "
+
+		# Read the answer (use /dev/tty in case stdin is redirected from somewhere else)
+		read -r reply </dev/tty
+
+		# Default?
+		if [[ -z $reply ]]; then
+			reply=$default
+		fi
+
+		# Check if the reply is valid
+		case "$reply" in
+			Y*|y*) return 0 ;;
+			N*|n*) return 1 ;;
+		esac
+
+	done
+}
+
+# A full chmod calculator on command line (type chmodcalc for usage and examples)
+function chmodcalc() {
+	# Define colors
+	local BLUE="\033[0;34m"
+	local CYAN="\033[0;36m"
+	local GREEN="\033[0;32m"
+	local MAGENTA="\033[0;35m"
+	local RED="\033[0;31m"
+	local YELLOW="\033[0;33m"
+	local ERROR="\033[1;31m"
+	local NOCOLOR="\033[0m"
+
+	# Define local variables
+	local text=""
+	local output=""
+	local example=""
+	local i=0
+	local n=0
+	local formatted=""
+
+	if [ "$#" -eq 1 ]; then
+		if [ "${#1}" -ge 4 ]; then
+			echo -e "${RED}Error: Invalid octal.${NOCOLOR}";
+			return 128;
+		fi
+		text="$1"
+		output=""
+		example=""
+		i=0
+		while (( i++ < ${#text} ))
+		do
+			char=$(expr substr "${text}" "${i}" 1)
+			case $char in
+			0)
+				part[${i}]="---"
+				;;
+			1)
+				part[${i}]="--x"
+				;;
+			2)
+				part[${i}]="-w-"
+				;;
+			3)
+				part[${i}]="-wx"
+				;;
+			4)
+				part[${i}]="r--"
+				;;
+			5)
+				part[${i}]="r-x"
+				;;
+			6)
+				part[${i}]="rw-"
+				;;
+			7)
+				part[${i}]="rwx"
+				;;
+			*)
+				part[${i}]="Error: Invalid octal."
+				break
+				;;
+			esac
+			example[${i}]="${part[${i}]//-}"
+		done
+		echo -e "${GREEN}${part[1]}${NOCOLOR} ${YELLOW}${part[2]}${NOCOLOR} ${RED}${part[3]}${NOCOLOR}"
+		echo ""
+		echo "Examples:"
+		echo -e "${CYAN}chmod${NOCOLOR} ${CYAN}-R${NOCOLOR} ${MAGENTA}${text}${NOCOLOR} ${BLUE}./*${NOCOLOR}"
+		echo -e "${CYAN}chmod${NOCOLOR} ${CYAN}-R${NOCOLOR} ${CYAN}u=${GREEN}${example[1]}${NOCOLOR}${CYAN},g=${YELLOW}${example[2]}${NOCOLOR}${CYAN},o=${RED}${example[3]}${NOCOLOR} ${BLUE}./*${NOCOLOR}"
+		echo ""
+	elif [ "$#" -eq 3 ]; then
+		formatted=""
+		for p
+		do
+			n=0
+			[[ $p =~ .*r.* ]] && (( n+=4 ))
+			[[ $p =~ .*w.* ]] && (( n+=2 ))
+			[[ $p =~ .*x.* ]] && (( n+=1 ))
+			formatted=${formatted}$(printf "${n}")
+			# printf $n
+		done
+		echo -e "${CYAN}${formatted}${NOCOLOR}"
+		chmodcalc "${formatted}"
+	else
+		echo -e "${ERROR}Error: 1 or 3 parameters required.${NOCOLOR}"
+		echo ""
+		echo -e "Syntax: ${CYAN}chmodcalc${NOCOLOR} ${GREEN}[owner]${NOCOLOR} ${YELLOW}[group]${NOCOLOR} ${RED}[other]${NOCOLOR}"
+		echo -e "Example: ${GREEN}chmodcalc${NOCOLOR} ${GREEN}rwx${NOCOLOR} ${YELLOW}rw${NOCOLOR} ${RED}r${NOCOLOR}"
+		echo ""
+		echo -e "Syntax: ${CYAN}chmodcalc [octal]${NOCOLOR}"
+		echo -e "Example: ${GREEN}chmodcalc 777${NOCOLOR}"
+		echo ""
+		echo -e "You can also use symbols instead of numeric values with chmod"
+		echo -e "${BLUE}chmod u=rwx,g=rw,o=r filename.ext${NOCOLOR}"
+		echo ""
+		echo -e "To calculate octals: ${BLUE}read${NOCOLOR} is ${CYAN}4${NOCOLOR}, ${BLUE}write${NOCOLOR} is ${CYAN}2${NOCOLOR}, and ${BLUE}execute${NOCOLOR} is ${CYAN}1${NOCOLOR}"
+		echo ""
+	fi
+}
+
+# Function to recursively set permissions for only files
+function chmodfiles() {
+	# If the second parameter is not passed, set to the current working directory using $PWD
+	_directory="${2:-${PWD}}"
+	_permission="$1"
+
+	# Exit if the directory does not exist
+	if [ -z "$_permission" ]; then
+		echo "Sets permissions for files recursively"
+		echo "Syntax:";
+		echo "  chmodfiles [mode] [optional folder]";
+		echo "Example:";
+		echo "  chmodfiles 664";
+		echo "  chmodfiles +x /some/path";
+		return 1;
+	fi
+
+	# Exit if the directory does not exist
+	if [ ! -d "$_directory" ]; then
+		echo "Error: Directory $_directory not found.";
+		return 2;
+	fi
+
+	# Get confirmation
+	echo "This will recursively change all permissions to $_permission for the files in the directory:"
+	echo "$_directory"
+
+	if ask "Are you sure?" N; then
+		find "$_directory" -type f -exec chmod $_permission {} \;
+		echo "Done."
+	fi
+}
+
+# Function to recursively set permissions for only directories
+function chmoddirs() {
+	# If the second parameter is not passed, set to the current working directory using $PWD
+	_directory="${2:-${PWD}}"
+	_permission="$1"
+
+	# Exit if the directory does not exist
+	if [ -z "$_permission" ]; then
+		echo "Sets permissions for directories recursively"
+		echo "Syntax:";
+		echo "  chmoddirs [mode] [optional folder]";
+		echo "Example:";
+		echo "  chmoddirs 775";
+		echo "  chmoddirs +x /some/path";
+		return 1;
+	fi
+
+	# Exit if the directory does not exist
+	if [ ! -d "$_directory" ]; then
+		echo "Error: Directory $_directory not found.";
+		return 2;
+	fi
+
+	# Get confirmation
+	echo "This will recursively change all permissions to $_permission for the directories:"
+	echo "$_directory"
+
+	if ask "Are you sure?" N; then
+		find "$_directory" -type d -name \* -exec chmod $_permission {} \;
+		echo "Done."
+	fi
+}
+
+# Recursively set permissions of code files and directories
+# WARNING: Will remove executable permissions on script files
+function chfix() {
+	# Directory and file permissions
+	_dir_permissions="0775"  # rwx rwx rx
+	_file_permissions="0664" # rw  rw  r
+
+	# Permissions for user and group
+	#_user="www-data"
+	#_group="www-data"
+
+	## If $1 is not passed, set to the current working dir using $PWD
+	_directory="${1:-${PWD}}"
+
+	## Exit if the directory does not exist
+	if [ ! -d "$_directory" ]; then
+		echo "Error: Directory $_directory not found.";
+		return 1;
+	fi
+
+	## Make sure we are not inside a protected folder
+	if [[ "$_directory" = "/" ||
+		"$_directory" = "/root" ||
+		"$_directory" = "/bin" ||
+		"$_directory" = "/boot" ||
+		"$_directory" = "/etc" ||
+		"$_directory" = "/home" ||
+		"$_directory" = "/lib" ||
+		"$_directory" = "/lib64" ||
+		"$_directory" = "/mnt" ||
+		"$_directory" = "/opt" ||
+		"$_directory" = "/proc" ||
+		"$_directory" = "/sbin" ||
+		"$_directory" = "/usr/bin" ||
+		"$_directory" = "/usr/lib" ||
+		"$_directory" = "/usr/lib64" ||
+		"$_directory" = "/usr/sbin" ||
+		"$_directory" = "/srv" ||
+		"$_directory" = "/usr" ||
+		"$_directory" = "/var" ||
+		"$_directory" = "/var/www" ]]; then
+		echo "Error: Cannot change $_dir because it is a protected directory.";
+		return 2;
+	fi
+
+	## Get confirmation
+	echo "This will change all permissions for the webserver directories and files and change ownership in:"
+	echo "$_directory"
+
+	if ask "Are you sure?" N; then
+		#sudo chown -R ${_user}:${_group} "$_directory"
+		sudo find "$_directory" -type f -exec chmod $_file_permissions {} \;
+		sudo find "$_directory" -type d -name \* -exec chmod $_dir_permissions {} \;
+		echo "Done."
+	fi
+}
+
+# Search process names to kill
+# https://unix.stackexchange.com/questions/443472/alias-for-killing-all-processes-of-a-grep-hit
+function smash () {
+	local T_PROC=$1
+	local T_PIDS=($(pgrep -i "$T_PROC"))
+	if [[ "${#T_PIDS[@]}" -ge 1 ]]; then
+		echo "Found the following processes:"
+		for pid in "${T_PIDS[@]}"; do
+			echo "$pid" "$(\ps -p "$pid" -o comm= | awk -F'/' '{print $NF}')" | column -t
+		done
+		if ask "Kill them?" N; then
+			for pid in "${T_PIDS[@]}"; do
+				echo "Killing ${pid}..."
+				( kill -15 "$pid" ) && continue
+				sleep 2
+				( kill -2 "$pid" ) && continue
+				sleep 2
+				( kill -1 "$pid" ) && continue
+				echo "Cannot terminate" >&2 && return 1
+			done
+		else
+			echo "Exiting..."
+			return 0
+		fi
+	else
+		echo "No processes found for: $1" >&2 && return 1
+	fi
+}
+
+# For some reason, rot13 pops up everywhere
+function rot13() {
+	if [[ $# -eq 0 ]]; then
+		tr '[a-m][n-z][A-M][N-Z]' '[n-z][a-m][N-Z][A-M]'
+	else
+		echo $* | tr '[a-m][n-z][A-M][N-Z]' '[n-z][a-m][N-Z][A-M]'
+	fi
+}
+
+# Trim leading and trailing spaces
+function trim() {
+	local var=$@
+	var="${var#"${var%%[![:space:]]*}"}"  # remove leading whitespace characters
+	var="${var%"${var##*[![:space:]]}"}"  # remove trailing whitespace characters
+	echo -n "$var"
+}
+
+#######################################################
+# Show the initial information HUD on initial Bash load
+# Link: https://github.com/LinusDierheimer/fastfetch
+# Link: https://ostechnix.com/neofetch-display-linux-systems-information/
+# Link: https://github.com/KittyKatt/screenFetch
+# Link: https://github.com/deater/linux_logo
+# Link: https://github.com/dylanaraps/pfetch
+#######################################################
+
+# If we are NOT root or in a virtual terminal console or TMUX or Git Bash...
+if [[ $EUID -ne 0 ]] && \
+	[[ ! "$(tty)" =~ /dev/tty ]] && \
+	[[ ! "$TERM" =~ screen ]] && \
+	[[ -z "$TMUX" ]] && \
+	[[ "$_KERNEL_NAME" != "MINGW" ]] && \
+	[[ "$_KERNEL_NAME" != "CYGWI" ]] && \
+	[[ "$_SKIP_SYSTEM_INFO" = false ]]; then
+
+	if [[ -x "$(command -v fastfetch)" ]]; then
+		fastfetch
+	elif [[ -x "$(command -v neofetch)" ]]; then
+		neofetch
+		printf '\e[A\e[K' # Move the cursor up one line
+	elif [[ -x "$(command -v screenfetch)" ]]; then
+		screenfetch
+	elif [[ -x "$(command -v linuxlogo)" ]]; then
+		linuxlogo
+	elif [[ -x "$(command -v archey)" ]]; then
+		archey
+	elif [[ -f "$HOME/pfetch.sh" ]]; then
+		"$HOME/pfetch.sh"
+	fi
+fi
+
+#######################################################
+# Show text or ASCII on initial Bash load
+# Create ASCII: jp2a --color ~/input_image.jpg > ~/.bash_motd_shown
+# Test: cat ~/.bash_motd_shown
+#######################################################
+
+# If we are NOT root or in a virtual terminal console or TMUX...
+if [[ -f "$HOME/.bash_motd_shown" ]] && \
+	[[ $EUID -ne 0 ]] && \
+	[[ ! "$(tty)" =~ /dev/tty ]] && \
+	[[ ! "$TERM" =~ screen ]] && \
+	[[ -z "$TMUX" ]]; then
+
+	# Show the ASCII text or image
+	cat "$HOME/.bash_motd_shown"
+fi
+
+#######################################################
+# This default prompt will be used if another prompt is not installed
+# Link: https://ezprompt.net/ (some modifications below)
+# Git Code Reference:
+# > Renamed
+# * Ahead
+# + New File
+# ? Untracked
+# x Deleted
+# ! Dirty
+#######################################################
+
+# Get current branch in Git repo
+function _parse_git_branch() {
+	BRANCH=`git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'`
+	if [[ ! "${BRANCH}" == "" ]]; then
+		STAT=`_parse_git_dirty`
+		echo " [${BRANCH}${STAT}]"
+	else
+		echo ""
+	fi
+}
+
+# Get current status of Git repo
+function _parse_git_dirty {
+	status=`git status 2>&1 | tee`
+	dirty=`echo -n "${status}" 2> /dev/null | grep "modified:" &> /dev/null; echo "$?"`
+	untracked=`echo -n "${status}" 2> /dev/null | grep "Untracked files" &> /dev/null; echo "$?"`
+	ahead=`echo -n "${status}" 2> /dev/null | grep "Your branch is ahead of" &> /dev/null; echo "$?"`
+	newfile=`echo -n "${status}" 2> /dev/null | grep "new file:" &> /dev/null; echo "$?"`
+	renamed=`echo -n "${status}" 2> /dev/null | grep "renamed:" &> /dev/null; echo "$?"`
+	deleted=`echo -n "${status}" 2> /dev/null | grep "deleted:" &> /dev/null; echo "$?"`
+	bits=''
+	if [[ "${renamed}" == "0" ]]; then
+		bits=">${bits}"
+	fi
+	if [[ "${ahead}" == "0" ]]; then
+		bits="*${bits}"
+	fi
+	if [[ "${newfile}" == "0" ]]; then
+		bits="+${bits}"
+	fi
+	if [[ "${untracked}" == "0" ]]; then
+		bits="?${bits}"
+	fi
+	if [[ "${deleted}" == "0" ]]; then
+		bits="x${bits}"
+	fi
+	if [[ "${dirty}" == "0" ]]; then
+		bits="!${bits}"
+	fi
+	if [[ ! "${bits}" == "" ]]; then
+		echo " ${bits}"
+	else
+		echo ""
+	fi
+}
+
+# Faster Git information for Git Bash and slow networks
+# https://stackoverflow.com/questions/4485059/git-bash-is-extremely-slow-in-windows-7-x64/19500237#19500237
+# https://stackoverflow.com/questions/4485059/git-bash-is-extremely-slow-in-windows-7-x64/13476961#13476961
+# https://stackoverflow.com/questions/39518124/check-if-directory-is-git-repository-without-having-to-cd-into-it/39518382#39518382
+function _fast_git_ps1 () {
+	git -C . rev-parse 2>/dev/null && echo " ($((git symbolic-ref --short -q HEAD || git rev-parse -q --short HEAD) 2> /dev/null))"
+}
+
+# Clear out the prompt command before we begin
+# Some environments can set this and cause errors
+export PROMPT_COMMAND=''
+
+# Set the prompt
+# Date formats: https://www.cyberciti.biz/faq/linux-unix-formatting-dates-for-display/
+if [[ "$_KERNEL_NAME" = "MINGW" ]] || [[ "$_KERNEL_NAME" = "CYGWI" ]]; then
+
+	# Prompt using faster and less intensive functions on Git Bash
+	export PS1="\[${PURPLE}\]\u \[${BLUE}\]\D{%b %d} \[${CYAN}\]\A \[${BROWN}\]\w\[${RED}\]\`_fast_git_ps1\`\[${NOCOLOR}\]\n\\$ "
+
+else # Standard default prompt
+
+	# Prompt color changes if logged on as root
+	if [[ $EUID -ne 0 ]]; then
+		_COLOR_USER="\033[0;32m"
+	else
+		_COLOR_USER="\033[1;31m"
+	fi
+
+	# Only if connected SSH, show the host
+	if [[ -n "$SSH_CLIENT" ]] || [[ -n "$SSH_TTY" ]]; then
+		export PS1="\[${PURPLE}\]\u@\h \[${BLUE}\]\D{%b %d} \[${CYAN}\]\[${_TIME_FORMAT}\] \[${BROWN}\]\w\[${RED}\]\`_parse_git_branch\`\[${NOCOLOR}\]\n\[${_COLOR_USER}\]>\[${NOCOLOR}\] "
+	else # Otherwise, only show the name
+		export PS1="\[${PURPLE}\]\u \[${BLUE}\]\D{%b %d} \[${CYAN}\]\[${_TIME_FORMAT}\] \[${BROWN}\]\w\[${RED}\]\`_parse_git_branch\`\[${NOCOLOR}\]\n\[${_COLOR_USER}\]>\[${NOCOLOR}\] "
+	fi
+fi
+
+# Prompt Configuration for Trueline if installed
+declare -A TRUELINE_COLORS=(
+	[black]='55;55;55'
+	[cursor_grey]='64;64;64'
+	[green]='80;230;70'
+	[grey]='178;178;178'
+	[cyan]='84;255;243'
+	[light_blue]='0;120;195'
+	[dark_blue]='0;85;150'
+	[mono]='136;136;136'
+	[yellow]='255;215;0'
+	[orange]='230;150;0'
+	[purple]='198;120;221'
+	[red]='253;84;84'
+	[special_grey]='64;64;64'
+	[white]='208;208;208'
+	[bright_white]='240;240;240'
+)
+
+# If we are NOT root
+if [[ $EUID -ne 0 ]]; then
+	declare -a TRUELINE_SEGMENTS=(
+#		'user,white,special_grey,normal'  # Show user
+		'ssh,white,special_grey,normal'  # Show user only when SSH
+		'time,bright_white,dark_blue,normal'
+		'aws_profile,black,orange,bold'
+		'venv,black,purple,bold'
+		'conda_env,black,purple,bold'
+		'git,grey,special_grey,normal'
+		'working_dir,bright_white,light_blue,normal'
+		'read_only,black,orange,bold'
+		'bg_jobs,black,orange,bold'
+		'exit_status,black,red,bold'
+		'cmd_duration,black,grey,normal'
+#		'newline,black,green,bold'
+	)
+else # We are logged in as root
+	declare -a TRUELINE_SEGMENTS=(
+#		'user,bright_white,red,bold'      # Show user
+		'ssh,bright_white,red,bold'      # Show user only when SSH
+		'time,bright_white,dark_blue,normal'
+		'aws_profile,black,orange,bold'
+		'venv,black,purple,bold'
+		'conda_env,black,purple,bold'
+		'git,grey,special_grey,normal'
+		'working_dir,bright_white,light_blue,normal'
+		'read_only,black,orange,bold'
+		'bg_jobs,black,orange,bold'
+		'exit_status,black,red,bold'
+		'cmd_duration,black,grey,normal'
+#		'newline,bright_white,red,bold'
+	)
+fi
+
+declare -A TRUELINE_SYMBOLS=(
+#	[git_modified]='*'
+#	[git_github]=''
+	[git_github]=''
+#	[git_github]=''
+#	[git_github]=''
+#	[git_github]=''
+#	[segment_separator]=''
+#	[segment_separator]=''
+#	[segment_separator]=''
+#	[working_dir_folder]='...'
+#	[working_dir_separator]='/'
+#	[working_dir_separator]=''
+#	[working_dir_home]='~'
+#	[working_dir_home]=' ~'
+#	[newline]='❯'
+	[clock]='🕒'
+	[timer]='⏱ '
+)
+
+export TRUELINE_GIT_SHOW_STATUS_NUMBERS=false
+export TRUELINE_GIT_MODIFIED_COLOR='red'
+export TRUELINE_GIT_BEHIND_AHEAD_COLOR='purple'
+export TRUELINE_USER_ROOT_COLORS=('white' 'red')
+export TRUELINE_WORKING_DIR_SPACE_BETWEEN_PATH_SEPARATOR=true
+export TRUELINE_WORKING_DIR_ABBREVIATE_PARENT_DIRS=false
+export TRUELINE_WORKING_DIR_ABBREVIATE_PARENT_DIRS_LENGTH=3
+export TRUELINE_USER_SHOW_IP_SSH=false
+export TRUELINE_USER_ALWAYS_SHOW_HOSTNAME=false
+export TRUELINE_USER_SHORTEN_HOSTNAME=false
+
+# Custom Trueline time segment
+function _trueline_time_segment() {
+	# local prompt_time="🕒 \D{%b %e %-l:%M.%S %p}"  # Long 12-Hour
+	# local prompt_time="🕒 \D{%b %e %-k:%M.%S}"  # Long 24-Hour
+	local prompt_time="🕒 \D{%-k:%M}"  # Short 24-Hour
+	local fg_color="$1"
+	local bg_color="$2"
+	local font_style="$3"
+	local segment="$(_trueline_separator)"
+	segment+="$(_trueline_content "$fg_color" "$bg_color" "$font_style" " $prompt_time ")"
+	PS1+="$segment"
+	_trueline_record_colors "$fg_color" "$bg_color" "$font_style"
+}
+
+# Custom Trueline customer ssh segment (only shows user@host when SSH)
+function _trueline_ssh_segment() {
+	local prompt_ssh="\u@\h"   # Short host name
+	# local prompt_ssh="\u@\H" # Fully qualified domain name
+	local prompt_non_ssh="\u"  # User name only for non-SSH
+	local fg_color="$1"
+	local bg_color="$2"
+	local font_style="$3"
+	local segment="$(_trueline_separator)"
+
+	if [[ -n "$SSH_CLIENT" ]] || [[ -n "$SSH_TTY" ]]; then
+		segment+="$(_trueline_content "$fg_color" "$bg_color" "$font_style" " $prompt_ssh ")"
+		PS1+="$segment"
+		_trueline_record_colors "$fg_color" "$bg_color" "$font_style"
+### Uncomment these lines to show user name only if not SSH
+### Otherwise, the local prompt will not show the user name at all
+#	else
+#		segment+="$(_trueline_content "$fg_color" "$bg_color" "$font_style" " $prompt_non_ssh ")"
+#		PS1+="$segment"
+#		_trueline_record_colors "$fg_color" "$bg_color" "$font_style"
+	fi
+}
+
+# Prompt Configuration for Powerline-Go
+function _powerline_go_update_ps1() {
+	PS1="$($GOPATH/bin/powerline-go -error $? -jobs $(jobs -p | wc -l))"
+
+	### Uncomment the following line to automatically clear errors after showing
+	### them once. This not only clears the error for powerline-go, but also for
+	### everything else you run in that shell. Don't enable this if you're not
+	### sure this is what you want.
+	#set "?"
+}
+
+# Prompt Configuration for Powerline-Shell
+function _powerline_shell_update_ps1() {
+	PS1=$(powerline-shell $?)
+}
+
+#######################################################
+# Attempt to find and load some of the top prompt scripts/apps
+# Only set and replace the custom prompt script if installed
+# Otherwise, the standard prompt in a section above is already set
+#######################################################
+
+# The original older Extreme Ultimate .bashrc File prompt with added Git support
+if [[ -f "$HOME/.bashrc_prompt" ]] && [[ "$_SKIP_PROMPT_ORIGINAL" = false ]]; then
+	source "$HOME/.bashrc_prompt"
+
+# Trueline Bash (true 24-bit color and glyph support)
+# This is the prefered prompt since it looks amazing,
+# has so many features, is easily extended using functions,
+# and is a single Bash script file that is easy to install.
+# Link: https://github.com/petobens/trueline
+# Install: wget https://raw.githubusercontent.com/petobens/trueline/master/trueline.sh -P ~/
+# Fonts: https://github.com/powerline/fonts
+elif [[ -f /usr/bin/trueline ]] && [[ "$_SKIP_PROMPT_TRUELINE" = false ]]; then
+	source /usr/bin/trueline
+elif [[ -f "$HOME/trueline/trueline.sh" ]] && [[ "$_SKIP_PROMPT_TRUELINE" = false ]]; then
+	source "$HOME/trueline/trueline.sh"
+elif [[ -f "$HOME/trueline.sh" ]] && [[ "$_SKIP_PROMPT_TRUELINE" = false ]]; then
+	source "$HOME/trueline.sh"
+
+# Powerline-Go (this prompt uses no special glyphs)
+# Link: https://github.com/justjanne/powerline-go
+elif [[ -f "$GOPATH/bin/powerline-go" ]] && [[ "$_SKIP_PROMPT_POWERLINE_GO" = false ]]; then
+	PROMPT_COMMAND="_powerline_go_update_ps1; $PROMPT_COMMAND"
+
+# Powerline-Shell (details about git/svn/hg/fossil branch and Python virtualenv environment)
+# Link: https://github.com/b-ryan/powerline-shell
+elif [[ -x "$(command -v powerline-shell)" ]] && [[ "$_SKIP_PROMPT_POWERLINE_SHELL" = false ]]; then
+	PROMPT_COMMAND="_powerline_shell_update_ps1; $PROMPT_COMMAND"
+
+# Pureline (256 color written in bash script)
+# Link: https://github.com/chris-marsh/pureline
+# Install:
+# git clone https://github.com/chris-marsh/pureline.git
+# cp pureline/configs/powerline_full_256col.conf ~/.pureline.conf
+elif [[ -f "$HOME/pureline/pureline" ]] && [[ "$_SKIP_PROMPT_PURELINE" = false ]]; then
+	source "$HOME/pureline/pureline $HOME/.pureline.conf"
+
+# Starship Cross Shell Prompt (focus on compatibility and written in Rust)
+# Link: https://starship.rs
+# Install: sh -c "$(curl -fsSL https://starship.rs/install.sh)"
+elif [[ -x "$(command -v starship)" ]] && [[ "$_SKIP_PROMPT_STARSHIP" = false ]]; then
+	eval "$(starship init bash)"
+
+# Oh-My-Git (only used for Git but has huge support for it, requires font)
+# Link: https://github.com/arialdomartini/oh-my-git
+# Install: git clone https://github.com/arialdomartini/oh-my-git.git ~/.oh-my-git
+elif [[ -f "$HOME/.oh-my-git/prompt.sh" ]] && [[ "$_SKIP_PROMPT_OH_MY_GIT" = false ]]; then
+	source "$HOME/.oh-my-git/prompt.sh"
+
+# Bash Git Prompt (shows git repository, branch name, difference with remote branch, number of files staged, changed, etc)
+# Link: https://github.com/magicmonty/bash-git-prompt
+# Install: git clone https://github.com/magicmonty/bash-git-prompt.git ~/.bash-git-prompt --depth=1
+elif [[ -f /usr/lib/bash-git-prompt/gitprompt.sh ]] && [[ "$_SKIP_PROMPT_BASH_GIT_PROMPT" = false ]]; then
+	# To only show the git prompt in or under a repository directory
+	GIT_PROMPT_ONLY_IN_REPO=1
+	# To use upstream's default theme
+	# GIT_PROMPT_THEME=Default
+	# To use upstream's default theme, modified by arch maintainer
+	GIT_PROMPT_THEME=Default_Arch
+	source /usr/lib/bash-git-prompt/gitprompt.sh
+elif [[ -f "$HOME/.bash-git-prompt/gitprompt.sh" ]] && [[ "$_SKIP_PROMPT_BASH_GIT_PROMPT" = false ]]; then
+	# To only show the git prompt in or under a repository directory
+	GIT_PROMPT_ONLY_IN_REPO=1
+	# To use upstream's default theme
+	# GIT_PROMPT_THEME=Default
+	# To use upstream's default theme, modified by arch maintainer
+	GIT_PROMPT_THEME=Default_Arch
+	source "$HOME/.bash-git-prompt/gitprompt.sh"
+
+# Bash Powerline (no need for patched fonts, supports git, previous command execution status, platform-dependent prompt symbols)
+# Link: https://github.com/riobard/bash-powerline
+# Install: curl https://raw.githubusercontent.com/riobard/bash-powerline/master/bash-powerline.sh > ~/.bash-powerline.sh
+elif [[ -f "$HOME/.bash-powerline.sh" ]] && [[ "$_SKIP_PROMPT_BASH_POWERLINE" = false ]]; then
+	source "$HOME/.bash-powerline.sh"
+
+# Sexy Bash Prompt (supports git, 256 color)
+# Link: https://github.com/twolfson/sexy-bash-prompt
+# Install: (cd /tmp && ([[ -d sexy-bash-prompt ]] || git clone --depth 1 --config core.autocrlf=false https://github.com/twolfson/sexy-bash-prompt) && cd sexy-bash-prompt && make install)
+elif [[ -f "$HOME/.bash_prompt" ]] && [[ "$_SKIP_PROMPT_SEXY_BASH_PROMPT" = false ]]; then
+	source "$HOME/.bash_prompt"
+
+# Liquid Prompt (adaptive prompt with low color and no glyphs)
+# Link: https://github.com/nojhan/liquidprompt
+# Install: git clone --branch stable https://github.com/nojhan/liquidprompt.git ~/liquidprompt
+elif [[ -f "$HOME/liquidprompt/liquidprompt" ]] && [[ "$_SKIP_PROMPT_LIQUIDPROMPT" = false ]]; then
+	source "$HOME/liquidprompt/liquidprompt"
+
+# Original Powerline Status Line for Vim Bash Zsh fish tmux IPython Awesome i3 Qtile
+# Link: https://github.com/powerline/powerline
+# Install: https://medium.com/earlybyte/powerline-for-bash-6d3dd004f6fc
+# NOTE: Requires Python and can be used with Trueline in Bash
+# WARNING: This path may change or break in the future with new Python versions
+elif [[ -f /usr/lib/python3.9/site-packages/powerline/bindings/bash/powerline.sh ]] && [[ "$_SKIP_PROMPT_POWERLINE" = false ]]; then
+	source /usr/lib/python3.9/site-packages/powerline/bindings/bash/powerline.sh
+fi
+
+#######################################################
+# bashmarks Directory Bookmarks
+# Link: https://github.com/huyng/bashmarks
+# Install: git clone git://github.com/huyng/bashmarks.git
+# s <bookmark_name> - Saves the current directory as "bookmark_name"
+# g <bookmark_name> - Goes (cd) to the directory associated with "bookmark_name"
+# p <bookmark_name> - Prints the directory associated with "bookmark_name"
+# d <bookmark_name> - Deletes the bookmark
+# l                 - Lists all available bookmarks
+#######################################################
+
+# If bashmarks is installed, load it
+if [[ -f "$HOME/bashmarks/bashmarks.sh" ]]; then
+	source "$HOME/bashmarks/bashmarks.sh"
+elif [[ -f "$HOME/.local/bin/bashmarks.sh" ]]; then
+	source "$HOME/.local/bin/bashmarks.sh"
+elif [[ -f /usr/share/bashmarks/bashmarks.sh ]]; then
+	source /usr/share/bashmarks/bashmarks.sh
+fi
+
+#######################################################
+# Zoxide is a smarter cd command (inspired by z and autojump)
+# Link: https://github.com/ajeetdsouza/zoxide
+# Install: curl -sS https://webinstall.dev/zoxide | bash
+#######################################################
+
+if [[ -x "$(command -v zoxide)" ]]; then
+	eval "$(zoxide init bash)"
+fi
+
+#######################################################
+# commacd Improved cd
+# Link: https://github.com/shyiko/commacd
+# Install: curl -sSL https://github.com/shyiko/commacd/raw/v1.0.0/commacd.sh -o ~/.commacd.sh
+#######################################################
+
+# If commacd is installed
+if [[ -f "$HOME/.commacd.sh" ]]; then
+	source "$HOME/.commacd.sh"
+elif [[ -f /usr/share/commacd/commacd.bash ]]; then
+	source /usr/share/commacd/commacd.bash
+fi
+
+#######################################################
+# Improve navigation and searching your command history
+#######################################################
+
+# HSTR Easily navigate and search your command history and favorites
+# (has favorites, syncs across shells, does not require an extra database, but does not show the time since a command)
+# Link: https://github.com/dvorka/hstr
+# Manual: man hstr
+if [[ -x "$(command -v hstr)" ]]; then
+
+	# Alias hh for hstr
+	alias hh='hstr'
+
+	# Get more colors
+	export HSTR_CONFIG=hicolor
+
+	# Bind hstr to CTRL-r (for Vi mode check doc)
+	bind '"\C-r": "\C-a hstr -- \C-j"'
+
+	# Bind 'kill last command' to CTRL-x k
+	bind '"\C-xk": "\C-a hstr -k \C-j"'
+
+# McFly - fly through your shell history using a small neural network
+# (shows the time since the command, but does not have favorites, and has issues syncing history across multiple shells)
+# NOTE: You can type % to match any number of characters when searching
+# Link: https://github.com/cantino/mcfly
+# Install: curl -LSfs https://raw.githubusercontent.com/cantino/mcfly/master/ci/install.sh | sh -s -- --git cantino/mcfly
+elif [[ -x "$(command -v mcfly)" ]]; then
+
+	# Initialize McFly
+	eval "$(mcfly init bash)"
+
+	# Alias hh for McFly
+	alias hh='mcfly search'
+
+	# Enable fuzzy searching
+	export MCFLY_FUZZY=2
+
+	# Change the maximum number of results shown (default: 10)
+	export MCFLY_RESULTS=60
+
+	# To swap the color scheme for use in a light terminal, change this
+	export MCFLY_LIGHT=FALSE
+
+# Rich Enhanced Shell History (resh) Context-based replacement/enhancement for zsh and bash shell history
+# (shows more information, has raw mode, but uses own database, does not have favorites, can't delete history)
+# Link: https://github.com/curusarn/resh
+# Install: (git clone https://github.com/curusarn/resh.git && cd resh && scripts/rawinstall.sh)
+# Update: reshctl update
+# WARNING: Install automatically adds lines to the end of the ~/.bashrc file
+elif [[ -f ~/.resh/shellrc ]]; then
+
+	# Source the scripts
+	source ~/.resh/shellrc
+	[[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh
+
+	# Bind 'kill last command' to CTRL-x k
+	bind '"\C-xk": "\C-a hstr -k \C-j"'
+
+	# Alias hh for resh
+	alias hh='resh'
+
+fi
+
+#######################################################
+# qfc Command Line File Completion (CTRL-F to list files)
+# Link: https://github.com/pindexis/qfc
+# Install: git clone https://github.com/pindexis/qfc $HOME/.qfc
+#######################################################
+
+# If qfc is installed
+if [[ -f "$HOME/.qfc/bin/qfc.sh" ]]; then
+	source "$HOME/.qfc/bin/qfc.sh"
+elif [[ -f /usr/share/qfc/qfc.sh ]]; then
+	source /usr/share/qfc/qfc.sh
+fi
+
+#######################################################
+# Settings and Exports
+#######################################################
+
+# Make sure 256 color terminals are enabled
+export TERM=xterm-256color
+export use_color=true
+
+# Tell NCURSES to use UTF-8 encoding
+export NCURSES_NO_UTF8_ACS=1
+
+# If bat is installed, use it instead of cat
+# https://github.com/sharkdp/bat
+if [[ -x "$(command -v batcat)" ]]; then
+	alias bat='batcat'
+	alias cat='batcat'
+elif [[ -x "$(command -v bat)" ]]; then
+	alias cat='bat'
+fi
+
+# Color for manpages in less makes manpages a little easier to read
+if [[ -f /usr/share/source-highlight/src-hilite-lesspipe.sh ]]; then
+	export PAGER=less
+	export LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh %s"
+elif [[ -x "$(command -v src-hilite-lesspipe.sh)" ]]; then
+	export PAGER=less
+	export LESSOPEN="| src-hilite-lesspipe.sh %s"
+elif [[ -x "$(command -v moar)" ]]; then
+	export PAGER=moar
+elif [[ -x "$(command -v most)" ]]; then
+	export PAGER=most
+else
+	export PAGER=less
+fi
+export LESS='-M~g -i -z-4 -F -R -P%t?f%f :stdin .?pb%pb\%:?lbLine %lb:?bbByte %bb:-...'
+export LESS_TERMCAP_mb=$'\E[01;31m'
+export LESS_TERMCAP_md=$'\E[01;31m'
+export LESS_TERMCAP_me=$'\E[0m'
+export LESS_TERMCAP_se=$'\E[0m'
+export LESS_TERMCAP_so=$'\E[01;44;33m'
+export LESS_TERMCAP_ue=$'\E[0m'
+export LESS_TERMCAP_us=$'\E[01;32m'
+alias less='less -N -R'
+
+#######################################################
+# Vivid LS_COLORS Generator
+# Link: https://github.com/sharkdp/vivid
+# Themes: https://github.com/sharkdp/vivid/tree/master/themes
+#######################################################
+# LS_COLORS (lscolors-git in Arch AUR repository)
+# Link: https://github.com/trapd00r/LS_COLORS
+# Install:
+# mkdir /tmp/LS_COLORS && curl -L https://api.github.com/repos/trapd00r/LS_COLORS/tarball/master | tar xzf - --directory=/tmp/LS_COLORS --strip=1
+# ( cd /tmp/LS_COLORS && sh install.sh )
+#######################################################
+
+# Colors for ls
+export CLICOLOR=1
+
+if [[ -x "$(command -v vivid)" ]]; then
+	# Vivid is installed
+	export LS_COLORS="$(vivid generate one-dark)"
+elif [[ -f "$HOME/.local/share/lscolors.sh" ]]; then
+	# LS_COLORS is installed locally
+	source "$HOME/.local/share/lscolors.sh"
+elif [[ -f /usr/share/LS_COLORS/dircolors.sh ]]; then
+	# LS_COLORS is installed system wide
+	source /usr/share/LS_COLORS/dircolors.sh
+elif [[ -x /usr/bin/dircolors ]]; then
+	test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+else
+	# Export a custom ls color profile
+	# NOTE: File types are in alphabetical order to make them easier to find
+	export LS_COLORS='bd=40;33;01:ca=30;41:cd=40;33;01:di=00;34:do=01;35:ex=01;32:fi=00:ln=01;36:mh=00:mi=01;05;37;41:no=00:or=40;31;01:ow=34;42:pi=40;33:rs=0:sg=30;43:so=01;35:st=37;44:su=37;41:tw=30;42:*.7z=01;31:*.Z=01;31:*.aac=01;36:*.ace=01;31:*.ada=00;32:*.alz=01;31:*.ans=01;33:*.anx=01;35:*.arc=01;31:*.arj=01;31:*.asc=01;33:*.asf=01;35:*.asm=00;32:*.au=01;36:*.avi=01;35:*.axa=01;36:*.axv=01;35:*.bmp=01;35:*.bz2=01;31:*.bz=01;31:*.c=00;32:*.cab=01;31:*.cbl=00;32:*.cgm=01;35:*.conf=00;31:*.cpio=01;31:*.cpp=00;32:*.cpy=00;32:*.cs=00;32:*.css=00;32:*.csv=01;33:*.deb=01;31:*.dl=01;35:*.doc=01;33:*.docx=01;33:*.dot=01;33:*.dz=01;31:*.ear=01;31:*.emf=01;35:*.f90=00;32:*.f=00;32:*.flac=01;36:*.flc=01;35:*.fli=01;35:*.flv=01;35:*.for=00;32:*.gif=01;35:*.gl=01;35:*.go=00;32:*.groovy=00;32:*.gz=01;31:*.h=00;32:*.hpp=00;32:*.htm=00;32:*.html=00;32:*.inc=00;32:*.ini=00;32:*.jar=01;31:*.java=00;32:*.jpeg=01;35:*.jpg=01;35:*.js=00;32:*.json=00;32:*.lha=01;31:*.lib=00;32:*.lrz=01;31:*.lua=00;32:*.lz=01;31:*.lzh=01;31:*.lzma=01;31:*.lzo=01;31:*.m2v=01;35:*.m4v=01;35:*.m=00;32:*.mat=00;32:*.mcw=01;33:*.mid=01;36:*.midi=01;36:*.mk=00;32:*.mka=01;36:*.mkv=01;35:*.mng=01;35:*.mov=01;35:*.mp3=01;36:*.mp4=01;35:*.mp4v=01;35:*.mpc=01;36:*.mpeg=01;35:*.mpg=01;35:*.msg=01;33:*.nfo=01;33:*.nuv=01;35:*.ods=01;33:*.odt=01;33:*.oga=01;36:*.ogg=01;36:*.ogm=01;35:*.ogv=01;35:*.ogx=01;35:*.pbm=01;35:*.pcx=01;35:*.pdf=01;33:*.pgm=01;35:*.php=00;32:*.pl=00;32:*.png=01;35:*.pot=01;33:*.ppm=01;35:*.pps=01;33:*.ppt=01;33:*.pptx=01;33:*.prn=01;33:*.py=00;32:*.qt=01;35:*.r=00;32:*.ra=01;36:*.rar=01;31:*.rb=00;32:*.rlib=00;32:*.rm=01;35:*.rmvb=01;35:*.rpm=01;31:*.rs=00;32:*.rtf=01;33:*.rz=01;31:*.sar=01;31:*.sc=00;32:*.scala=00;32:*.scss=00;32:*.sh=00;32:*.slk=01;33:*.spx=01;36:*.sql=00;32:*.svg=01;35:*.svgz=01;35:*.swift=00;32:*.t7z=01;31:*.tar=01;31:*.taz=01;31:*.tbz2=01;31:*.tbz=01;31:*.tcl=00;32:*.template=00;32:*.tga=01;35:*.tgz=01;31:*.tif=01;35:*.tiff=01;35:*.tlz=01;31:*.tpl=00;32:*.ts=00;32:*.txt=01;33:*.txz=01;31:*.tz=01;31:*.tzo=01;31:*.vb=00;32:*.vba=00;32:*.vbs=00;32:*.vob=01;35:*.war=01;31:*.wav=01;36:*.wb1=01;33:*.wk1=01;33:*.wk3=01;33:*.wk4=01;33:*.wmv=01;35:*.wpd=01;33:*.wps=01;33:*.wri=01;33:*.xbm=01;35:*.xcf=01;35:*.xlr=01;33:*.xls=01;33:*.xlsx=01;33:*.xlw=01;33:*.xml=00;32:*.xpm=01;35:*.xspf=01;36:*.xwd=01;35:*.xz=01;31:*.yaml=00;32:*.yml=00;32:*.yuv=01;35:*.zip=01;31:*.zoo=01;31:'
+fi
+
+#######################################################
+# mysql-colorize
+# Link: https://github.com/zpm-zsh/mysql-colorize
+# Install: git clone https://github.com/horosgrisa/mysql-colorize.bash ~/.bash/mysql-colorize
+#######################################################
+
+# If qfc is installed
+if [[ -f "$HOME/.bash/mysql-colorize/mysql-colorize.bash" ]]; then
+	source "$HOME/.bash/mysql-colorize/mysql-colorize.bash"
+fi
+
+#######################################################
+# Bash Completion
+# Link: https://github.com/scop/bash-completion
+#######################################################
+
+# Use extended globbing for more advanced pattern matching
+# This is necessary for programmable completion
+shopt -s extglob
+
+# Use bash-completion, if available
+if [[ -f /usr/share/bash-completion/bash_completion ]]; then
+	source /usr/share/bash-completion/bash_completion
+elif [[ -f /etc/bash_completion ]]; then
+	source /etc/bash_completion
+elif [[ -f "$HOME/bash_completion" ]]; then
+	source "$HOME/bash_completion"
+elif [[ -f "$HOME/.local/share/bash_completion" ]]; then
+	source "$HOME/.local/share/bash_completion"
+elif [[ -f "$HOME/.config/bash_completion" ]]; then
+	source "$HOME/.config/bash_completion"
+fi
+
+#######################################################
+# Cod is a completion daemon for bash, fish, and zsh
+# Link: https://github.com/dim-an/cod
+#######################################################
+
+if [[ -x "$(command -v cod)" ]]; then
+	source <(cod init $$ bash)
+fi
+
+#######################################################
+# Enable the "Command not found" hook
+# Link: https://github.com/falconindy/pkgfile
+# NOTE: pkgfile is targetted at Arch Linux users
+# Install: pacman -S pkgfile
+#######################################################
+
+if [[ -r /usr/share/doc/pkgfile/command-not-found.bash ]]; then
+	source /usr/share/doc/pkgfile/command-not-found.bash
+fi
+
+#######################################################
+# Better Bash Defaults
+# Link: http://www.gnu.org/software/bash/manual/html_node/The-Shopt-Builtin.html
+#######################################################
+
+### GENERAL OPTIONS
+
+# CRTL-q will now clear the entire line in the terminal (quit command)
+#bind '"\C-q":"C-k\C-u"'
+bind '"\C-q":"\e[F\C-u"'
+
+# Disable the bell sound but make it visible
+bind 'set bell-style visible'
+
+# Prevent overwriting an existing file with the >, >&, and <> redirection operators
+# Use `>|` to force redirection to an existing file
+#set -o noclobber
+
+# Update window size after each command and, if necessary, update the values of LINES and COLUMNS
+shopt -s checkwinsize
+
+# Automatically trim long paths in the prompt (requires Bash 4.x)
+PROMPT_DIRTRIM=3
+
+# Turn on recursive globbing (enables ** to recurse all directories)
+# For example, ls **/*.txt will list all text files in the current directory hierarchy
+shopt -s globstar 2> /dev/null
+
+# Case-insensitive globbing (used in pathname expansion)
+shopt -s nocaseglob;
+
+# Report the status of terminated background jobs immediately rather than before the next primary prompt
+set -o notify
+
+# Bash checks that a command found in the hash table exists before trying to execute it
+shopt -s checkhash
+
+# Turns off CTRL-D to log out
+#set -o ignoreeof
+
+# Disable coredumps
+ulimit -S -c 0
+
+# Don't want my shell to warn me of incoming mail
+shopt -u mailwarn
+unset MAILCHECK
+
+# Fix the HOME and END keys in PuTTY
+if [[ "$COLORTERM" ]]; then # rxvt
+	bind '"\e[7~": beginning-of-line'
+	bind '"\e[8~": end-of-line'
+else # xterm
+	bind '"\e[1~": beginning-of-line'
+	bind '"\e[4~": end-of-line'
+fi
+
+### SMARTER TAB-COMPLETION (Readline bindings)
+
+# Necessary for programmable completion
+shopt -s extglob
+
+# Perform file completion in a case insensitive fashion
+bind 'set completion-ignore-case on'
+
+# Treat hyphens and underscores as equivalent
+bind 'set completion-map-case on'
+
+# Display matches for ambiguous patterns at first tab press
+bind 'set show-all-if-ambiguous on'
+
+# Immediately add a trailing slash when autocompleting symlinks to directories
+bind 'set mark-symlinked-directories on'
+
+### HISTORY DEFAULTS
+
+# Turn off bash history completely
+# set +o history
+
+# Enable history expansion with space
+# E.g. typing !!<space> will replace the !! with your last command
+bind Space:magic-space
+
+# Huge history. Doesn't appear to slow things down, so why not?
+export HISTFILESIZE=100000
+export HISTSIZE=${HISTFILESIZE}
+
+# Avoid duplicate lines in the history and do not add lines that start with a space
+export HISTCONTROL=ignoreboth:erasedups
+
+# Append to history instead of overwriting it so if you start a new terminal, you have old session history
+shopt -s histappend histverify
+
+# Save and reload the history after each command finishes
+# WARNING: Some of these mess up the history counter and is slower as history grows larger
+# This has issues with McFly so only set if it's not installed
+if [[ ! -x "$(command -v mcfly)" ]]; then
+	## Append new history to history file, clear internal history list, and re-read the history file
+	export PROMPT_COMMAND="history -a; history -c; history -r; ${PROMPT_COMMAND}"
+	## -Or- just record each line as it gets issued but new history is not in other sessions (faster)
+	#export PROMPT_COMMAND="history -a; ${PROMPT_COMMAND}"
+fi
+
+# Save multi-line commands as one command
+shopt -s cmdhist
+
+# Consecutive duplicate commands, invocations of common commands like ls without parameters,
+# plus calls to the bg, fg and exit built-ins will not be appended to the history list
+export HISTIGNORE='&:[ ]*:ls:ll:[bf]g:history:clear:cls:exit'
+
+# Use standard ISO 8601 timestamp
+# %F equivalent to %Y-%m-%d
+# %T equivalent to %H:%M:%S (24-hours format)
+export HISTTIMEFORMAT='%F %T '
+
+# Enable incremental history search with up/down arrows (also Readline goodness)
+# Learn more about this here: http://codeinthehole.com/writing/the-most-important-command-line-tip-incremental-history-searching-with-inputrc/
+bind '"\e[A": history-search-backward'
+bind '"\e[B": history-search-forward'
+bind '"\e[C": forward-char'
+bind '"\e[D": backward-char'
+
+# Allow ctrl-S for history navigation (with ctrl-R)
+stty -ixon
+
+### BETTER DIRECTORY NAVIGATION
+
+# Prepend cd to directory names automatically
+shopt -s autocd 2> /dev/null
+
+# Correct spelling errors during tab-completion
+shopt -s dirspell 2> /dev/null
+shopt -s direxpand 2> /dev/null
+
+# Correct spelling errors in arguments supplied to cd
+shopt -s cdspell 2> /dev/null
+
+# This defines where cd looks for targets
+# Add the directories you want to have fast access to, separated by colon
+# Ex: CDPATH=".:~:~/projects" will look for targets in the current working directory, in home and in the ~/projects folder
+CDPATH="."
+
+# The source builtin uses the value of PATH to find the directory containing the file supplied as an argument
+shopt -s sourcepath
+
+# If Readline is being used, Bash will not attempt to search the PATH for possible completions when completion is attempted on an empty line
+shopt -s no_empty_cmd_completion
+
+# This allows you to bookmark your favorite places across the file system
+# Define a variable containing a path and you will be able to cd into it regardless of the directory you're in
+shopt -s cdable_vars
+
+# Examples:
+# export backup="$HOME/Backup"
+# export desktop="$HOME/Desktop"
+# export documents="$HOME/Documents"
+# export music="$HOME/Music"
+# export pictures="$HOME/Pictures"
+# export videos="$HOME/Videos"
+
+#######################################################
+# Automatically launch TMUX if this is a TTY Console
+# We only want to launch TMUX here when in a TTY console if it's installed
+#######################################################
+# Most terminals can launch TMUX and automatically exit when TMUX is detached:
+# konsole -e 'tmux new-session -A -s main'
+# xfce4-terminal -e 'tmux new-session -A -s main'
+# gnome-terminal -e 'tmux new-session -A -s main'
+# kitty sh -c "tmux new-session -A -s main"
+# guake -e tmux
+# Yakuake Profile -> Command -> /bin/bash -c "tmux new-session -A -s main"
+# Alacritty: https://github.com/alacritty/alacritty/issues/2956
+# ssh user@server -t tmux new-session -A -s main
+#######################################################
+
+# Check if TMUX is installed
+if [[ "$_SKIP_TMUX" = false ]] && command -v tmux>/dev/null; then
+	# We're on a TTY and not in TMUX
+	if [[ "$(tty)" =~ /dev/tty ]] && [[ ! "$TERM" =~ screen ]] && [ -z "$TMUX" ]; then
+		tmux new-session -A -s main
+	fi
+fi
+
+#######################################################
+# Blesh: Bash Line Editor replaces default GNU Readline
+# Link: https://github.com/akinomyoga/ble.sh
+# WARNING: Can be buggy with certain prompts (like Trueline)
+# To Install:
+# git clone --recursive https://github.com/akinomyoga/ble.sh.git
+# make -C ble.sh
+# To Update (in a ble.sh session):
+# ble-update
+#######################################################
+
+# If Blesh is installed, either activate or create an alias
+if [[ "$_SKIP_BLESH" = false ]]; then
+	if [[ -f "$HOME/ble.sh/out/ble.sh" ]]; then
+		source "$HOME/ble.sh/out/ble.sh"
+	elif [[ -f "$HOME/.local/share/blesh/ble.sh" ]]; then
+		source "$HOME/.local/share/blesh/ble.sh"
+	elif [[ -f /usr/share/blesh/ble.sh ]]; then
+		source /usr/share/blesh/ble.sh
+	fi
+fi
+
+#######################################################
+# Tilix VTE Configuration
+# Link: https://gnunn1.github.io/tilix-web/manual/vteconfig/
+#######################################################
+
+if [[ $TILIX_ID ]] || [[ $VTE_VERSION ]]; then
+	if [[ -f /etc/profile.d/vte.sh ]]; then
+		source /etc/profile.d/vte.sh
+	fi
+fi

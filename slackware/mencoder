@@ -1,0 +1,123 @@
+To list output video codecs, run
+
+$ mencoder -ovc help
+
+Similarly, to list output audio codecs, run
+
+$ mencoder -oac help
+
+
+The basic syntax for a conversion is
+
+mencoder original_video.mpg -o new_video.avi -ovc output_video_codec -oac output_audio_codec
+
+
+
+
+
+
+
+
+ Get Video File Information
+
+ ffmpeg -i video.flv -hide_banner
+
+  Split a video into images
+
+  ffmpeg -i video.flv image%d.jpg
+
+  converting a file to wav [HQ]
+
+  /usr/bin/ffmpeg -y -i "/home/ben/Music/pop/Alibama.mp3" -vn -r:a 48000  "/home/ben/Alibama.wav"
+
+
+converting a file to mp3 [HQ]
+
+/usr/bin/ffmpeg -y -i "/home/ben/Music/pop/Alibama.mp3" -acodec libmp3lame  -b:a 320k -ac 2   -r:a 48000 -b:a 320k "/home/ben/Alibama.mp3"
+
+ffmpeg -i video.flv -vn -ar 44100 -ac 2 -ab 192 -f mp3 audio.mp3
+
+/usr/bin/ffmpeg -y -i "/home/ube.mkv" -acodec libmp3lame  -b:a 320k -ac 2   -r:a 48000 -b:a 320k "/home/ben/1Tube.mp3"
+
+
+    vn: helps to disable video recording during the conversion.
+    ar: helps you set audio sampling rate in Hz.
+    ab: set the audio bitrate.
+    ac: to set the number of audio channels.
+    -f: format.
+
+converting to OGG audio
+
+/usr/bin/ffmpeg -y -i "/home/ben/Downloe.mkv" -acodec libvorbis -aq 3 -vn -ac 2 -b:a 320k  -r:a 48000  "/home/be/uTube.ogg"
+
+convert to mpeg4 audio
+
+/usr/bin/ffmpeg -y -i "/home/ben/ube.mkv" -vn -acodec aac  -b:a 320k -ac 2   -r:a 48000 -b:a 320k "/home/ben/10Tube.m4a"
+
+convert to WMA audio
+
+/usr/bin/ffmpeg -y -i "/home/ben/Dow.mkv" -vn -acodec wmav2  -b:a 320k -ac 2 -b:a 320k -r:a 48000  "/home/ben/1be.wma"
+
+
+Convert images into a video
+
+ ffmpeg -f image2 -i image%d.jpg imagestovideo.mpg
+
+
+convert to avi
+
+/usr/bin/ffmpeg -y -i "/home/ben/Tube.mkv" -acodec libmp3lame -vcodec msmpeg4  -b:a 320k -b:v 1000k -filter:v scale=640:480 -r:a 48000 -b:a 320k "/home/bebe.avi"
+
+convert to xvid fullscreen
+
+/usr/bin/ffmpeg -y -i "/home/ben/e.mkv" -f avi -r 29.97 -vcodec libxvid -vtag XVID -filter:v scale=640:480 -aspect 4:3 -maxrate 1800k -b:v 1500k -qmin 3 -qmax 5 -bufsize 4096 -mbd 2 -bf 2 -trellis 1 -flags +aic -cmp 2 -subcmp 2 -g 300 -acodec libmp3lame   -r:a 48000 -b:a 320k -ac 2 -b:a 320k "/home/bene.avi"
+
+convert to xvid widescreen
+
+/usr/bin/ffmpeg -y -i "/home/ben/be.mkv" -f avi -r 29.97 -vcodec libxvid -vtag XVID -filter:v scale=640:480 -aspect 4:3 -maxrate 1800k -b:v 1500k -qmin 3 -qmax 5 -bufsize 4096 -mbd 2 -bf 2 -trellis 1 -flags +aic -cmp 2 -subcmp 2 -g 300 -acodec libmp3lame   -r:a 48000 -b:a 320k -ac 2 -b:a 320k "/home/be.avi"
+
+convert to mp4 720p
+
+/usr/bin/ffmpeg -y -i "/home/ben/Doe.mkv" -crf 20.0 -vcodec libx264 -filter:v scale=1280:720 -preset slow -acodec aac   -r:a 48000 -b:a 320k -coder 1 -flags +loop -cmp chroma -partitions +parti4x4+partp8x8+partb8x8 -me_method hex -subq 6 -me_range 16 -g 250 -keyint_min 25 -sc_threshold 40 -i_qfactor 0.71 -b_strategy 1 -threads 0 -b:a 320k "/home/bee.mp4"
+
+convert to mp4 1080p
+
+/usr/bin/ffmpeg -y -i "/home/ben/e.mkv" -crf 18.0 -vcodec libx264 -filter:v scale=1920:1080 -preset veryslow -acodec aac   -r:a 48000 -b:a 320k -coder 1 -flags +loop -cmp chroma -partitions +parti4x4+partp8x8+partb8x8 -me_method hex -subq 6 -me_range 16 -g 250 -keyint_min 25 -sc_threshold 40 -i_qfactor 0.71 -b_strategy 1 -threads 0 -b:a 320k "/home/ben/1e.mp4"
+
+
+convert to mp4
+
+/usr/bin/ffmpeg -y -i "/home/ben/Doube.mkv" -f mp4 -r 29.97 -vcodec libx264 -preset slow -filter:v scale=640:480 -b:v 1000k -aspect 4:3 -flags +loop -cmp chroma -b:v 1250k -maxrate 1500k -bufsize 4M -bt 256k -refs 1 -bf 3 -coder 1 -me_method umh -me_range 16 -subq 7 -partitions +parti4x4+parti8x8+partp8x8+partb8x8 -g 250 -keyint_min 25 -level 30 -qmin 10 -qmax 51 -qcomp 0.6 -trellis 2 -sc_threshold 40 -i_qfactor 0.71 -acodec aac  -b:a 320k   -r:a 48000 -ac 2 -b:a 320k "/home/bene.mp4"
+
+
+dvd ntsc hq
+
+/usr/bin/ffmpeg -y -i "/home/ben/Dov" -f dvd -target ntsc-dvd -r 30000/1001 -filter:v scale=720:480 -aspect 4:3 -vb 8000k -mbd rd -trellis 1 -flags +mv0 -cmp 0 -subcmp 2 -b:a 320k  -r:a 48000  "/home/ben/100ube.mpg"
+
+dvd pal hq
+
+/usr/bin/ffmpeg -y -i "/home/bbe.mkv" -f dvd -target pal-dvd -aspect 4:3 -vb 8000k -mbd rd -trellis 1 -flags +mv0 -cmp 0 -subcmp 2 -b:a 320k  -r:a 48000  "/home/bebe.mpg"
+
+. Mix a video and audio together
+
+You can also mix a video with a sound file as follows:
+
+$ ffmpeg -i audio.mp3 -i video.avi video_audio_mix.mpg
+
+Add Photo or Banner to Audio
+
+You can add a cover poster or image to an audio file using the following command, this comes very useful for uploading MP3s to YouTube.
+
+$ ffmpeg -loop 1 -i image.jpg -i Bryan\ Adams\ -\ Heaven.mp3 -c:v libx264 -c:a aac -strict experimental -b:a 192k -shortest output.mp4
+
+
+
+You can also use ffmpeg to attach audio to a still image:
+ffmpeg -i audio.mp3 -loop 1 -i picture.jpg -shortest -vcodec mpeg4 -b:v 800k audio.avi
+
+
+This might be useful for porting audio to old DVD players that don’t support MP3 etc. ​You need to first add the audio to blank video using ffmpeg: (command adapted from Stefano Sabatini’s suggestion on ffmpeg-user)
+ffmpeg -i input-audio.wav -s 640x480 -f rawvideo -pix_fmt rgb24 -r 25 -i /dev/zero -shortest -vcodec libx264 -preset medium -tune stillimage -crf 24 -acodec copy output.mkv
+then proceed with output.mkv (convert it to .mpg as per DVD output below, etc)
+
+    Output file might not concatenate well with other tracks, but the dvdauthor command (below) can take multiple mpg inputs

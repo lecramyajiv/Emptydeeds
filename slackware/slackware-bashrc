@@ -1,0 +1,445 @@
+# If not running interactively, don't do anything
+case $- in
+    *i*) ;;
+      *) return;;
+esac
+
+# Bash version check
+
+if ((BASH_VERSINFO[0] < 4)); then
+	echo "This .bashrc file requires at least Bash 4.0"
+	exit 1
+fi
+
+# Home Dir PATH
+
+export HOME=${HOME:-"/home/$USER"}
+
+# Make sure if the history file is deleted...
+
+if [[ ! -f "$HOME/.bash_history" ]]; then
+	# Recreate an empty copy so history apps don't show errors
+	touch "$HOME/.bash_history"
+fi
+
+# Create bash_profile
+
+if [[ ! -f "$HOME/.bash_profile" ]]; then
+	touch "$HOME/.bash_profile"
+fi
+
+# enable programmable completion features (you don't need to enable
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+
+if ! shopt -oq posix; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+  fi
+fi
+
+# source bash_profile
+
+if [ -f /home/ben/.bash_profile ]; then
+    . /home/ben/.bash_profile
+fi
+
+# Make sure 256 color terminals are enabled
+
+export TERM=xterm-256color
+export use_color=true
+
+# Tell NCURSES to use UTF-8 encoding
+
+export NCURSES_NO_UTF8_ACS=1
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+
+shopt -s checkwinsize
+
+# If set, the pattern "**" used in a pathname expansion context will
+# match all files and zero or more directories and subdirectories.
+
+shopt -s globstar
+
+shopt -s extglob
+
+shopt -s nocaseglob
+
+# append to the history file, don't overwrite it
+
+shopt -s histappend
+
+shopt -s histverify
+
+# Show a notification when a job finishes.
+
+set -o notify
+
+# Enable programmable completion.
+
+shopt -s progcomp
+
+shopt -s no_empty_cmd_completion
+
+# Make ls, du, df and possibly other programs report sizes in a human-readable
+# way by default (e.g. `df` implicitly becomes `df -h`).
+
+export BLOCKSIZE=human-readable
+
+# Expand the history size
+
+export HISTFILESIZE=100000
+
+export HISTSIZE=${HISTFILESIZE}
+
+export HISTTIMEFORMAT='%d/%m/%y %T'
+
+export HISTIGNORE='&:[ ]*:ls:ll:[bf]g:history:clear:cls:exit'
+
+export HISTCONTROL=ignoreboth
+
+export HISTCONTROL=ignoredups
+
+export HISTCONTROL=ignorespace
+
+# gcc (available since gcc 4.9)
+
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
+# Color for manpages in less makes manpages a little easier to read
+
+export LESS_TERMCAP_mb=$'\E[01;31m'
+
+export LESS_TERMCAP_md=$'\E[01;31m'
+
+export LESS_TERMCAP_me=$'\E[0m'
+
+export LESS_TERMCAP_se=$'\E[0m'
+
+export LESS_TERMCAP_so=$'\E[01;44;33m'
+
+export LESS_TERMCAP_ue=$'\E[0m'
+
+export LESS_TERMCAP_us=$'\E[01;32m'
+####################
+# Terminal Options #
+####################
+
+PS1="[\D{%d/%m/%Y}-\A] \u@\H-\W:-\$"
+PS2="[\D{%d/%m/%Y}-\A] \u@\H-\W:-\$"
+
+####################
+#  DIRECTORY PATH  #
+####################
+
+# For making things adhere to XDG see: https://wiki.archlinux.org/index.php/XDG_Base_Directory
+
+export XDG_CACHE_HOME=${XDG_CACHE_HOME:-"$HOME/.cache"} # Cache stuff should go here.
+
+export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-"$HOME/.config"} # Config stuff should go here.
+
+export XDG_DATA_HOME=${XDG_DATA_HOME:-"$HOME/.local/share"} # Data should go here.
+
+export XDG_STATE_HOME=${XDG_STATE_HOME:-"$HOME/.local/state"} # user-specific state files should be written here
+
+export PATH=$PATH:/opt:$XDG_DATA_HOME/rustup:$XDG_DATA_HOME/cargo:/usr/local/share:/usr/share:/usr/local/include/libvmaf:/usr/local/include:/tmp:$HOME/.local/bin:/lib64/pkgconfig:/usr/lib64/pkgconfig:/usr/lib/pkgconfig:/usr/lib64:/usr/include:/usr/include/glslang/Include/
+
+export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/lib64/pkgconfig:/usr/lib/pkgconfig:/usr/lib64:/usr/include:/usr/include/glslang/Include/:/usr/include/opencv4/opencv2/core
+
+export PATH=/home/$USER/Tex/texlive/2022/bin/x86_64-linux:$PATH
+
+export MANPATH=/home/$USER/Tex/texlive/2022/texmf-dist/doc/man:$MANPATH
+
+export INFOPATH=/home/$USER/Tex/texlive/2022/texmf-dist/doc/info:$INFOPATH
+
+####################
+# IBUS Integration #
+####################
+
+export GTK_IM_MODULE=ibus
+
+export XMODIFIERS=@im=ibus
+
+export QT_IM_MODULE=ibus
+
+########################################################
+# EDITOR                                               #
+########################################################
+
+export EDITOR=nano
+
+export VISUAL=nano
+
+export SUDO_EDITOR=nano
+
+export FCEDIT=nano
+
+# Locale
+
+export LANG=en_US.UTF-8
+
+export LC_TIME=en_GB.UTF-8
+
+export LC_PAPER=en_GB.UTF-8
+
+export LC_MEASUREMENT=en_GB.UTF-8
+
+##################################################
+# Bashrc greetings				 #
+##################################################
+
+###### greeting
+# # from Jonathan's .bashrc file (by ~71KR117)
+# # get current hour (24 clock format i.e. 0-23)
+# # if it is midnight to midafternoon will say G'morning
+# if it is midafternoon to evening ( before 6 pm) will say G'noon
+# else it is good evening till midnight
+
+hour=$(date +"%H")
+if [ $hour -ge 0 -a $hour -lt 12 ]
+    then
+    greet="Good Morning, $USER. Your Fortune:"
+elif [ $hour -ge 12 -a $hour -lt 18 ]
+ then
+ greet="Good Afternoon, $USER. Your Fortune:"
+ else
+greet="Good Evening, $USER. Your Fortune:"
+fi
+echo  $greet
+#paste <(echo $greet) <( echo -e $( fortune -s)) | column -t     #-s ":"  # # display greeting
+printf "\n  $(fortune -a -s) "
+#printf "\t"
+#echo -e $(fortune -a -s)
+printf "\n \n Today's weather:"
+printf "\n \n \t"
+echo $(/usr/games/pom)
+printf "\n"
+#/usr/games/pom
+# printf "\n"
+
+#######################################
+# Show the current distribution       #
+#######################################
+
+distro ()
+{
+	# For Slackware we currently just test if /etc/slackware-version exists
+
+	if [ -s /etc/slackware-version ]; then
+		cat /etc/slackware-version
+    else
+			echo "Error: Unknown distribution"
+			exit 1
+    fi
+
+}
+
+
+##################################################################
+# myip - finds your current IP if your connected to the internet
+##################################################################
+
+function myip()
+{
+lynx -dump -hiddenlinks=ignore -nolist http://checkip.dyndns.org:8245/ | awk '{ print $4 }' | sed '/^$/d; s/^[ ]*//g; s/[ ]*$//g'
+}
+
+##################################################
+# Numerical conversions and numbers stuff	 #
+##################################################
+
+#################################################
+###### convert arabic to roman numerals         #
+# Copyright 2007 - 2010 Christopher Bratusek    #
+################################################# 
+
+function roman {
+
+  echo $1 | sed -e 's/1...$/M&/;s/2...$/MM&/;s/3...$/MMM&/;s/4...$/MMMM&/
+s/6..$/DC&/;s/7..$/DCC&/;s/8..$/DCCC&/;s/9..$/CM&/
+s/1..$/C&/;s/2..$/CC&/;s/3..$/CCC&/;s/4..$/CD&/;s/5..$/D&/
+s/6.$/LX&/;s/7.$/LXX&/;s/8.$/LXXX&/;s/9.$/XC&/
+s/1.$/X&/;s/2.$/XX&/;s/3.$/XXX&/;s/4.$/XL&/;s/5.$/L&/
+s/1$/I/;s/2$/II/;s/3$/III/;s/4$/IV/;s/5$/V/
+s/6$/VI/;s/7$/VII/;s/8$/VIII/;s/9$/IX/
+s/[0-9]//g'
+
+}
+
+################################################
+######## Convert Roman to Arabic Numerals      #
+###### from github.com/pysysops script         #
+################################################
+
+function arabic()
+
+{
+
+roman_numerals=$(echo $1 | tr a-z A-Z)
+
+# Test that it is valid
+[[ "${roman_numerals//[IVXLCDM]/}" == "" ]] || \
+    { echo Roman numerals ${roman_numerals} contains invalid characters ; \
+    exit 1 ;}
+
+# We want to replace all tokens to eventually have
+# all I's, remove new lines and count the characters.
+number=$(
+    echo ${roman_numerals} |
+    sed 's/CM/DCD/g' |
+    sed 's/M/DD/g' |
+    sed 's/CD/CCCC/g' |
+    sed 's/D/CCCCC/g' |
+    sed 's/XC/LXL/g' |
+    sed 's/C/LL/g' |
+    sed 's/XL/XXXX/g' |
+    sed 's/L/XXXXX/g' |
+    sed 's/IX/VIV/g' |
+    sed 's/X/VV/g' |
+    sed 's/IV/IIII/g' |
+    sed 's/V/IIIII/g' |
+    tr -d '\n' |
+    wc -m
+)
+
+echo ${roman_numerals} is ${number}
+
+}
+
+###############################
+# system health information   #
+###############################
+
+alias inf="uname -sr && uptime| sed 's/ //' && sensors|grep Pack && \
+           lscpu|grep 'CPU MHz:' && acpi && \
+           echo -n 'Memory in use: ' && free -m|grep Mem|\
+           awk '{print \$3+\$5\" megs\"}'"
+
+#################
+# take a note   #
+#################
+
+function note {
+  if [ -z "$1" ]; then
+    echo "No note entered."
+  else
+    echo "$@" >> "$HOME/.notes"
+  fi
+}
+
+##################
+# display notes  #
+##################
+
+function dnote {
+  FN="$HOME/.notes"
+  if [ ! -f "$FN" ]; then
+    echo "No notes (file missing)."
+    return
+  fi
+
+  if [ -z "$1" ]; then
+    LINECOUNT="10"
+  else
+    LINECOUNT="$1"
+  fi
+  LNUM=$(wc -l "$FN"|cut -d " " -f1)
+  echo "Showing max $LINECOUNT of $LNUM notes."
+  tail "$FN" -n "$LINECOUNT"
+}
+
+######################
+# clear all notes    #
+######################
+
+function cnote {
+  rm "$HOME/.notes"
+  touch "$HOME/.notes"
+}
+
+##################################################
+# Lookup a word with dict.org                    #
+##################################################
+
+###### define "whatever"
+
+function dic() { curl dict://dict.org/d:"$@" ; }
+
+##################################################
+# Weather Forecast 				 #
+##################################################
+
+function forecast() 
+{ 
+curl https://wttr.in/
+}
+
+##########################################
+# ALIAS                                  #
+##########################################
+
+# Set some defaults for nano
+# NOTE: Depending on the version of nano you have, --linenumbers is helpful
+
+alias nano='nano --smarthome --multibuffer --const --autoindent --suspend --linenumbers'
+
+# Alias for ping
+
+alias ping='ping -c 4'
+
+# Watch real time network activity
+
+if [[ -x "$(command -v lsof)" ]]; then
+        alias netwatch='lsof -i'
+fi
+
+# Colorize messages for the kernel ring buffer
+
+alias dmesg='dmesg --color'
+
+# view only the process name using an internet connection
+
+alias netuser="netstat -lantp | grep -i stab | awk -F/ '{print $2}' | sort | uniq"
+
+
+#########################################
+# Alias for compression			#
+#########################################
+
+alias mzip="zip -r"
+alias mtgz="tar -czvf"
+alias mtxz="tar -cJvf"
+alias mtbz="tar -cjvf"
+alias mlz4="tar -I 'lz4 -6' -cvf"
+
+#############################################
+# Alias for decompression		            #
+#############################################
+
+alias uzip="unzip -v"
+alias tgz="tar -xvf"
+alias txz="tar -xvf"
+alias tbz="tar -xvf"
+alias tlz4="tar --use-compress-program=lz4 -xvf"
+
+##############################################
+# Default to Python3
+##############################################
+
+alias python=python3
+
+###############################################
+# Colors
+###############################################
+
+alias diff='diff --color=auto'
+alias grep='grep --color=auto'
+alias ip='ip -color=auto'
+alias ls='ls --color=auto'
+
+export LESS='-R --use-color -Dd+r$Du+b'
+export MANPAGER="less -R --use-color -Dd+r -Du+b"

@@ -1,0 +1,141 @@
+Rxvt*font:           xft:Courier New:pixelsize=15:style=bold:antialias=true:hinting=true, \
+			xft:Agastya Serif:pixelsize=12:antialias=true:hinting=true, \
+			xft:Annapurna SIL:Pixelsize=12:antialias=true:hinting=true				
+Xft*dpi:       96
+Xft*antialias: true
+Xft*hinting:   true
+Xft.rgba:       rgb
+Xft.hintstyle:  Full
+Xft.autohint:   false
+Xft.lcdfilter:  lcddefault
+URxvt.scrollstyle: next
+URxvt.underlineURLs: true
+URxvt.scrollBar:	true
+URxvt.scrollBar_right: true
+URxvt:thickness: 24
+URxvt.saveLines: 20000
+URxvt.clipboard.autocopy: true
+URxvt.keysym.Shift-Control-V: eval:paste_clipboard
+URxvt.keysym.Shift-Control-C: eval:selection_to_clipboard
+URxvt.iso14755: false
+URxvt.iso14755_52: false
+URxvt.perl-ext-common: default,tabbed,selection-to-clipboard
+
+
+URxvt.colorIT:      #87af5f
+URxvt.colorBD:      #d7d7d7
+URxvt.colorUL:      #87afd7
+
+
+XTerm.termName: xterm-256color
+XTerm*utf8: 1
+XTerm.vt100.saveLines: 4096
+XTerm.vt100.scrollBar: true
+XTerm.vt100.scrollbar.width: 20
+XTerm*selectToClipboard: true
+XTerm*fullscreen: never
+XTerm.vt1000.scaleHeight: 1.01
+XTerm.vt100.rightScrollBar: true
+XTerm.vt100.renderFont: true
+XTerm.vt100.bellIsUrgent: true
+XTerm.vt100.faceName: Fira Mono:size=12:style=bold:antialias=true:hinting=true
+
+XTerm*pointerColor: white
+XTerm*pointerColorBackground: black
+XTerm*cursorColor: black
+XTerm*cursorBlink: true
+
+
+UXTerm*termName: xterm-256color
+UXTerm*utf8: 1
+UXTerm*saveLines: 4096
+UXTerm*scrollBar: true
+UXTerm*scrollBar.Width: 20
+UXTerm*selectToClipboard: true
+UXTerm*rightScrollBar: true
+UXTerm*renderFont: true
+UXTerm*bellIsUrgent: true
+UXTerm*faceName:  Cousine:size=11:style=bold:antialias=true:hinting=true
+UXTerm*pointerColor: white
+UXTerm*pointerColorBackground: black
+UXTerm*cursorColor: black
+UXTerm*cursorBlink: true
+UXTerm.scaleHeight: 1.01
+
+
+! Terminal color schemes copied from https://gogh-co.github.io/Gogh/
+
+! xterm road sign BG [008450]  with white FG
+! xterm alt Yellow BG with Black FG
+
+XTerm.vt100.foreground: #000000
+XTerm.vt100.background: #FDDA16
+
+! Terminal Light theme: Manpage
+
+XTerm.vt100.color0: #000000
+XTerm.vt100.color1: #cc0000
+XTerm.vt100.color2: #00a600
+XTerm.vt100.color3: #999900
+XTerm.vt100.color4: #0000b2
+XTerm.vt100.color5:  #b200b2
+XTerm.vt100.color6: #00a6b2
+XTerm.vt100.color7: #cccccc
+XTerm.vt100.color8: #666666
+XTerm.vt100.color9: #e50000
+XTerm.vt100.color10: #00d900
+XTerm.vt100.color11: #dcb735
+XTerm.vt100.color12:  #0000ff
+XTerm.vt100.color13:  #e500e5
+XTerm.vt100.color14: #00e5e5
+XTerm.vt100.color15: #e5e5e5
+
+! Uxterm borland blue BG with yellow FG
+
+UXTerm*background: #0000A4
+UXTerm*foreground: #FDDA16
+
+! Terminal dark theme ocean 
+
+UXTerm.color0: #000000
+UXTerm.color1:  #990000
+UXTerm.color2:  #00a600
+UXTerm.color3: #999900
+UXTerm.color4: #96cbfe
+UXTerm.color5: #b200b2
+UXTerm.color6: #00a6b2
+UXTerm.color7: #bfbfbf
+UXTerm.color8: #666666
+UXTerm.color9: #e50000
+UXTerm.color10:  #00d900
+UXTerm.color11: #e5e500
+UXTerm.color12:  #b5dcff
+UXTerm.color13: #e500e5
+UXTerm.color14: #00e5e5
+UXTerm.color15: #e5e5e5
+
+
+
+
+
+!  Black BG with Yellow FG
+
+*background: #000000
+*foreground: #FDDA16
+
+*color0: #151515
+*color1: #a53c23
+*color2:  #7b9246
+*color3: #d3a04d
+*color4: #6c99bb
+*color5: #9f4e85
+*color6:  #7dd6cf
+*color7: #d0d0d0
+*color8: #505050
+*color9: #a53c23
+*color10: #7b9246
+*color11: #d3a04d
+*color12: #547c99
+*color13: #9f4e85
+*color14: #7dd6cf
+*color15: #f5f5f5
