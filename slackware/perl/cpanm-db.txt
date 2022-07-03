@@ -1,0 +1,25 @@
+# To install packages from cpan use the cpan package manager
+# It does not maintains a list of packages installed
+# It relies on the user to remember the packages installed 
+# uninstall process. We will also talk on how to install 
+# the perl modules that are not in the slackbuilds.org
+# perl comes with cpan manager in slackware. Run cpan as root in terminal,
+# it would configure everything automatically. 
+# Run cpan App::cpanminus it should install cpanm a perl module package manager
+# it can install also uninstall packages.
+# use cpan to install modules and cpanm to uninstall it.
+# to install run cpan install JSON. 
+# to uninstall cpanm -U JSON
+
+
+# These packages are needed before installing any other modules: 
+
+1. CPAN::DistnameInfo
+2. YAML::Old
+3. YAML::XS
+4. JSON
+
+# To list installed perl modules run instmodsh in terminal as normal user and then type l in the prompt to list 
+# the packages also you can try cpan -l in terminal
+
+# https://www.cyberciti.biz/faq/list-installed-perl-modules-unix-linux-appleosx-bsd/
