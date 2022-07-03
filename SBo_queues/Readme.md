@@ -3,7 +3,11 @@
 
 Install order
 
-1. Essential-perl.sqf
-2. ffmpeg-deps.sqf
-3. python-ectx-deps.sqf
-4. qemu-deps.sqf
+1. intel-java.sqf
+2. Essential-perl.sqf
+3. doc-builder.sqf
+4. ffmpeg-deps.sqf
+5. python-ectx-deps.sqf
+6. qemu-deps.sqf
+
+before installing doc-builder.sqf install jai and jai-imageio from SBO
