@@ -1,0 +1,148 @@
+# Show file titles (title, author, album) instead of file names?
+
+ReadTags = yes
+
+MusicDir = /home/$USER/Music/pop
+
+StartInMusicDir = yes
+
+Sort = FileName
+
+ShowStreamErrors = no
+
+MP3IgnoreCRCErrors = yes
+
+
+# Set playback toggles.
+
+Repeat = no
+Shuffle = no
+AutoNext = yes
+
+# Default FormatString:
+#
+#   %n - Track number
+#   %a - Artist
+#   %A - Album
+#   %t - Title
+#   %(X:TRUE:FALSE) - Ternary expression: if X exists, do TRUE,
+#                     otherwise FALSE.  The escape character must
+#                     be doubled (i.e., '\\').  (See zshmisc
+#                     documentation for more information.)
+#
+
+FormatString = "%t"
+
+
+# Input and output buffer sizes (in kilobytes).
+
+InputBuffer = 2048                 # Minimum value is 32KB
+OutputBuffer = 5120                # Minimum value is 128KB
+
+Prebuffering = 1024
+
+SoundDriver = ALSA:JACK:OSS
+
+ALSAStutterDefeat = no
+
+Softmixer_SaveState = yes
+
+Equalizer_SaveState = yes
+
+ShowHiddenFiles = no
+
+HideFileExtension = yes
+
+ShowFormat = no
+
+ShowTime = IfAvailable
+
+ShowTimePercent = no
+
+Theme = moca_theme
+
+MOCDir = ~/.moc
+
+UseMMap = no
+
+UseMimeMagic = yes
+
+UseRCC = yes
+
+UseRCCForFilesystem = yes
+
+EnforceTagsEncoding = no
+
+FileNamesIconv = no
+
+NonUTFXterm = no
+
+Precache = yes
+
+SavePlaylist = yes
+
+SyncPlaylist = yes
+
+Keymap = /home/$USER/.moc/keymap
+
+ASCIILines = no
+
+Fastdir1 =  /home/$USER/Music/pop
+
+SeekTime = 1
+SilentSeekTime = 5
+
+ResampleMethod = SincBestQuality
+
+ForceSampleRate = 48000
+
+Allow24bitOutput = yes
+
+UseRealtimePriority = yes
+
+TagsCacheSize = 512
+
+PlaylistNumbering = yes
+
+FollowPlayedFile = yes
+
+CanStartInPlaylist = no
+
+UseCursorSelection = no
+
+SetXtermTitle = yes
+
+SetScreenTitle = yes
+
+PlaylistFullPaths = no
+
+BlockDecorators = "`\"'
+
+MessageLingerTime = 10
+
+PrefixQueuedMessages = yes
+
+ErrorMessagesQueued = "!"
+
+ModPlug_Oversampling = yes
+ModPlug_NoiseReduction = yes
+ModPlug_Reverb = no
+ModPlug_MegaBass = no
+ModPlug_Surround = yes
+
+ModPlug_ResamplingMode = FIR
+
+ModPlug_Channels = 2               # 1 or 2 channels
+ModPlug_Bits = 32                  # 8, 16 or 32 bits
+ModPlug_Frequency = 48000          # 11025, 22050, 44100 or 48000 Hz
+ModPlug_ReverbDepth = 0            # 0 (quiet) to 100 (loud)
+ModPlug_ReverbDelay = 0            # Delay in ms (usually 40-200ms)
+ModPlug_BassAmount = 0             # 0 (quiet) to 100 (loud).
+ModPlug_BassRange = 10             # Cutoff in Hz (10-100).
+ModPlug_SurroundDepth = 0          # Surround level 0(quiet)-100(heavy).
+ModPlug_SurroundDelay = 0          # Surround delay in ms, usually 5-40ms.
+ModPlug_LoopCount = 0              # 0 (never), n (times) or -1 (forever)
+
+RepeatSongChange = no
+
+QueueNextSongReturn = yes
