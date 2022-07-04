@@ -1,6 +1,6 @@
 cunit
 celt
-libconfig
+libconfig | DOC=yes EXAMPLES=yes
 libdbus-c++
 mm-common
 libxml++3
@@ -38,11 +38,11 @@ zvbi
 libilbc
 rtmpdump
 vamp-plugin-sdk
-rubberband
+rubberband  | JAVA=YES 
 aom
 serd
 sord
-OpenBLAS
+OpenBLAS | TARGET=HASWELL
 Atlas-C++
 lv2
 numpy3
@@ -55,7 +55,7 @@ wxPython
 erlang-otp
 elixir
 rabbitmq-server
-rabbitmq-c
+rabbitmq-c  | BUILD_EXAMPLES=ON BUILD_TESTS=ON BUILD_TOOLS=ON ENABLE_SSL_SUPPOT=ON BUILD_TOOLS_DOCS=ON RUN_SYSYEM_TESTS=ON
 soxr
 zimg
 srt
@@ -75,7 +75,7 @@ vcdimager
 libshout
 libdca
 bitstream
-libde265
+libde265 | SHERLOCK265=yes
 libheif
 heif-gimp-plugin
 gst-plugins-ugly
@@ -93,7 +93,7 @@ libmp4v2
 libdv
 libquicktime
 yajl
-singledispatch
+libdaemon
 avahi
 libnfs
 libminizip
