@@ -33,6 +33,7 @@ OpenBLAS: If running in virtual machine like qemu pass an argument TARGET=cpunam
 Rabbitmq-server: Do this before installing
 
 groupadd -g 319 rabbitmq
+
 useradd  -u 319 -g 319  -c "Rabbit MQ" -d /var/lib/rabbitmq -s /bin/sh rabbitmq
 
 rabbitmq-c: In the sqf file pass these options
@@ -46,6 +47,7 @@ avahi:
 before installing avahi add
 
 groupadd -g 214 avahi
+
 useradd -u 214 -g 214 -c "Avahi User" -d /dev/null -s /bin/false avahi
 
 after installing start the Avahi daemon:
