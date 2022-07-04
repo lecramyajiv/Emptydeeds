@@ -14,7 +14,7 @@ before installing doc-builder.sqf install jai and jai-imageio from SBO
 
 before installing FFmpeg-deps.sqf do the following
 
-optional: add libconfig | DOC=yes EXAMPLES=yes
+optional: in the sqf file add libconfig | DOC=yes EXAMPLES=yes
 
 add the following line to /lib/udev/rules.d/65-permissions.rules 
 
@@ -26,7 +26,7 @@ Optional: In Tesseract to enable different lang packs edit the LANGNAM variable 
 
 LANGNAM=${LANGNAM:-"eng hin san tam mal kan tel ben"}
 
-optional: pass the option rubberband | JAVA=YES  this requires zulu-openjdk8
+optional: pass the option rubberband | JAVA=YES in the sqf file, this requires zulu-openjdk8
 
 OpenBLAS: If running in virtual machine like qemu pass an argument TARGET=cpuname, list available from Targetlist.txt in source code
 
@@ -34,3 +34,9 @@ Rabbitmq-server: Do this before installing
 
 groupadd -g 319 rabbitmq
 useradd  -u 319 -g 319  -c "Rabbit MQ" -d /var/lib/rabbitmq -s /bin/sh rabbitmq
+
+rabbitmq-c: In the sqf file pass these options
+
+rabbitmq-c | BUILD_EXAMPLES=ON BUILD_TESTS=ON BUILD_TOOLS=ON ENABLE_SSL_SUPPOT=ON BUILD_TOOLS_DOCS=ON RUN_SYSYEM_TESTS=ON
+
+libde265: in the sqf file pass the option, libde265 | SHERLOCK265=yes
