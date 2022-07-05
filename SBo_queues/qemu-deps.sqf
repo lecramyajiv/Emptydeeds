@@ -1,6 +1,4 @@
-# ounit, ocaml-gettext
-# pcsc -- readme
-
+valgrind
 ORBit2
 libbonobo
 gnome-mime-data
@@ -14,8 +12,8 @@ ocaml-batteries
 ocaml-camomile
 bubblewrap
 libiscsi
-pcsc-lite
 libcacard
+pcsc-lite
 spice-protocol
 spice
 spice-vdagent
@@ -38,4 +36,11 @@ libsmraw
 libsmdev
 libqcow
 augeas
+capstone
+numactl
+rdma-core
+softhsm
+pandoc-bin
+osinfo-db-tools
+osinfo-db
 @python-evtx-deps.sqf
