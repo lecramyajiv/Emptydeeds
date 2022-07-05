@@ -43,4 +43,7 @@ softhsm
 pandoc-bin
 osinfo-db-tools
 osinfo-db
+libosinfo
+trousers
+libtpms
 @python-evtx-deps.sqf
