@@ -1,0 +1,16 @@
+po4a
+fop
+pandoc-bin
+pytz
+python3-babel
+sphinxcontrib-serializinghtml
+sphinxcontrib-qthelp
+sphinxcontrib-htmlhelp
+sphinxcontrib-jsmath
+sphinxcontrib-devhelp
+sphinxcontrib-applehelp
+PyStemmer
+snowballstemmer
+imagesize
+alabaster
+Sphinx
