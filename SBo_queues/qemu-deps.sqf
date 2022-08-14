@@ -1,4 +1,3 @@
-valgrind
 ORBit2
 libbonobo
 gnome-mime-data
@@ -18,7 +17,6 @@ spice-protocol
 spice
 spice-vdagent
 phodav
-xf86-video-qxl
 usbredir
 virglrenderer
 device-tree-compiler
@@ -46,4 +44,3 @@ osinfo-db
 libosinfo
 trousers
 libtpms
-@python-evtx-deps.sqf
