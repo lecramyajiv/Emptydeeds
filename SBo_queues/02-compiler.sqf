@@ -19,3 +19,6 @@ ocaml-camomile
 mujs
 fpc
 lazarus
+p7zip
+rar
+unrar
