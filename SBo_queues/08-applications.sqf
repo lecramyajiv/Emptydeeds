@@ -2,12 +2,13 @@ dropbox
 bibletime
 wps-office
 kchmviewer-qt
-p7zip
-rar
-unrar
 coolreader
 qcomicbook
 vlc
 mpv
 smplayer
 thonny
+libmirage
+vhba-module
+cdemu-daemon
+kde_cdemu
