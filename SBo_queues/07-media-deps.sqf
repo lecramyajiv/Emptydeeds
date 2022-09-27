@@ -4,6 +4,8 @@ celt
 gts
 DevIL
 graphviz
+libdaemon
+avahi
 libconfig | DOC=yes EXAMPLES=yes
 libdbus-c++
 mm-common
