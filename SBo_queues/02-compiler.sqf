@@ -17,6 +17,7 @@ ocaml-num
 ocaml-batteries
 ocaml-camomile
 mujs
+libqtpas
 fpc
 lazarus
 p7zip
