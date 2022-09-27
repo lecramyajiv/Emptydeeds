@@ -132,3 +132,4 @@ vmaf
 vo-amrwbenc
 xavs2
 libmysofa
+pocketsphinx
