@@ -3,16 +3,17 @@
 
 Install order
 
-1. intel-java.sqf
-2. Essential-perl.sqf
-3. doc-builder.sqf
-4. ffmpeg-deps.sqf
-5. python-ectx-deps.sqf
-6. qemu-deps.sqf
+1. 00-microcode.sqf
+2. 01-doc-builder.sqf
+3. 02-compiler.sqf
+4. 04-Essential-perl.sqf
+5. 05-Essential-python.sqf
+6. 06-vbox.sqf
+7. 07-media-deps.sqf
+8. 08-appications.sqf
 
-before installing doc-builder.sqf install jai and jai-imageio from SBO
 
-before installing FFmpeg-deps.sqf do the following
+before installing 07-media-deps.sqf do the following
 
 optional: in the sqf file add libconfig | DOC=yes EXAMPLES=yes
 
