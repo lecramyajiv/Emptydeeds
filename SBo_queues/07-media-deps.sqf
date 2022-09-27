@@ -1,6 +1,9 @@
 gtest
 cunit
 celt
+gts
+DevIL
+graphviz
 libconfig | DOC=yes EXAMPLES=yes
 libdbus-c++
 mm-common
@@ -103,9 +106,27 @@ cmocka
 cJSON
 libunibreak
 gperftools
+gflags
+highway
 libmd
 libbsd
 youtube-dl
 intel-media-sdk
 intel-gmmlib
 intel-media-driver
+AviSynthPlus
+aribb24 
+aribb25
+davs2
+kvazaar 
+libbpg
+libjxl
+librist
+openh264
+shine
+svt-av1
+uavs3d
+vmaf
+vo-amrwbenc
+xavs2
+libmysofa
