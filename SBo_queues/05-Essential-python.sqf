@@ -1,4 +1,9 @@
 python3-installer
+python3-semantic-version
+python3-flit_core
+python3-flit
+python3-pep517
+python3-build
 python3-setuptools_scm_git_archive
 scikit-build
 python2-setuptools-scm
