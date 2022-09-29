@@ -1,0 +1,17 @@
+chroot /mnt /bin/bash
+source /etc/profile
+grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=grub
+grub-mkconfig -o /boot/grub/grub.cfg
+
+for virtualbox
+mkdir -pv /boot/efi/EFI/boot
+cp /boot/efi/EFI/grub/grubx64.efi /boot/efi/EFI/boot/bootx64.efi
+
+
+rescuing slackware system
+
+mount /dev/sda1 /mnt
+mount -o bind  /dev /mnt/dev
+mount -o bind /proc /mnt/proc
+mount -o bind /sys  /mnt/sys
+chroot /mnt /bin/bash
