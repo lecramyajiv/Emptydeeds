@@ -30,6 +30,19 @@ make -C build
 make -C build install DESTDIR=$PKG  [OR]  make -C build DESTDIR=$PKG install
 
 
+cmake -B build -S $TMP/$PRGNAM-$VERSION \
+    -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
+    -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+    -DCMAKE_INSTALL_PREFIX:PATH=/usr \
+    -DCMAKE_INSTALL_LIBDIR:PATH=/usr/lib${LIBDIRSUFFIX} \
+    -DCMAKE_INSTALL_BINDIR:PATH=/usr/bin \
+    -DBUILD_SHARED_LIBS:BOOL=ON \
+    -DHWY_SYSTEM_GTEST:BOOL=ON \
+    -DHWY_ENABLE_CONTRIB:BOOL=ON \
+    -DHWY_ENABLE_EXAMPLES:BOOL=ON \
+    -DHWY_ENABLE_INSTALL:BOOL=ON
+
 ----------------------
 CMAKE WITH NINJA
 ----------------------
@@ -43,7 +56,6 @@ cmake -B build -S $TMP/$PRGNAM-$VERSION  -G Ninja \
 cmake --build build
 
 DESTDIR=$PKG cmake --install build
-
 
 ------------------------
 CMAKE WITH GO
@@ -101,7 +113,6 @@ CONFIGURE
 make
 make install DESTDIR=$PKG
 
-
 -------------------------------------
 CONFIGURE WITH AUTOGEN
 -------------------------------------
@@ -125,7 +136,6 @@ make install DESTDIR=$PKG
 CONFIGURE WITH BOOTSTRAP
 --------------------------------------
 
-
 cd build/generic
 ./bootstrap.sh
 CFLAGS="$SLKCFLAGS" \
@@ -142,7 +152,6 @@ make install DESTDIR=$PKG
 -------------------------------
 CONFIGURE WITH ACLOCAL
 -------------------------------
-
 
 libtoolize --force --copy
 aclocal
@@ -161,11 +170,9 @@ CXXFLAGS="$SLKCFLAGS" \
 make
 make install DESTDIR=$PKG
 
-
 -----------------------------------------------------------------
 MESON WITH NINJA
 -----------------------------------------------------------------
-
 
 mkdir build
 cd build
@@ -178,7 +185,6 @@ cd build
   ninja
   DESTDIR=$PKG ninja install
 cd ..
-
 
 
 mkdir -pv build && cd build
@@ -197,8 +203,6 @@ export OSINFO_DB_TOOLS_NETWORK_TESTS=1
 ninja -C build
 DESTDIR=$PKG ninja -C build install
 
-
-
 ------------------------
 from arch pkgbuild
 ------------------------
@@ -207,7 +211,6 @@ from arch pkgbuild
     -Dbuild-test=false
 ninja -C build
 DESTDIR="$pkgdir" meson install -C build
-
 
 
 meson build
@@ -240,21 +243,17 @@ cd src                  # Ladspa slackbuild
     INSTALL_INCLUDE_DIR="$PKG/usr/include"
 cd -
 
-
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
 make
 make install DESTDIR=$PKG PREFIX="/usr"
 
 
-
 make LIB_PREFIX=lib prefix=/usr PREFIX=/usr install DESTDIR=$PKG
-
 
 ------------------------------------------------------------------
 PYTHON PACKAGES
 ------------------------------------------------------------------
-
 
 export PYTHON=python3
 ./waf configure \
@@ -268,7 +267,6 @@ export PYTHON=python3
 ./waf
 
 ./waf install --destdir=$PKG
-
 
 
 ./setup.py install  --prefix=/usr --root=$PKG
@@ -296,6 +294,3 @@ DEBUG INFO
 trap 'echo "$0 FAILED at line $LINENO!" | tee $OUTPUT/error-${PKGNAM}.log' ERR
 set -u
 P1=${1:-1}
-
-
-
