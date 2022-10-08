@@ -1,3 +1,5 @@
+libdaemon
+avahi
 ORBit2
 libbonobo
 gnome-mime-data
@@ -23,6 +25,7 @@ device-tree-compiler
 liburcu
 glusterfs
 vde2
+valgrind
 libfsntfs
 libewf
 afflib
@@ -44,3 +47,16 @@ osinfo-db
 libosinfo
 trousers
 libtpms
+hivex
+libslirp
+memkind
+pmdk
+sparse
+libldm
+libfabric
+libnfs
+snappy
+cmocka
+acpica
+perf
+gperftools
