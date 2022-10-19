@@ -1,3 +1,11 @@
+partion:
+create a GPT based partition with uefi
+a 500M EFI partition
+a swap partition 
+a linux filesystem
+
+in case of bios it is the same process but create a 500M bios partition
+
 chroot /mnt /bin/bash
 source /etc/profile
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=grub
