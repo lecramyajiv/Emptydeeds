@@ -1,0 +1,34 @@
+# Cleanup /tmp
+
+/usr/bin/find /tmp -mindepth 1 -maxdepth 1 -exec /bin/rm -rf {} +;
+
+# Stop VDE-Switch
+
+ if [ -x /etc/rc.d/rc.vde2 ]; then
+     /etc/rc.d/rc.vde2 stop
+  fi
+
+# Stop avahidnsconfd
+	
+if [ -x /etc/rc.d/rc.avahidnsconfd ]; then
+ /etc/rc.d/rc.avahidnsconfd stop
+fi
+
+# Stop avahidaemon
+	
+if [ -x /etc/rc.d/rc.avahidaemon ]; then
+  /etc/rc.d/rc.avahidaemon stop
+fi
+
+# Stop vboxdrv
+	
+if [ -x /etc/rc.d/rc.vboxdrv ]; then
+ /etc/rc.d/rc.vboxdrv stop
+fi
+
+# Stopping smart card reader daemon
+
+if [ -x /etc/rc.d/rc.pcscd ]; then
+	/etc/rc.d/rc.pcscd stop
+fi
+
