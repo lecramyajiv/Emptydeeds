@@ -1,0 +1,49 @@
+#!/bin/bash
+#
+# /etc/rc.d/rc.local:  Local system initialization script.
+#
+# Put any local startup commands in here.  Also, if you have
+# anything that needs to be run at shutdown time you can
+# make an /etc/rc.d/rc.local_shutdown script and put those
+# commands in there.
+
+# start VDE-switch
+
+if [ -x /etc/rc.d/rc.vde2 ]; then
+    /etc/rc.d/rc.vde2 start
+fi
+
+# Start avahidaemon
+
+if [ -x /etc/rc.d/rc.avahidaemon ]; then
+  /etc/rc.d/rc.avahidaemon start
+fi
+
+# Start avahidnsconfd
+
+if [ -x /etc/rc.d/rc.avahidnsconfd ]; then
+  /etc/rc.d/rc.avahidnsconfd start
+fi
+
+# Start vboxdrv
+
+if [ -x /etc/rc.d/rc.vboxdrv ]; then
+   /etc/rc.d/rc.vboxdrv start
+fi
+
+# Start sndiod
+
+if [ -x /etc/rc.d/rc.sndiod ]; then
+	/etc/rc.d/rc.sndiod start
+fi
+
+# Start PCSC a.k.a Smart card reader daemon
+
+if [ -x /etc/rc.d/rc.pcscd ]; then
+	/etc/rc.d/rc.pcscd start
+fi
+
+# Start spice-vdagent:
+if [ -x /etc/rc.d/rc.spice-vdagent ]; then
+  /etc/rc.d/rc.spice-vdagent start
+fi
