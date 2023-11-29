@@ -300,3 +300,12 @@ DEBUG INFO
 trap 'echo "$0 FAILED at line $LINENO!" | tee $OUTPUT/error-${PKGNAM}.log' ERR
 set -u
 P1=${1:-1}
+
+
+---------------------------------------------------------------------------------
+GCC Hardening
+---------------------------------------------------------------------------------
+
+PREPROCESS="-Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS"
+HARDENING="-fexceptions -fstack-protector-strong -fstack-clash-protection -mindirect-branch=thunk -mfunction-return=thunk -mneeded -fPIE"
+SLDFLAGS="-pie -Wl,-z,relro -Wl,-z,separate-code -Wl,-z,now -Wl,-z,nodlopen -Wl,-z,nodump -Wl,-z,noexecstack -Wl,-z,noexecheap -Wl,-z,defs"
